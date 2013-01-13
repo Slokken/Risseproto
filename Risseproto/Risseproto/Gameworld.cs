@@ -14,8 +14,8 @@ namespace Risseproto
 
         public Gameworld(ContentHolder contentHolder)
         {
-            risseObject = new Gameobject(contentHolder.risse, Vector2.Zero);
-            background = new Gameobject(contentHolder.background, Vector2.Zero);
+            risseObject = new Gameobject(contentHolder.risse, Vector2.Zero, Vector2.Zero);
+            background = new Gameobject(contentHolder.background, Vector2.Zero, new Vector2(-10, 0));
         }
 
         public void Draw(SpriteBatch spriteBatch)

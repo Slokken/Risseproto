@@ -13,12 +13,13 @@ namespace Risseproto
         private Vector2 position;
         private Texture2D texture;
         private Vector2 velocity;
-        private Vector2 accelleration;
+        private Vector2 accelllllllllleration;
 
-        public Gameobject(Texture2D texture, Vector2 position)
+        public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
         {
             this.texture = texture;
             this.position = position;
+            this.velocity = velocity;
         }
         
         public void Draw(SpriteBatch spriteBatch)
@@ -28,7 +29,18 @@ namespace Risseproto
             //        position, 0.2f, SpriteEffects.None, 0f);
         }
 
-        public void update (GameTime gameTime)
+        public Vector2 Position
+        {
+            get { return position; }
+            set { this.position = value; }
+        }
+
+        public int TextureWidth
+        {
+            get { return texture.Width; }
+        }
+
+        public void update ()
         {
             position += velocity; 
         }
