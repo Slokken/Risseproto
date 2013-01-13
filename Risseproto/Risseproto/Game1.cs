@@ -19,11 +19,12 @@ namespace Risseproto
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ContentHolder contentHolder;
-        Gameobject risseObject;
+        Gameworld gameWorld;
         Input input;
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
+        Controller controller;
 
 
         public Game1()
@@ -41,6 +42,9 @@ namespace Risseproto
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            contentHolder = new ContentHolder(Content);
+            gameWorld = new Gameworld(contentHolder);
+            controller = new Controller();
             base.Initialize();
         }
 
@@ -52,9 +56,8 @@ namespace Risseproto
             Mouse.WindowHandle = this.Window.Handle;
 
             // Create a new SpriteBatch, which can be used to draw textures.
-            contentHolder = new ContentHolder(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            risseObject = new Gameobject(contentHolder.risse, Vector2.Zero);
+            
             input = new Input();
 
             input.jump += new Input.EventHandler(jump);
@@ -89,6 +92,8 @@ namespace Risseproto
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            //controller.update(gameTime);
+
             // TODO: Add your update logic here
             input.Update();
             base.Update(gameTime);
@@ -100,10 +105,11 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            risseObject.Draw(spriteBatch);
+            gameWorld.Draw(spriteBatch);
+            
             // TODO: Add your drawing code here
 
             spriteBatch.End();
