@@ -11,6 +11,9 @@ namespace Risseproto
     {
         public Texture2D risse;
         public Texture2D background;
+        public Texture2D menuStart;
+        public Texture2D menuStartHover;
+        public Texture2D menuStartClicked;
 
         public ContentHolder(ContentManager content)
         {
@@ -24,6 +27,9 @@ namespace Risseproto
         {
             risse = content.Load<Texture2D>("Risse\\risse");
             background = content.Load<Texture2D>("Background\\background");
+            menuStart = content.Load<Texture2D>("MenuObjects\\start");
+            menuStartHover = content.Load<Texture2D>("MenuObjects\\start_hover");
+            menuStartClicked = content.Load<Texture2D>("MenuObjects\\start_clicked");
         }
     }
 }
