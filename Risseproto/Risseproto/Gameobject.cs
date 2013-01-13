@@ -17,8 +17,8 @@ namespace Risseproto
 
         public Gameobject(Texture2D texture, Vector2 position)
         {
-            this.texture = texture;
-            this.position = position;
+            Texture = texture;
+            Position = position;
         }
 
         public Rectangle BoundingBox
@@ -32,6 +32,30 @@ namespace Risseproto
                     texture.Height);
             }
         }
+
+        protected Vector2 Position
+        {
+            get { return this.position; }
+            set { this.position = value; }
+        }
+
+        protected Texture2D Texture
+        {
+            get { return this.texture; }
+            set { this.texture = value; }
+        }
+
+        protected Vector2 Velocity
+        {
+            get { return this.velocity; }
+            set { this.velocity = value; }
+        }
+
+        protected Vector2 Acceleration
+        {
+            get { return this.acceleration; }
+            set { this.acceleration = value; }
+        }
         
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -44,5 +68,7 @@ namespace Risseproto
         {
             position += velocity; 
         }
+
+
     }
 }
