@@ -13,7 +13,7 @@ namespace Risseproto
         private Vector2 position;
         private Texture2D texture;
         private Vector2 velocity;
-        private Vector2 accelllllllllleration;
+        private Vector2 acceleration;
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
         {
@@ -63,12 +63,6 @@ namespace Risseproto
             spriteBatch.Draw(texture, position, Color.White);
             //spriteBatch.Draw(texture, position, null, Color.White, 0f,
             //        position, 0.2f, SpriteEffects.None, 0f);
-        }
-
-        public Vector2 Position
-        {
-            get { return position; }
-            set { this.position = value; }
         }
 
         public int TextureWidth
