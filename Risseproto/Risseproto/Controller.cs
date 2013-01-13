@@ -8,6 +8,9 @@ namespace Risseproto
 {
     class Controller
     {
+
+        public Gameobject risse;
+
         public Controller()
         {
 
@@ -15,6 +18,7 @@ namespace Risseproto
 
         public void update(Gameworld gameWorld, GameTime gameTime)
         {
+            risse = gameWorld.Risse;
             parallaxBackground(gameWorld);
         }
 
@@ -31,6 +35,11 @@ namespace Risseproto
             gameWorld.Background.update();
 
             
+        }
+
+        public void jump()
+        {
+
         }
     }
 }

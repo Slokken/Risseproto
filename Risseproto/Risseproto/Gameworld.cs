@@ -30,5 +30,10 @@ namespace Risseproto
             get { return background; }
             set { this.background = value; }
         }
+
+        public Gameobject Risse
+        {
+            get { return risseObject; }
+        }
     }
 }
