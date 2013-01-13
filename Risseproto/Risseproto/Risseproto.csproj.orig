@@ -107,9 +107,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button.cs" />
+<<<<<<< HEAD
     <Compile Include="Input.cs" />
+=======
     <Compile Include="Background.cs" />
+>>>>>>> ab8caaf94ebbef3c8b689c154c301de56a2dc869
     <Compile Include="ContentHolder.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Gameobject.cs" />
