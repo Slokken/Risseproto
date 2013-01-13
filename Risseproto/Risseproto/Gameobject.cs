@@ -30,15 +30,8 @@ namespace Risseproto
 
         public Rectangle BoundingBox
         {
-            set
-            {
-                this.boundingBox = value;
-            }
-            get
-            {
-                refreshRectangle();
-                return this.boundingBox;
-            }
+            set { this.boundingBox = value; }
+            get { return refreshRectangle(); }
         }
 
         public Vector2 Position
@@ -82,10 +75,11 @@ namespace Risseproto
             position += velocity; 
         }
 
-        protected void refreshRectangle()
+        protected Rectangle refreshRectangle()
         {
             this.boundingBox.X = (int)Position.X - Texture.Width / 2;
             this.boundingBox.Y = (int)Position.Y - Texture.Height / 2;
+            return this.boundingBox;
         }
     }
 }
