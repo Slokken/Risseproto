@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Input.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="ContentHolder.cs" />
     <Compile Include="Controller.cs" />

@@ -21,6 +21,18 @@ namespace Risseproto
             this.position = position;
             this.velocity = velocity;
         }
+
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)position.X - texture.Width / 2,
+                    (int)position.Y - texture.Height / 2,
+                    texture.Width,
+                    texture.Height);
+            }
+        }
         
         public void Draw(SpriteBatch spriteBatch)
         {
