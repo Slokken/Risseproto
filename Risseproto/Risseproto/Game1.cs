@@ -20,6 +20,7 @@ namespace Risseproto
         SpriteBatch spriteBatch;
         ContentHolder contentHolder;
         Gameworld gameWorld;
+        Input input;
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
@@ -50,13 +51,27 @@ namespace Risseproto
         
         protected override void LoadContent()
         {
+
+            // Sets the mouse position in our window.
+            Mouse.WindowHandle = this.Window.Handle;
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
+            input = new Input();
 
+            input.jump += new Input.EventHandler(jump);
+            input.duck += new Input.EventHandler(duck);
             // TODO: use this.Content to load your game content here
         }
-
+        public void jump()
+        {
+            System.Diagnostics.Debug.WriteLine("jump");
+        }
+        public void duck()
+        {
+            System.Diagnostics.Debug.WriteLine("duck");
+        }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
@@ -80,7 +95,7 @@ namespace Risseproto
             //controller.update(gameTime);
 
             // TODO: Add your update logic here
-
+            input.Update();
             base.Update(gameTime);
         }
 
