@@ -103,7 +103,7 @@ namespace Risseproto
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            //controller.update(gameTime);
+            controller.update(gameWorld, gameTime);
 
             // TODO: Add your update logic here
             input.Update();
