@@ -22,5 +22,17 @@ namespace Risseproto
             gameObject.Velocity += new Vector2(0, GRAVITYCONSTANT * elapsed);
             gameObject.Position += gameObject.Velocity * elapsed;
         }
+
+        public bool collisionDetection(Gameobject object1, Gameobject object2)
+        {
+            if (object1.BoundingBox.Intersects(object2.BoundingBox))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
