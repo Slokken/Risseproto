@@ -10,16 +10,19 @@ namespace Risseproto
     {
 
         public Gameobject risse;
+        private PhysicsEngine physicsEngine;
 
         public Controller()
         {
-
+            physicsEngine = new PhysicsEngine();
         }
 
         public void update(Gameworld gameWorld, GameTime gameTime)
         {
             risse = gameWorld.Risse;
             parallaxBackground(gameWorld);
+            physicsEngine.gravitation(risse, gameTime);
+
         }
 
 
@@ -40,6 +43,9 @@ namespace Risseproto
         public void jump()
         {
 
+            risse.Velocity = new Vector2(0, -10);
         }
+
+
     }
 }

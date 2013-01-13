@@ -34,7 +34,7 @@ namespace Risseproto
             }
         }
 
-        protected Vector2 Position
+        public Vector2 Position
         {
             get { return this.position; }
             set { this.position = value; }
@@ -46,13 +46,13 @@ namespace Risseproto
             set { this.texture = value; }
         }
 
-        protected Vector2 Velocity
+        public Vector2 Velocity
         {
             get { return this.velocity; }
             set { this.velocity = value; }
         }
 
-        protected Vector2 Acceleration
+        public Vector2 Acceleration
         {
             get { return this.acceleration; }
             set { this.acceleration = value; }
