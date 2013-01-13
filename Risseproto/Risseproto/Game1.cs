@@ -23,6 +23,7 @@ namespace Risseproto
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
+        Controller controller;
 
 
         public Game1()
@@ -42,6 +43,7 @@ namespace Risseproto
             // TODO: Add your initialization logic here
             contentHolder = new ContentHolder(Content);
             gameWorld = new Gameworld(contentHolder);
+            controller = new Controller();
             base.Initialize();
         }
 
@@ -75,6 +77,8 @@ namespace Risseproto
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            //controller.update(gameTime);
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -86,7 +90,7 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             gameWorld.Draw(spriteBatch);

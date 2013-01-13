@@ -36,8 +36,13 @@ namespace Risseproto
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
-            spriteBatch.Draw(texture, position, null, Color.White, 0f,
-                    position, 0.2f, SpriteEffects.None, 0f);
+            //spriteBatch.Draw(texture, position, null, Color.White, 0f,
+            //        position, 0.2f, SpriteEffects.None, 0f);
+        }
+
+        public void update (GameTime gameTime)
+        {
+            position += velocity; 
         }
     }
 }
