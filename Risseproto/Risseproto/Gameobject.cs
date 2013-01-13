@@ -14,23 +14,30 @@ namespace Risseproto
         private Texture2D texture;
         private Vector2 velocity;
         private Vector2 acceleration;
+        private Rectangle boundingBox;
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
         {
             Texture = texture;
             Position = position;
-            this.velocity = velocity;
+            Velocity = velocity;
+            BoundingBox = new Rectangle(
+                    (int)Position.X - Texture.Width / 2,
+                    (int)Position.Y - Texture.Height / 2,
+                    Texture.Width,
+                    Texture.Height);
         }
 
         public Rectangle BoundingBox
         {
+            set
+            {
+                this.boundingBox = value;
+            }
             get
             {
-                return new Rectangle(
-                    (int)position.X - texture.Width / 2,
-                    (int)position.Y - texture.Height / 2,
-                    texture.Width,
-                    texture.Height);
+                refreshRectangle();
+                return this.boundingBox;
             }
         }
 
@@ -75,6 +82,10 @@ namespace Risseproto
             position += velocity; 
         }
 
-
+        protected void refreshRectangle()
+        {
+            this.boundingBox.X = (int)Position.X - Texture.Width / 2;
+            this.boundingBox.Y = (int)Position.Y - Texture.Height / 2;
+        }
     }
 }
