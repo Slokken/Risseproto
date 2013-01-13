@@ -20,9 +20,15 @@ namespace Risseproto
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            risseObject.Draw(spriteBatch);
             background.Draw(spriteBatch);
+            risseObject.Draw(spriteBatch);
 
+        }
+
+        public Gameobject Background
+        {
+            get { return background; }
+            set { this.background = value; }
         }
     }
 }
