@@ -10,17 +10,18 @@ namespace Risseproto
     class Gameworld
     {
         private Gameobject risseObject;
-        private Background background;
+        private Gameobject background;
 
         public Gameworld(ContentHolder contentHolder)
         {
             risseObject = new Gameobject(contentHolder.risse, Vector2.Zero);
-            background = new Background();
+            background = new Gameobject(contentHolder.background, Vector2.Zero);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             risseObject.Draw(spriteBatch);
+            background.Draw(spriteBatch);
 
         }
     }

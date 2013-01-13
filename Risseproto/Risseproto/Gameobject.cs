@@ -12,6 +12,8 @@ namespace Risseproto
     {
         private Vector2 position;
         private Texture2D texture;
+        private Vector2 velocity;
+        private Vector2 accelleration;
 
         public Gameobject(Texture2D texture, Vector2 position)
         {

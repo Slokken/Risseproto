@@ -10,6 +10,7 @@ namespace Risseproto
     class ContentHolder
     {
         public Texture2D risse;
+        public Texture2D background;
 
         public ContentHolder(ContentManager content)
         {
@@ -21,7 +22,8 @@ namespace Risseproto
 
         public void loadTextures(ContentManager content)
         {
-            risse = content.Load<Texture2D>("risse");
+            risse = content.Load<Texture2D>("Risse\\risse");
+            background = content.Load<Texture2D>("Background\\background");
         }
     }
 }

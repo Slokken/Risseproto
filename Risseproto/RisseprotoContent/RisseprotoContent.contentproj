@@ -42,7 +42,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="risse.jpg">
+    <Compile Include="Background\background.png">
+      <Name>background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Object\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Risse\risse.jpg">
       <Name>risse</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
