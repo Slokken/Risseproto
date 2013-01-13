@@ -75,6 +75,7 @@ namespace Risseproto
             position += velocity; 
         }
 
+        // updates boundingbox position
         protected Rectangle refreshRectangle()
         {
             this.boundingBox.X = (int)Position.X - Texture.Width / 2;
