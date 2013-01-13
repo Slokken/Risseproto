@@ -19,7 +19,7 @@ namespace Risseproto
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ContentHolder contentHolder;
-        Gameobject risseObject;
+        Gameworld gameWorld;
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
@@ -40,6 +40,8 @@ namespace Risseproto
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            contentHolder = new ContentHolder(Content);
+            gameWorld = new Gameworld(contentHolder);
             base.Initialize();
         }
 
@@ -47,9 +49,8 @@ namespace Risseproto
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            contentHolder = new ContentHolder(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            risseObject = new Gameobject(contentHolder.risse, Vector2.Zero);
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -88,7 +89,8 @@ namespace Risseproto
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            risseObject.Draw(spriteBatch);
+            gameWorld.Draw(spriteBatch);
+            
             // TODO: Add your drawing code here
 
             spriteBatch.End();
