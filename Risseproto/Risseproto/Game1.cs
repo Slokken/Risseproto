@@ -104,6 +104,8 @@ namespace Risseproto
                 // Allows the game to exit
                 if (input.WasKeyClicked(Keys.Escape))
                     this.Exit();
+                if (input.WasKeyClicked(Keys.Enter))
+                    gameState = GameState.InGame;
                 startButton.Update();
             }
             else if (gameState == GameState.InGame)
