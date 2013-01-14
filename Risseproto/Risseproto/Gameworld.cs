@@ -40,7 +40,7 @@ namespace Risseproto
             int platformWidth = contentHolder.texture_platform.Width;
             for (int i = 0; i < NUMBEROFPLATFORMS; i++)
             {
-                ground.Add(new Gameobject(contentHolder.texture_platform, new Vector2(- 200 + platformWidth, 688), Vector2.Zero));
+                ground.Add(new Gameobject(contentHolder.texture_platform, new Vector2(- 200 + platformWidth, 550), Vector2.Zero));
                 platformWidth += 200;
             }
         }

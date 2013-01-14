@@ -66,7 +66,7 @@ namespace Risseproto
             }
             if(risse.OnTheGround)
             {
-           	theState = state.jumping;
+           	    theState = state.jumping;
                 risse.Animation = (int)state.jumping;
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -15);
@@ -78,12 +78,14 @@ namespace Risseproto
             if (risse.OnTheGround)
             {
                 theState = state.ducking;
-                risse.BoundingBox = new Rectangle(risse.BoundingBox.X, risse.BoundingBox.Y, risse.BoundingBox.Width , risse.BoundingBox.Height / 2);
+                risse.Animation = (int)state.ducking;
+                //risse.Position = new Vector2(risse.Position.X, risse.Position.Y - 128);
             }
         }
         public void ResetBoundingBox()
         {
-            risse.BoundingBox = new Rectangle(risse.BoundingBox.X, risse.BoundingBox.Y - risse.BoundingBox.Height - 6, risse.BoundingBox.Width, risse.NormalBoundingHeight);
+            risse.Position = new Vector2(risse.Position.X, risse.Position.Y - risse.BoundingBox.Height);
+            risse.BoundingBox = new Rectangle(0, 0, risse.BoundingBox.Width / 2, risse.NormalBoundingHeight);
         }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
