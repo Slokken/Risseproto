@@ -43,6 +43,11 @@ namespace Risseproto
                 go.update();
             }
 
+            foreach (Gameobject go in gameWorld.BackgroundFluff)
+            {
+                go.updateFluff((int)risse.BoundingBox.X);
+            }
+
             //foreach (Gameobject ground in gameWorld.Ground)
             //{
             //    ground.update();
@@ -56,7 +61,7 @@ namespace Risseproto
                 }
             }
 
-            //Console.Out.WriteLine(risse.Position);
+            Console.Out.WriteLine(risse.Position);
         }
 
 
@@ -159,7 +164,7 @@ namespace Risseproto
                 return false;
             }
 
-            if (risse.OnTheGround && risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
+            if (risse.OnTheGround && risse.BoundingBox.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
             {
                 collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                 return false;

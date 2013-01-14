@@ -52,7 +52,7 @@ namespace Risseproto
                 }
             }
 
-            //Console.Out.WriteLine(risse.Position);
+            Console.Out.WriteLine(risse.Position);
         }
 
 
@@ -116,7 +116,7 @@ namespace Risseproto
             }
             foreach (Gameobject platform in gameworld.Platforms)
             {
-                if (physicsEngine.collisionDetection(risse, platform, crouchingRisseHiddenBoundingBox))
+                if (physicsEngine.collisionDetection(risse, platform))
                 {
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
@@ -145,43 +145,43 @@ namespace Risseproto
                 foreach (List<Gameobject> list in gameworld.Ground)
                 {
 <<<<<<< HEAD
-                    foreach (Gameobject ground in list)
+                    if (physicsEngine.collisionDetection(risse, ground))
 =======
-                    if (physicsEngine.collisionDetection(risse, ground, crouchingRisseHiddenBoundingBox))
->>>>>>> 1a21153046a150672e6753549f0dfa571dc30535
+                    foreach (Gameobject ground in list)
+>>>>>>> 2897775b17c0887a4191469cd4ba89ebc435908b
                     {
-                        if (physicsEngine.collisionDetection(risse, ground))
+                        if (physicsEngine.collisionDetection(risse, ground, crouchingRisseHiddenBoundingBox))
                         {
                             if (collisionDetermineType(gameworld, risse, ground, prePos))
                             {
                                 collidedWithPlatformSide = true;
                             }
+                            else
+                            {
+                                airborne = false;
+                            }
                         }
-<<<<<<< HEAD
-
-=======
-                        else
-                        {
-                            airborne = false;
-                        }
->>>>>>> 1a21153046a150672e6753549f0dfa571dc30535
                     }
                 }
-            }
 
-            if (!collidedWithPlatformSide)
-            {
-                foreach (Gameobject collidable in gameworld.Collidables)
+                if (!collidedWithPlatformSide)
                 {
-                    if (physicsEngine.collisionDetection(risse, collidable, crouchingRisseHiddenBoundingBox))
+<<<<<<< HEAD
+                    if (physicsEngine.collisionDetection(risse, collidable))
+=======
+                    foreach (Gameobject collidable in gameworld.Collidables)
+>>>>>>> 2897775b17c0887a4191469cd4ba89ebc435908b
                     {
-                        collisionHorizontal(gameworld, prePos);
+                        if (physicsEngine.collisionDetection(risse, collidable, crouchingRisseHiddenBoundingBox))
+                        {
+                            collisionHorizontal(gameworld, prePos);
+                        }
                     }
                 }
-            }
-            if (airborne)
-            {
-                //risse.OnTheGround = false;
+                if (airborne)
+                {
+                    //risse.OnTheGround = false;
+                }
             }
         }
 
@@ -214,7 +214,7 @@ namespace Risseproto
                 return false;
             }
 
-            if (risse.OnTheGround && risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
+            if (risse.OnTheGround && risse.BoundingBox.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
             {
                 collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                 return false;
