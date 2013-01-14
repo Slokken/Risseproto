@@ -45,9 +45,10 @@ namespace Risseproto
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            input = new Input();
             contentHolder = new ContentHolder(Content);
             gameWorld = new Gameworld(contentHolder);
-            controller = new Controller();
+            controller = new Controller(input);
             this.IsMouseVisible = true;
             base.Initialize();
         }
@@ -62,15 +63,14 @@ namespace Risseproto
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            input = new Input();
+           
             startButton = new Button(new Rectangle((width/2)-200,50,400,75), "Start Spill", ref input, new List<Texture2D>() {
                 contentHolder.menuStart,
                 contentHolder.menuStartHover,
                 contentHolder.menuStartClicked
             });
 
-            input.jump += new Input.EventHandler(jump);
-            input.duck += new Input.EventHandler(duck);
+            
             startButton.clicked += new Button.EventHandler(buttonClicked);
             // TODO: use this.Content to load your game content here
         }
