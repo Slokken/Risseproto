@@ -29,6 +29,10 @@ namespace Risseproto
             physicsEngine.gravitation(risse, gameTime);
             collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
+<<<<<<< HEAD
+            //Console.Out.WriteLine("Position: " + risse.Position);
+=======
+>>>>>>> ec29bc4d12365f2b53983b06c2ace35a0b11fcbc
         }
 
 
