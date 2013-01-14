@@ -49,7 +49,8 @@ namespace Risseproto
 
         public void jump()
         {
-                risse.Velocity = new Vector2(0, -10);
+            //risse.Position = new Vector2(risse.Position.X, risse.Position.Y -5);
+            risse.Velocity = new Vector2(0, -10);
             //if (risse.Velocity.Y == 0) //Trokke det her funker
             //{
             //}
