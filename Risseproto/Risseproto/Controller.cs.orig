@@ -11,11 +11,15 @@ namespace Risseproto
 
         public Gameobject risse;
         private PhysicsEngine physicsEngine;
+        private SoundManager soundManager;
 
-        public Controller(Input input)
+        enum state { running, jumping, ducking, idonteven, facedown, crash }
+
+        public Controller(Input input, SoundManager soundManager)
         {
             physicsEngine = new PhysicsEngine();
 
+            this.soundManager = soundManager;
             input.jump += new Input.EventHandler(jump);
             //input.duck += new Input.EventHandler(duck);
         }
@@ -29,41 +33,50 @@ namespace Risseproto
             physicsEngine.gravitation(risse, gameTime);
             collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
-<<<<<<< HEAD
-            //Console.Out.WriteLine("Position: " + risse.Position);
-=======
->>>>>>> ec29bc4d12365f2b53983b06c2ace35a0b11fcbc
+            foreach (Gameobject go in gameWorld.Platforms)
+            {
+                go.update();
+            }
+
+            Console.Out.WriteLine(risse.Position);
         }
 
 
         //TODO: actual parallaxing
         public void parallaxBackground(Gameworld gameWorld)
         {
-            Gameobject background = gameWorld.Background;
-
-            if (background.Position.X < (-background.TextureWidth / 2))
+            for (int i = 0; i < gameWorld.Backgrounds.Count; i++ )
             {
-                background.Position = Vector2.Zero;
+                if (gameWorld.Backgrounds[i].Position.X < (-gameWorld.Backgrounds[i].TextureWidth))
+                {
+                    gameWorld.Backgrounds[i].Position = new Vector2(gameWorld.Backgrounds[i].Position.X + gameWorld.Backgrounds[i].TextureWidth, 0);
+                    //gameWorld.Backgrounds[i+1].Position = new Vector2(gameWorld.Backgrounds[i+1].Position.X + gameWorld.Backgrounds[i+1].TextureWidth, 0);
+                }
+                gameWorld.Backgrounds[i].update();
             }
-            gameWorld.Background.update();
-
-            
         }
 
         public void jump()
         {
-            //risse.Position = new Vector2(risse.Position.X, risse.Position.Y -5);
-            risse.Velocity = new Vector2(0, -10);
-            //if (risse.Velocity.Y == 0) //Trokke det her funker
-            //{
-            //}
+            if(risse.OnTheGround)
+            {
+                risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
+                risse.Velocity = new Vector2(0, -15);
+                soundManager.Play();
+            }
+        }
+        public void duck()
+        {
+            if (risse.OnTheGround)
+            {
 
-            System.Console.WriteLine("JUMPMUTHAAA");
+            }
         }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
             bool collidedWithPlatformSide = false;
+            risse.OnTheGround = false;
             foreach (Gameobject platform in gameworld.Platforms)
             {
                 if (physicsEngine.collisionDetection(risse, platform))
@@ -71,21 +84,24 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
-                        break;
+<<<<<<< HEAD
+                        risse.OnTheGround = true;
+                        //break;
+=======
+>>>>>>> 94e6abf781af41f3f59d878ce87f3c5c66d350d3
                     }
                 }
             }
 
             if (!collidedWithPlatformSide)
             {
-                foreach (Gameobject platform in gameworld.Ground)
+                foreach (Gameobject ground in gameworld.Ground)
                 {
-                    if (physicsEngine.collisionDetection(risse, platform))
+                    if (physicsEngine.collisionDetection(risse, ground))
                     {
-                        if (collisionDetermineType(gameworld, risse, platform, prePos))
+                        if (collisionDetermineType(gameworld, risse, ground, prePos))
                         {
                             collidedWithPlatformSide = true;
-                            break;
                         }
                     }
                 }
@@ -108,7 +124,15 @@ namespace Risseproto
         {
             if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
             {
-                collisionVertical(gameworld, prePos);
+                if (risse.Position.Y < platform.BoundingBox.Y){
+                    collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
+                    risse.OnTheGround = true;
+                    gameworld.Risse.Animation = (int)state.running;
+                }
+                else
+                {
+                    collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (platform.BoundingBox.Height + 1)));
+                }
                 return false;
             }
 
@@ -116,18 +140,18 @@ namespace Risseproto
             return true;
         }
 
-        //handles crashing
+        //handles colliding with something from the side
         protected void collisionHorizontal(Gameworld gameworld, Vector2 prePos)
         {
-            //gameworld.Risse.Velocity = Vector2.Zero;
-
-            //FUCK MY LIFE HE HAS TO FALL AND STOP
+            gameworld.Risse.Velocity = Vector2.Zero;
+            gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
+            gameworld.Risse.Animation = (int)state.crash;
         }
 
         //handles landing on or jumping up and hitting a platform
-        protected void collisionVertical(Gameworld gameworld, Vector2 prePos)
+        protected void collisionVertical(Gameworld gameworld, Vector2 newPos)
         {
-            gameworld.Risse.Position = new Vector2(gameworld.Risse.Position.X, prePos.Y);
+            gameworld.Risse.Position = newPos;
             gameworld.Risse.Velocity = new Vector2(gameworld.Risse.Velocity.X, 0);
         }
     }

@@ -76,14 +76,7 @@ namespace Risseproto
             startButton.clicked += new Button.EventHandler(buttonClicked);
             // TODO: use this.Content to load your game content here
         }
-        public void jump()
-        {
-            System.Diagnostics.Debug.WriteLine("jump");
-        }
-        public void duck()
-        {
-            System.Diagnostics.Debug.WriteLine("duck");
-        }
+
         public void buttonClicked(string action)
         {
             gameState = GameState.InGame;

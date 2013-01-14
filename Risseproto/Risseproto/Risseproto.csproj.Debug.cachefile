@@ -1,8 +1,8 @@
 Content\Background\background.xnb
-Content\Object\platform.xnb
 Content\MenuObjects\start.xnb
 Content\MenuObjects\start_clicked.xnb
 Content\MenuObjects\start_hover.xnb
+Content\Object\platform.xnb
 Content\Risse\spriteSheet.xnb
 Content\SoundEffects\jump.xnb
 Content\rasstangle.xnb
@@ -10,3 +10,6 @@ Content\Background\BackGround1.xnb
 Content\Background\BackGround2.xnb
 Content\Background\BackGround3.xnb
 Content\Background\BackGround4.xnb
+Content\Object\platform_end.xnb
+Content\Object\platform_middle.xnb
+Content\Object\platform_start.xnb

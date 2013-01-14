@@ -14,7 +14,7 @@ namespace Risseproto
         private Texture2D texture;
         private Vector2 velocity;
         private Vector2 acceleration;
-        private const int BOUNDING= 256;
+        private const int normalBoundingHeight = 256;
         private Rectangle boundingBox;
 
         private Texture2D rectangle = ContentHolder.textureRectangle;
@@ -73,6 +73,11 @@ namespace Risseproto
         {
             set { this.boundingBox = value; }
             get { return refreshRectangle(); }
+        }
+
+        public int NormalBoundingHeight
+        {
+            get { return normalBoundingHeight; }
         }
 
         public Vector2 Position

@@ -14,6 +14,7 @@ namespace Risseproto
         private SoundManager soundManager;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
+        private state theState = state.running;
 
         public Controller(Input input, SoundManager soundManager)
         {
@@ -21,7 +22,7 @@ namespace Risseproto
 
             this.soundManager = soundManager;
             input.jump += new Input.EventHandler(jump);
-            //input.duck += new Input.EventHandler(duck);
+            input.duck += new Input.EventHandler(duck);
         }
 
         public void update(Gameworld gameWorld, GameTime gameTime)
@@ -31,14 +32,19 @@ namespace Risseproto
             parallaxBackground(gameWorld);
 
             physicsEngine.gravitation(risse, gameTime);
-            risse.update(gameTime);
             collisionResolution(gameWorld, prePos);
+            risse.update(gameTime);
             foreach (Gameobject go in gameWorld.Platforms)
             {
                 go.update();
             }
 
-            Console.Out.WriteLine(risse.Position);
+            foreach (Gameobject ground in gameWorld.Ground)
+            {
+                ground.update();
+            }
+
+            //Console.Out.WriteLine(risse.Position);
         }
 
 
@@ -58,8 +64,14 @@ namespace Risseproto
 
         public void jump()
         {
+            if (theState == state.ducking)
+            {
+                ResetBoundingBox();
+                risse.OnTheGround = true;
+            }
             if(risse.OnTheGround)
             {
+           	theState = state.jumping;
                 risse.Animation = (int)state.jumping;
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -15);
@@ -70,14 +82,19 @@ namespace Risseproto
         {
             if (risse.OnTheGround)
             {
-
+                theState = state.ducking;
+                risse.BoundingBox = new Rectangle(risse.BoundingBox.X, risse.BoundingBox.Y, risse.BoundingBox.Width , risse.BoundingBox.Height / 2);
             }
+        }
+        public void ResetBoundingBox()
+        {
+            risse.BoundingBox = new Rectangle(risse.BoundingBox.X, risse.BoundingBox.Y - risse.BoundingBox.Height - 6, risse.BoundingBox.Width, risse.NormalBoundingHeight);
         }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
             bool collidedWithPlatformSide = false;
-            risse.OnTheGround = false;
+            //risse.OnTheGround = false;
             foreach (Gameobject platform in gameworld.Platforms)
             {
                 if (physicsEngine.collisionDetection(risse, platform))
@@ -85,7 +102,7 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
-                        risse.OnTheGround = true;
+                        //risse.OnTheGround = true;
                     }
                 }
             }
@@ -128,15 +145,31 @@ namespace Risseproto
                     {
                         gameworld.Risse.Animation = (int)state.running;
                     }
+                    if (risse.Animation != (int)state.crash)
+                    {
+                        gameworld.Risse.Animation = (int)state.running;
+                    }
                 }
-                else
+                else if (risse.Position.Y + risse.BoundingBox.Height > platform.BoundingBox.Y + platform.BoundingBox.Height)
                 {
-                    //collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y + (platform.BoundingBox.Height + 1)));
+                    if (risse.OnTheGround)
+                    {
+                        gameworld.Risse.Animation = (int)state.ducking;
+                    }
+                    else
+                    {
+                        collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y + (platform.BoundingBox.Height + 1)));
+                    }
                     Console.Out.WriteLine("facepalmed");
                 }
                 return false;
             }
 
+            if (risse.OnTheGround && risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
+            {
+                collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
+                return false;
+            }
             collisionHorizontal(gameworld, prePos);
             return true;
         }
@@ -146,7 +179,7 @@ namespace Risseproto
         {
             gameworld.Risse.Velocity = Vector2.Zero;
             gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
-            //gameworld.Risse.Animation = (int)state.crash;
+            gameworld.Risse.Animation = (int)state.crash;
         }
 
         //handles landing on or jumping up and hitting a platform
