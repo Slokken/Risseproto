@@ -115,13 +115,19 @@ namespace Risseproto
             //spriteBatch.Draw(texture, position, null, Color.White, 0f,
             //        position, 0.2f, SpriteEffects.None, 0f);
 
-            spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+            //spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+        }
+
+        public void DrawDuplicateMUTHAAAAAAA(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(texture, new Vector2(position.X + texture.Width, position.Y), Color.White);
         }
 
         public void DrawAnimation(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
-            spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+            //spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
         }
 
         public int TextureWidth
@@ -137,8 +143,6 @@ namespace Risseproto
 
         public void update(GameTime gameTime)
         {
-
-            velocity.X = 2;
             position += velocity;
 
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;

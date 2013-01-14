@@ -35,13 +35,41 @@ namespace Risseproto
         //TODO: actual parallaxing
         public void parallaxBackground(Gameworld gameWorld)
         {
-            Gameobject background = gameWorld.Background;
 
-            if (background.Position.X < (-background.TextureWidth / 2))
+
+            for (int i = 0; i < gameWorld.Backgrounds.Count; i++ )
             {
-                background.Position = Vector2.Zero;
+
+                if (gameWorld.Backgrounds[i].Position.X < (-gameWorld.Backgrounds[i].TextureWidth))
+                {
+                    gameWorld.Backgrounds[i].Position = new Vector2(gameWorld.Backgrounds[i].Position.X + gameWorld.Backgrounds[i].TextureWidth, 0);
+                    //gameWorld.Backgrounds[i+1].Position = new Vector2(gameWorld.Backgrounds[i+1].Position.X + gameWorld.Backgrounds[i+1].TextureWidth, 0);
+                }
+
+                gameWorld.Backgrounds[i].update();
+                //gameWorld.Backgrounds[i+1].update();
+
+                //i++;
             }
-            gameWorld.Background.update();
+
+            //for (int i = 0; i < gameWorld.Backgrounds2.Count; i++)
+            //{
+
+            //    if (gameWorld.Backgrounds2[i].Position.X <= 0 )
+            //    {
+            //        gameWorld.Backgrounds2[i].Position = new Vector2(gameWorld.Backgrounds2[i].Position.X + gameWorld.Backgrounds2[i].TextureWidth, 0);
+            //        //gameWorld.Backgrounds[i+1].Position = new Vector2(gameWorld.Backgrounds[i+1].Position.X + gameWorld.Backgrounds[i+1].TextureWidth, 0);
+            //    }
+
+            //    gameWorld.Backgrounds2[i].update();
+            //    //gameWorld.Backgrounds[i+1].update();
+
+            //    //i++;
+            //}
+            
+            
+
+            
 
             
         }

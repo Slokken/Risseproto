@@ -11,7 +11,12 @@ namespace Risseproto
     class ContentHolder
     {
         public Texture2D texture_risse;
-        public Texture2D texture_background;
+
+        public Texture2D texture_background1;
+        public Texture2D texture_background2;
+        public Texture2D texture_background3;
+        public Texture2D texture_background4;
+
         public Texture2D texture_platform;
 
         public Texture2D menuStart;
@@ -38,7 +43,12 @@ namespace Risseproto
         private void loadTextures(ContentManager content)
         {
             texture_risse       = content.Load<Texture2D>("Risse\\spriteSheet");
-            texture_background  = content.Load<Texture2D>("Background\\background");
+
+            texture_background1 = content.Load<Texture2D>("Background\\background1");
+            texture_background2 = content.Load<Texture2D>("Background\\background2");
+            texture_background3 = content.Load<Texture2D>("Background\\background3");
+            texture_background4 = content.Load<Texture2D>("Background\\background4");
+
             texture_platform    = content.Load<Texture2D>("Object\\platform"); 
             menuStart = content.Load<Texture2D>("MenuObjects\\start");
             menuStartHover = content.Load<Texture2D>("MenuObjects\\start_hover");
