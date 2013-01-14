@@ -93,8 +93,8 @@ namespace Risseproto
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
+            Console.Out.WriteLine(risse.OnTheGround);
             bool collidedWithPlatformSide = false;
-            //risse.OnTheGround = false;
             foreach (Gameobject platform in gameworld.Platforms)
             {
                 if (physicsEngine.collisionDetection(risse, platform))
@@ -102,7 +102,6 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
-                        //risse.OnTheGround = true;
                     }
                 }
             }
@@ -141,18 +140,18 @@ namespace Risseproto
                 if (risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height){
                     collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                     risse.OnTheGround = true;
-                    if (gameworld.Risse.Animation == (int)state.jumping)
-                    {
-                        gameworld.Risse.Animation = (int)state.running;
-                    }
-                    if (risse.Animation != (int)state.crash)
+                    //if (gameworld.Risse.Animation == (int)state.jumping)
+                    //{
+                    //    gameworld.Risse.Animation = (int)state.running;
+                    //}
+                    if (risse.Animation != (int)state.crash && risse.Animation != (int)state.ducking)
                     {
                         gameworld.Risse.Animation = (int)state.running;
                     }
                 }
                 else if (risse.Position.Y + risse.BoundingBox.Height > platform.BoundingBox.Y + platform.BoundingBox.Height)
                 {
-                    if (risse.OnTheGround)
+                    if (risse.OnTheGround && risse.Animation != (int)state.crash && risse.Animation != (int)state.ducking)
                     {
                         gameworld.Risse.Animation = (int)state.ducking;
                     }
