@@ -22,7 +22,7 @@ namespace Risseproto
 
         public void loadTextures(ContentManager content)
         {
-            risse = content.Load<Texture2D>("Risse\\risse");
+            risse = content.Load<Texture2D>("Risse\\spriteSheet");
             background = content.Load<Texture2D>("Background\\background");
         }
     }
