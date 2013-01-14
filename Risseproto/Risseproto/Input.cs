@@ -9,10 +9,19 @@ namespace Risseproto
     class Input
     {
         private KeyboardState preKeyState, keyState;
-        private MouseState preMouseState, MouseState;
+        private MouseState preMouseState, mouseState;
         public event EventHandler duck, jump;
         public delegate void EventHandler();
         private int preY = 0;
+
+        public MouseState PreMouseState
+        {
+            get { return preMouseState; }
+        }
+        public MouseState MouseState
+        {
+            get { return mouseState; }
+        }
 
         private bool WasMouseLeftPressed()
         {
@@ -21,14 +30,23 @@ namespace Risseproto
 
         private bool IsMouseLeftPressed()
         {
-            return (MouseState.LeftButton == ButtonState.Pressed);
+            return (mouseState.LeftButton == ButtonState.Pressed);
+        }
+        public bool WasMouseClicked()
+        {
+            return (WasMouseLeftPressed() && !IsMouseLeftPressed());
         }
 
-        private void Swipe()
+        public bool WasKeyClicked(Keys key)
+        {
+            return (preKeyState.IsKeyDown(key) && keyState.IsKeyUp(key));
+        }
+
+        public void Swipe()
         {
             if (IsMouseLeftPressed() && !WasMouseLeftPressed())
                 preY = MouseState.Y;
-            else if(WasMouseLeftPressed() && !IsMouseLeftPressed()) {
+            else if(WasMouseClicked()) {
                 if (preY < MouseState.Y)
                     duck();
                 else
@@ -36,7 +54,7 @@ namespace Risseproto
             }
         }
 
-        private void Click()
+        public void Click()
         {
             if (preKeyState.IsKeyUp(Keys.Up) && keyState.IsKeyDown(Keys.Up))
                 jump();
@@ -46,13 +64,11 @@ namespace Risseproto
 
         public void Update()
         {
-            Swipe();
-            Click();
             preKeyState = keyState;
             keyState = Keyboard.GetState();
 
             preMouseState = MouseState;
-            MouseState = Mouse.GetState();
+            mouseState = Mouse.GetState();
         }
     }
 }

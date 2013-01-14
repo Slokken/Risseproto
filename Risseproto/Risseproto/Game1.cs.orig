@@ -16,14 +16,15 @@ namespace Risseproto
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        enum GameState { Menu, InGame }
-        GameState gameState = GameState.Menu;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ContentHolder contentHolder;
-        Gameworld gameWorld;
+<<<<<<< HEAD
+        Gameobject risseObject;
         Input input;
-        Button startButton;
+=======
+        Gameworld gameWorld;
+>>>>>>> ab8caaf94ebbef3c8b689c154c301de56a2dc869
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
@@ -60,17 +61,15 @@ namespace Risseproto
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+<<<<<<< HEAD
+            risseObject = new Gameobject(contentHolder.risse, Vector2.Zero);
             input = new Input();
-            startButton = new Button(new Rectangle(0,0,400,75), "Start Spill", ref input, new List<Texture2D>() {
-                contentHolder.menuStart,
-                contentHolder.menuStartHover,
-                contentHolder.menuStartClicked
-            });
+=======
+            
+>>>>>>> ab8caaf94ebbef3c8b689c154c301de56a2dc869
 
             input.jump += new Input.EventHandler(jump);
             input.duck += new Input.EventHandler(duck);
-            startButton.clicked += new Button.EventHandler(buttonClicked);
             // TODO: use this.Content to load your game content here
         }
         public void jump()
@@ -80,10 +79,6 @@ namespace Risseproto
         public void duck()
         {
             System.Diagnostics.Debug.WriteLine("duck");
-        }
-        public void buttonClicked(string action)
-        {
-            gameState = GameState.InGame;
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -101,22 +96,14 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            input.Update();
             // Allows the game to exit
-            if (input.WasKeyClicked(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            if (gameState == GameState.Menu)
-            {
-                startButton.Update();
-            }
-            else if (gameState == GameState.InGame)
-            {
-                // TODO: Add your update logic here
-                controller.update(gameWorld, gameTime);
-                input.Swipe();
-                input.Click();
-            }
+            //controller.update(gameTime);
+
+            // TODO: Add your update logic here
+            input.Update();
             base.Update(gameTime);
         }
 
@@ -127,15 +114,10 @@ namespace Risseproto
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            if (gameState == GameState.Menu)
-            {
-                startButton.Draw(spriteBatch);
-            }
-            else if(gameState == GameState.InGame)
-            {
-                gameWorld.Draw(spriteBatch);
-            }
+            gameWorld.Draw(spriteBatch);
+            
             // TODO: Add your drawing code here
 
             spriteBatch.End();

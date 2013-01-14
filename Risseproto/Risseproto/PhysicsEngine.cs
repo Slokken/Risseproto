@@ -19,8 +19,20 @@ namespace Risseproto
         {
             
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;//0.01666667 (or 16.67 ms) @ 60FPS
-            gameObject.Velocity += new Vector2(0, GRAVITYCONSTANT * elapsed);
+            gameObject.Velocity += new Vector2(0, GRAVITYCONSTANT * elapsed + 20);
             gameObject.Position += gameObject.Velocity * elapsed;
+        }
+
+        public bool collisionDetection(Gameobject object1, Gameobject object2)
+        {
+            if (object1.BoundingBox.Intersects(object2.BoundingBox))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
