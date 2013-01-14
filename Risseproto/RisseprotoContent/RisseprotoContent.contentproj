@@ -147,15 +147,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuObjects\meny_bg.png">
-      <Name>meny_bg</Name>
+    <Compile Include="Background\SnowmanSpriteSheet.png">
+      <Name>SnowmanSpriteSheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Background\SnowmanSpriteSheet.png">
-      <Name>SnowmanSpriteSheet</Name>
+    <Compile Include="MenuObjects\meny_bg.png">
+      <Name>meny_bg</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

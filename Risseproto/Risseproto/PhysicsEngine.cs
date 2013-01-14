@@ -24,7 +24,6 @@ namespace Risseproto
         }
 
         public bool collisionDetection(Gameobject object1, Gameobject object2)
-        public bool collisionDetectionCrouching(Rectangle secretBox, Gameobject object2)
         {
             if (object1.BoundingBox.Intersects(object2.BoundingBox))
             {

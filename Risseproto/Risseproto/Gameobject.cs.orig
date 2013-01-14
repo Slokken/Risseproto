@@ -31,6 +31,9 @@ namespace Risseproto
         bool onTheGround = true;
 
         int animation;
+        int previousAnimation;
+
+        private int checkpoints;
         
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
@@ -60,7 +63,7 @@ namespace Risseproto
             boundingBoxDuck = new Rectangle(
                 (int)Position.X,
                 (int)Position.Y + spriteWidth / 2,
-                spriteWidth,
+                spriteWidth / 2,
                 spriteHeight / 2);
             Interval = interval;
             SpriteWidth = spriteWidth;
@@ -70,9 +73,35 @@ namespace Risseproto
 
             origin = position;
 
+            animation = 0;
+            previousAnimation = 0;
+
             timer = 0f;
             currentFrame = 0;
             numberOfFrames = 7;
+        }
+
+        public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity, int spriteWidth, int spriteHeight)
+        {
+            Texture = texture;
+            Position = position;
+            Velocity = velocity;
+
+            SpriteWidth = spriteWidth;
+            SpriteHeight = spriteHeight;
+
+            BoundingBox = new Rectangle(
+                    (int)Position.X - Texture.Width,
+                    (int)Position.Y - Texture.Height,
+                    Texture.Width,
+                    Texture.Height);
+            
+            origin = position;
+            //this.origin = new Vector2(SpriteWidth / 2, SpriteWidth / 2);
+
+            currentFrame = 0;
+            numberOfFrames = 2;
+            Checkpoints = 0;
         }
 
         public Rectangle BoundingBox
@@ -140,6 +169,12 @@ namespace Risseproto
             set { this.onTheGround = value; }
         }
 
+        public int Checkpoints
+        {
+            get { return this.checkpoints; }
+            set { this.checkpoints = value; }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
@@ -147,6 +182,11 @@ namespace Risseproto
             //        position, 0.2f, SpriteEffects.None, 0f);
 
             //spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+        }
+
+        public void DrawFluff(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
         }
 
         public void DrawDuplicateMUTHAAAAAAA(SpriteBatch spriteBatch)
@@ -176,10 +216,16 @@ namespace Risseproto
         public void update(GameTime gameTime)
         {
             position += velocity;
+
             if (timer > interval)
             {
                 currentFrame++;
                 timer = 0f;
+            }
+
+            if (previousAnimation != animation)
+            {
+                currentFrame = 0;
             }
 
             switch (animation)
@@ -197,11 +243,11 @@ namespace Risseproto
                     break;
                 case 3:
                     numberOfFrames = 1;
-                    runAnimationOnce(500, 0);
+                    runAnimationOnce(1000, 0);
                     break;
                 case 4:
                     numberOfFrames = 2;
-                    runAnimationOnce(500, 0);
+                    runAnimationOnce(1000, 0);
                     break;
             }
 
@@ -215,14 +261,32 @@ namespace Risseproto
 
             Console.Out.WriteLine(secretBox);
             sourceRect = new Rectangle(currentFrame * spriteWidth, animation * spriteHeight, spriteWidth, spriteHeight);
+
+            previousAnimation = animation;
+            
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
         }
 
-<<<<<<< HEAD
-        Rectangle secretBox;
-=======
+        public void updateFluff(int rissepos)
+        {
+            position += velocity;
+            if (Position.X <= rissepos + 400)
+            {
+                currentFrame = 1;
+                Checkpoints = Checkpoints + 1;
+            }
+            if (Position.X < -SpriteWidth)
+            {
+                position.X = 4000;
+                currentFrame = 0;
+            }
+            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            Console.Out.WriteLine(Position);
+        }
+
         private void runAnimationOnce(int animationSpeed, int nextAnimation)
         {
             if (currentFrame >= numberOfFrames)
@@ -232,13 +296,18 @@ namespace Risseproto
             }
         }
 
->>>>>>> 2897775b17c0887a4191469cd4ba89ebc435908b
+        Rectangle secretBox;
         // updates boundingbox position
         protected Rectangle refreshRectangle()
         {
             this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
             this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
 
+<<<<<<< HEAD
+            this.boundingBoxDuck.X = (int)Position.X;// -Texture.Width / 2;
+            this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2;
+=======
+>>>>>>> fd03325243ebc87379aa402e719be58061154bde
 
             secretBox = new Rectangle(
                 (int)Position.X - SpriteWidth / 3,
