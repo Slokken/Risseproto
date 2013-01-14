@@ -12,9 +12,12 @@ namespace Risseproto
         public Gameobject risse;
         private PhysicsEngine physicsEngine;
 
-        public Controller()
+        public Controller(Input input)
         {
             physicsEngine = new PhysicsEngine();
+
+            input.jump += new Input.EventHandler(jump);
+            //input.duck += new Input.EventHandler(duck);
         }
 
         public void update(Gameworld gameWorld, GameTime gameTime)
@@ -45,10 +48,13 @@ namespace Risseproto
 
         public void jump()
         {
-            if (risse.Velocity.Y == 0) //Trokke det her funker
-            {
-                risse.Velocity = new Vector2(0, -10);
-            }
+            //risse.Position = new Vector2(risse.Position.X, risse.Position.Y -5);
+            risse.Velocity = new Vector2(0, -10);
+            //if (risse.Velocity.Y == 0) //Trokke det her funker
+            //{
+            //}
+
+            System.Console.WriteLine("JUMPMUTHAAA");
         }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
