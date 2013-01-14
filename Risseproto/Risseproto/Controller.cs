@@ -21,6 +21,7 @@ namespace Risseproto
         {
             risse = gameWorld.Risse;
             parallaxBackground(gameWorld);
+
             physicsEngine.gravitation(risse, gameTime);
 
         }
@@ -42,8 +43,10 @@ namespace Risseproto
 
         public void jump()
         {
-
-            risse.Velocity = new Vector2(0, -10);
+            if (risse.Velocity.Y == 0) //Trokke det her funker
+            {
+                risse.Velocity = new Vector2(0, -10);
+            }
         }
 
 
