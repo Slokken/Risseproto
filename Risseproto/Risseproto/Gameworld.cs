@@ -35,7 +35,7 @@ namespace Risseproto
             backgrounds2.Add(new Gameobject(contentHolder.texture_background2, new Vector2(contentHolder.texture_background2.Width, 0), new Vector2(-8, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background2, Vector2.Zero, new Vector2(-8, 0)));
 
-
+            platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
 
             int platformWidth = contentHolder.texture_platform.Width;
             for (int i = 0; i < NUMBEROFPLATFORMS; i++)
@@ -58,6 +58,10 @@ namespace Risseproto
             for (int i = 0; i < ground.Count; i++)
             {
                 ground[i].Draw(spriteBatch);
+            }
+            foreach (Gameobject go in platforms)
+            {
+                go.Draw(spriteBatch);
             }
 
         }

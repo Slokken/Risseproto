@@ -33,6 +33,10 @@ namespace Risseproto
             physicsEngine.gravitation(risse, gameTime);
             collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
+            foreach (Gameobject go in gameWorld.Platforms)
+            {
+                go.update();
+            }
 
             Console.Out.WriteLine(risse.Position);
         }
@@ -62,6 +66,13 @@ namespace Risseproto
                 soundManager.Play();
             }
         }
+        public void duck()
+        {
+            if (risse.OnTheGround)
+            {
+
+            }
+        }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
@@ -74,6 +85,7 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
+                        risse.OnTheGround = true;
                     }
                 }
             }

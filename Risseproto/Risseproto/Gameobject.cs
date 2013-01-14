@@ -14,6 +14,7 @@ namespace Risseproto
         private Texture2D texture;
         private Vector2 velocity;
         private Vector2 acceleration;
+        private const int BOUNDING= 256;
         private Rectangle boundingBox;
 
         private Texture2D rectangle = ContentHolder.textureRectangle;
@@ -21,6 +22,7 @@ namespace Risseproto
         private float timer;
         private float interval;
         private int currentFrame;
+        private int numberOfFrames;
         private int spriteWidth;
         private int spriteHeight;
         Rectangle sourceRect;
@@ -61,6 +63,10 @@ namespace Risseproto
             //this.origin = new Vector2(texture.Width , texture.Height );
 
             origin = position;
+
+            timer = 0f;
+            currentFrame = 0;
+            numberOfFrames = 7;
 
             
         }
@@ -169,7 +175,7 @@ namespace Risseproto
                 timer = 0f;
             }
 
-            if (currentFrame == 3)
+            if (currentFrame == numberOfFrames)
             {
                 currentFrame = 0;
             }
