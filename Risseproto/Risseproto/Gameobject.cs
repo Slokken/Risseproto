@@ -163,6 +163,7 @@ namespace Risseproto
         {
             spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
             spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+            spriteBatch.Draw(rectangle, secretBox, Color.Red);
         }
 
         public int TextureWidth
@@ -222,6 +223,7 @@ namespace Risseproto
                 currentFrame = 0;
             }
 
+            Console.Out.WriteLine(secretBox);
             sourceRect = new Rectangle(currentFrame * spriteWidth, animation * spriteHeight, spriteWidth, spriteHeight);
 
             previousAnimation = animation;
@@ -240,16 +242,25 @@ namespace Risseproto
             }
         }
 
+        Rectangle secretBox;
         // updates boundingbox position
         protected Rectangle refreshRectangle()
         {
             this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
             this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
 
-            this.boundingBoxDuck.X = (int)Position.X - spriteWidth / 2;// -Texture.Width / 2;
-            this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2 ;
 
-            return (animation == 2) ? this.boundingBoxDuck: this.boundingBox;
+            secretBox = new Rectangle(
+                (int)Position.X - SpriteWidth / 3,
+                (int)Position.Y + SpriteHeight / 2,
+                SpriteWidth,
+                SpriteHeight / 2);
+            //this.boundingBoxDuck.X = (int)Position.X - spriteWidth / 2;// -Texture.Width / 2;
+            //this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2 ;
+
+            //return (animation == 2) ? this.boundingBoxDuck: this.boundingBox;
+            //return (animation == 2) ? secretBox : this.boundingBox;
+            return secretBox;
         }
     }
 }
