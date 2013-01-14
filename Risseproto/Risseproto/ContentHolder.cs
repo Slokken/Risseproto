@@ -25,6 +25,7 @@ namespace Risseproto
         public Texture2D menuStart;
         public Texture2D menuStartHover;
         public Texture2D menuStartClicked;
+        public Texture2D menuBackground;
 
         public static Texture2D textureRectangle;
 
@@ -52,14 +53,15 @@ namespace Risseproto
             texture_background3 = content.Load<Texture2D>("Background\\background3");
             texture_background4 = content.Load<Texture2D>("Background\\background4");
 
-            texture_platform = content.Load<Texture2D>("Object\\platform");
+            texture_platform        = content.Load<Texture2D>("Object\\platform");
             texture_platform_start  = content.Load<Texture2D>("Object\\platform_start");
             texture_platform_middle = content.Load<Texture2D>("Object\\platform_middle");
             texture_platform_end    = content.Load<Texture2D>("Object\\platform_end"); 
 
-            menuStart = content.Load<Texture2D>("MenuObjects\\start");
-            menuStartHover = content.Load<Texture2D>("MenuObjects\\start_hover");
-            menuStartClicked = content.Load<Texture2D>("MenuObjects\\start_clicked");
+            menuStart           = content.Load<Texture2D>("MenuObjects\\start");
+            menuStartHover      = content.Load<Texture2D>("MenuObjects\\start_hover");
+            menuStartClicked    = content.Load<Texture2D>("MenuObjects\\start_clicked");
+            menuBackground      = content.Load<Texture2D>("MenuObjects\\meny_bg");
 
             textureRectangle = content.Load<Texture2D>("rasstangle");
         }
