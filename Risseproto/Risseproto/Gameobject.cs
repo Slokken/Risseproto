@@ -165,6 +165,19 @@ namespace Risseproto
         {
             position += velocity;
 
+            switch (animation)
+            {
+                case 0:
+                    numberOfFrames = 7;
+                    break;
+                case 5:
+                    numberOfFrames = 1;
+                    break;
+                default:
+                    numberOfFrames = 0;
+                    break;
+            }
+
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             if (timer > interval)
