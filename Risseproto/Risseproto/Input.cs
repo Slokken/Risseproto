@@ -37,6 +37,11 @@ namespace Risseproto
             return (WasMouseLeftPressed() && !IsMouseLeftPressed());
         }
 
+        public bool WasKeyClicked(Keys key)
+        {
+            return (preKeyState.IsKeyDown(key) && keyState.IsKeyUp(key));
+        }
+
         public void Swipe()
         {
             if (IsMouseLeftPressed() && !WasMouseLeftPressed())

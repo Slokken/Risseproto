@@ -30,7 +30,7 @@ namespace Risseproto
             if (box.Contains(input.MouseState.X, input.MouseState.Y) && input.WasMouseClicked())
             {
                 state = 2;
-                clicked("start");
+                clicked(text);
             }
             else if (box.Contains(input.MouseState.X, input.MouseState.Y) && state != 1)
                 state = 1;

@@ -16,6 +16,8 @@ namespace Risseproto
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        enum GameState { Menu, InGame }
+        GameState gameState = GameState.Menu;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ContentHolder contentHolder;
@@ -60,7 +62,7 @@ namespace Risseproto
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             input = new Input();
-            startButton = new Button(new Rectangle(0,0,400,75), "Start Spill", ref input, new List<Texture2D>() {
+            startButton = new Button(new Rectangle((width/2)-200,50,400,75), "Start Spill", ref input, new List<Texture2D>() {
                 contentHolder.menuStart,
                 contentHolder.menuStartHover,
                 contentHolder.menuStartClicked
@@ -81,7 +83,7 @@ namespace Risseproto
         }
         public void buttonClicked(string action)
         {
-            System.Diagnostics.Debug.WriteLine(action);
+            gameState = GameState.InGame;
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -99,15 +101,22 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            input.Update();
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (input.WasKeyClicked(Keys.Escape))
                 this.Exit();
 
-            controller.update(gameWorld, gameTime);
-
-            // TODO: Add your update logic here
-            input.Update();
-            startButton.Update();
+            if (gameState == GameState.Menu)
+            {
+                startButton.Update();
+            }
+            else if (gameState == GameState.InGame)
+            {
+                // TODO: Add your update logic here
+                controller.update(gameWorld, gameTime);
+                input.Swipe();
+                input.Click();
+            }
             base.Update(gameTime);
         }
 
@@ -117,11 +126,16 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
+            GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            gameWorld.Draw(spriteBatch);
-            startButton.Draw(spriteBatch);
+            if (gameState == GameState.Menu)
+            {
+                startButton.Draw(spriteBatch);
+            }
+            else if(gameState == GameState.InGame)
+            {
+                gameWorld.Draw(spriteBatch);
+            }
             // TODO: Add your drawing code here
 
             spriteBatch.End();
