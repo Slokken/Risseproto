@@ -39,9 +39,17 @@ namespace Risseproto
                 go.update();
             }
 
-            foreach (Gameobject ground in gameWorld.Ground)
+            //foreach (Gameobject ground in gameWorld.Ground)
+            //{
+            //    ground.update();
+            //}
+
+            foreach (List<Gameobject> g in gameWorld.Ground)
             {
-                ground.update();
+                foreach (Gameobject obj in g)
+                {
+                    obj.update();
+                }
             }
 
             //Console.Out.WriteLine(risse.Position);
@@ -109,14 +117,29 @@ namespace Risseproto
 
             if (!collidedWithPlatformSide)
             {
-                foreach (Gameobject ground in gameworld.Ground)
+                //foreach (Gameobject ground in gameworld.Ground)
+                //{
+                //    if (physicsEngine.collisionDetection(risse, ground))
+                //    {
+                //        if (collisionDetermineType(gameworld, risse, ground, prePos))
+                //        {
+                //            collidedWithPlatformSide = true;
+                //        }
+                //    }
+                //}
+
+                foreach (List<Gameobject> list in gameworld.Ground)
                 {
-                    if (physicsEngine.collisionDetection(risse, ground))
+                    foreach (Gameobject ground in list)
                     {
-                        if (collisionDetermineType(gameworld, risse, ground, prePos))
+                        if (physicsEngine.collisionDetection(risse, ground))
                         {
-                            collidedWithPlatformSide = true;
+                            if (collisionDetermineType(gameworld, risse, ground, prePos))
+                            {
+                                collidedWithPlatformSide = true;
+                            }
                         }
+
                     }
                 }
             }
