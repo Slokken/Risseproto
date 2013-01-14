@@ -19,7 +19,7 @@ namespace Risseproto
 
         public Gameworld(ContentHolder contentHolder)
         {
-            risseObject = new Gameobject(contentHolder.texture_risse, Vector2.Zero, Vector2.Zero, 250, 100, 100);
+            risseObject = new Gameobject(contentHolder.texture_risse, new Vector2(100, 0), Vector2.Zero, 100, 256, 256);
             background = new Gameobject(contentHolder.texture_background, Vector2.Zero, new Vector2(-10, 0));
 
 

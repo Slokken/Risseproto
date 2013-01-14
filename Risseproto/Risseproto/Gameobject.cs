@@ -113,6 +113,7 @@ namespace Risseproto
         public void DrawAnimation(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
         }
 
         public int TextureWidth
