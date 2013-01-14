@@ -137,8 +137,6 @@ namespace Risseproto
 
         public void update(GameTime gameTime)
         {
-
-            velocity.X = 2;
             position += velocity;
 
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
