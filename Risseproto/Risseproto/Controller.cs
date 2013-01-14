@@ -31,8 +31,8 @@ namespace Risseproto
             parallaxBackground(gameWorld);
 
             physicsEngine.gravitation(risse, gameTime);
-            collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
+            collisionResolution(gameWorld, prePos);
             foreach (Gameobject go in gameWorld.Platforms)
             {
                 go.update();
@@ -121,14 +121,15 @@ namespace Risseproto
         {
             if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
             {
-                if (risse.Position.Y - risse.BoundingBox.Height < platform.BoundingBox.Y - platform.BoundingBox.Height){
+                if (risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height){
                     collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                     risse.OnTheGround = true;
-                    gameworld.Risse.Animation = (int)state.running;
+                    //gameworld.Risse.Animation = (int)state.running;
                 }
                 else
                 {
-                    collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (platform.BoundingBox.Height + 1)));
+                    //collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y + (platform.BoundingBox.Height + 1)));
+                    Console.Out.WriteLine("facepalmed");
                 }
                 return false;
             }
@@ -142,7 +143,7 @@ namespace Risseproto
         {
             gameworld.Risse.Velocity = Vector2.Zero;
             gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
-            gameworld.Risse.Animation = (int)state.crash;
+            //gameworld.Risse.Animation = (int)state.crash;
         }
 
         //handles landing on or jumping up and hitting a platform
