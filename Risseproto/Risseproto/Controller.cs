@@ -13,6 +13,8 @@ namespace Risseproto
         private PhysicsEngine physicsEngine;
         private SoundManager soundManager;
 
+        enum state { running, jumping, ducking, idonteven, facedown, crash }
+
         public Controller(Input input, SoundManager soundManager)
         {
             physicsEngine = new PhysicsEngine();

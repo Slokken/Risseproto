@@ -27,6 +27,9 @@ namespace Risseproto
         Vector2 origin;
         bool onTheGround = false;
 
+        int animation;
+        
+
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
         {
             Texture = texture;
@@ -109,6 +112,12 @@ namespace Risseproto
             get { return this.spriteHeight; }
             set { this.spriteHeight = value; }
         }
+
+        public int Animation
+        {
+            get { return this.animation; }
+            set { this.animation = value; }
+        }
         
         public bool OnTheGround
         {
@@ -165,7 +174,7 @@ namespace Risseproto
                 currentFrame = 0;
             }
 
-            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
+            sourceRect = new Rectangle(currentFrame * spriteWidth, animation * spriteHeight, spriteWidth, spriteHeight);
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
