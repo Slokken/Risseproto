@@ -48,13 +48,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Risse\spriteSheet.png">
-      <Name>spriteSheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Risse\risse.jpg">
       <Name>risse</Name>
@@ -63,6 +57,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <Compile Include="Object\platform.png">
+      <Name>platform</Name>
+=======
     <Compile Include="MenuObjects\start.png">
       <Name>start</Name>
       <Importer>TextureImporter</Importer>
@@ -79,29 +77,9 @@
   <ItemGroup>
     <Compile Include="MenuObjects\start_hover.png">
       <Name>start_hover</Name>
+>>>>>>> efbec3b331beed9a003bfb3a69495b528f7c74a3
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Object\platform.png">
-      <Name>platform</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="rasstangle.png">
-      <Name>rasstangle</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="SoundEffects\jump.wma">
-      <Name>jump</Name>
-      <Importer>WmaImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
