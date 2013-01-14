@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 
 namespace Risseproto
 {
@@ -12,17 +13,22 @@ namespace Risseproto
         public Gameobject risse;
         private PhysicsEngine physicsEngine;
         private SoundManager soundManager;
+        private ContentHolder contentHolder;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
         private state theState = state.running;
 
-        public Controller(Input input, SoundManager soundManager)
+        public Controller(Input input, SoundManager soundManager, ContentHolder contentHolder)
         {
             physicsEngine = new PhysicsEngine();
+
+            this.contentHolder = contentHolder;
 
             this.soundManager = soundManager;
             input.jump += new Input.EventHandler(jump);
             input.duck += new Input.EventHandler(duck);
+
+            soundManager.playSoundtrack();
         }
 
         public void update(Gameworld gameWorld, GameTime gameTime)
@@ -39,6 +45,11 @@ namespace Risseproto
                 go.update();
             }
 
+            //if (!(MediaPlayer.State == MediaState.Playing))
+            //{
+            //    MediaPlayer.Play(contentHolder.soundtrack);
+            //}
+
             //foreach (Gameobject ground in gameWorld.Ground)
             //{
             //    ground.update();
@@ -50,6 +61,11 @@ namespace Risseproto
                 {
                     obj.update();
                 }
+            }
+
+            foreach (Gameobject obj in gameWorld.Collidables)
+            {
+                obj.update();
             }
 
             //Console.Out.WriteLine(risse.Position);

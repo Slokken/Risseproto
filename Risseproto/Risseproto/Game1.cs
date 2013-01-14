@@ -50,7 +50,7 @@ namespace Risseproto
             contentHolder = new ContentHolder(Content);
             soundManager = new SoundManager(contentHolder);
             gameWorld = new Gameworld(contentHolder);
-            controller = new Controller(input, soundManager);
+            controller = new Controller(input, soundManager, contentHolder);
             this.IsMouseVisible = true;
             base.Initialize();
         }
