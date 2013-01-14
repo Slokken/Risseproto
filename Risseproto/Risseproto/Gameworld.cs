@@ -43,6 +43,7 @@ namespace Risseproto
             //platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
 
             background_fluff.Add(new Gameobject(contentHolder.texture_checkpoint, new Vector2(checkpointInterval, 550), new Vector2(-10, 0), 256, 256));
+            platforms.Add(List < Gameobject > makePlatformSection(new Vector2(checkpointInterval, GROUNDHEIGHT), 0, 0));
             this.contentHolder = contentHolder;
 
 
