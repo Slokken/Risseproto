@@ -43,6 +43,11 @@ namespace Risseproto
 
         }
 
+        public List<Gameobject> Ground
+        {
+            get { return ground; }
+        }
+
         public List<Gameobject> Platforms
         {
             get { return platforms; }

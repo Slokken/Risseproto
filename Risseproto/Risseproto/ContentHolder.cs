@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Risseproto
 {
@@ -12,19 +13,27 @@ namespace Risseproto
         public Texture2D texture_risse;
         public Texture2D texture_background;
         public Texture2D texture_platform;
+
         public Texture2D menuStart;
         public Texture2D menuStartHover;
         public Texture2D menuStartClicked;
 
+        public SoundEffect jump;
+
         public ContentHolder(ContentManager content)
         {
             loadTextures(content);
-            //loadSounds(content);
+            loadSounds(content);
             //loadParticles(content);
             //loadFonts(content);
         }
 
-        public void loadTextures(ContentManager content)
+        private void loadSounds(ContentManager content)
+        {
+            jump = content.Load<SoundEffect>("SoundEffects\\jump");
+        }
+
+        private void loadTextures(ContentManager content)
         {
             texture_risse       = content.Load<Texture2D>("Risse\\risse");
             texture_background  = content.Load<Texture2D>("Background\\background");
