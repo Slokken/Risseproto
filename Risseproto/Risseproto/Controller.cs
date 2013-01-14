@@ -12,7 +12,6 @@ namespace Risseproto
         public Gameobject risse;
         private PhysicsEngine physicsEngine;
         private SoundManager soundManager;
-        bool ground = false;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
 
@@ -34,69 +33,39 @@ namespace Risseproto
             physicsEngine.gravitation(risse, gameTime);
             collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
+
+            Console.Out.WriteLine(risse.Position);
         }
 
 
         //TODO: actual parallaxing
         public void parallaxBackground(Gameworld gameWorld)
         {
-
-
             for (int i = 0; i < gameWorld.Backgrounds.Count; i++ )
             {
-
                 if (gameWorld.Backgrounds[i].Position.X < (-gameWorld.Backgrounds[i].TextureWidth))
                 {
                     gameWorld.Backgrounds[i].Position = new Vector2(gameWorld.Backgrounds[i].Position.X + gameWorld.Backgrounds[i].TextureWidth, 0);
                     //gameWorld.Backgrounds[i+1].Position = new Vector2(gameWorld.Backgrounds[i+1].Position.X + gameWorld.Backgrounds[i+1].TextureWidth, 0);
                 }
-
                 gameWorld.Backgrounds[i].update();
-                //gameWorld.Backgrounds[i+1].update();
-
-                //i++;
             }
-
-            //for (int i = 0; i < gameWorld.Backgrounds2.Count; i++)
-            //{
-
-            //    if (gameWorld.Backgrounds2[i].Position.X <= 0 )
-            //    {
-            //        gameWorld.Backgrounds2[i].Position = new Vector2(gameWorld.Backgrounds2[i].Position.X + gameWorld.Backgrounds2[i].TextureWidth, 0);
-            //        //gameWorld.Backgrounds[i+1].Position = new Vector2(gameWorld.Backgrounds[i+1].Position.X + gameWorld.Backgrounds[i+1].TextureWidth, 0);
-            //    }
-
-            //    gameWorld.Backgrounds2[i].update();
-            //    //gameWorld.Backgrounds[i+1].update();
-
-            //    //i++;
-            //}
-            
-            
-
-            
-
-            
         }
 
         public void jump()
         {
-            if(ground)
+            if(risse.OnTheGround)
             {
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
-                risse.Velocity = new Vector2(0, -10);
+                risse.Velocity = new Vector2(0, -15);
                 soundManager.Play();
             }
-            //if (risse.Velocity.Y == 0) //Trokke det her funker
-            //{
-            //}
-
         }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
             bool collidedWithPlatformSide = false;
-            ground = false;
+            risse.OnTheGround = false;
             foreach (Gameobject platform in gameworld.Platforms)
             {
                 if (physicsEngine.collisionDetection(risse, platform))
@@ -104,7 +73,6 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
-                        ground = true;
                         //break;
                     }
                 }
@@ -119,7 +87,7 @@ namespace Risseproto
                         if (collisionDetermineType(gameworld, risse, platform, prePos))
                         {
                             collidedWithPlatformSide = true;
-                            ground = true;
+                            risse.OnTheGround = true;
                             //break;
                         }
                     }
@@ -133,7 +101,6 @@ namespace Risseproto
                     if (physicsEngine.collisionDetection(risse, collidable))
                     {
                         collisionHorizontal(gameworld, prePos);
-                        ground = true;
                     }
                 }
             }
@@ -144,7 +111,7 @@ namespace Risseproto
         {
             if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
             {
-                collisionVertical(gameworld, prePos);
+                collisionVertical(gameworld, new Vector2(prePos.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                 return false;
             }
 

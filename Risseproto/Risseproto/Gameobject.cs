@@ -25,6 +25,7 @@ namespace Risseproto
         private int spriteHeight;
         Rectangle sourceRect;
         Vector2 origin;
+        bool onTheGround = false;
 
         int animation;
         
@@ -118,6 +119,12 @@ namespace Risseproto
             set { this.animation = value; }
         }
         
+        public bool OnTheGround
+        {
+            get { return this.onTheGround; }
+            set { this.onTheGround = value; }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
