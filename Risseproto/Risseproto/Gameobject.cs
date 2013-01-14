@@ -14,7 +14,7 @@ namespace Risseproto
         private Texture2D texture;
         private Vector2 velocity;
         private Vector2 acceleration;
-        private const int BOUNDING= 256;
+        private const int normalBoundingHeight = 256;
         private Rectangle boundingBox;
 
         private Texture2D rectangle = ContentHolder.textureRectangle;
@@ -67,14 +67,17 @@ namespace Risseproto
             timer = 0f;
             currentFrame = 0;
             numberOfFrames = 7;
-
-            
         }
 
         public Rectangle BoundingBox
         {
             set { this.boundingBox = value; }
             get { return refreshRectangle(); }
+        }
+
+        public int NormalBoundingHeight
+        {
+            get { return normalBoundingHeight; }
         }
 
         public Vector2 Position
@@ -167,6 +170,19 @@ namespace Risseproto
         {
             position += velocity;
 
+            switch (animation)
+            {
+                case 0:
+                    numberOfFrames = 7;
+                    break;
+                case 5:
+                    numberOfFrames = 1;
+                    break;
+                default:
+                    numberOfFrames = 0;
+                    break;
+            }
+
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             if (timer > interval)
@@ -175,7 +191,7 @@ namespace Risseproto
                 timer = 0f;
             }
 
-            if (currentFrame == numberOfFrames)
+            if (currentFrame >= numberOfFrames)
             {
                 currentFrame = 0;
             }
