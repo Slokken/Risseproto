@@ -189,7 +189,7 @@ namespace Risseproto
                     break;
                 case 1:
                     numberOfFrames = 2;
-                    runAnimationOnce(500, 0);
+                    runAnimationOnce(1000, 0);
                     break;
                 case 2:
                     numberOfFrames = 0;
