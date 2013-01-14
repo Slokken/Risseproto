@@ -11,6 +11,7 @@ namespace Risseproto
 
         public Gameobject risse;
         private PhysicsEngine physicsEngine;
+        bool ground = false;
 
         public Controller(Input input)
         {
@@ -76,8 +77,11 @@ namespace Risseproto
 
         public void jump()
         {
-            risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
-            risse.Velocity = new Vector2(0, -10);
+            if(ground)
+            {
+                risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
+                risse.Velocity = new Vector2(0, -10);
+            }
             //if (risse.Velocity.Y == 0) //Trokke det her funker
             //{
             //}
@@ -88,6 +92,7 @@ namespace Risseproto
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
             bool collidedWithPlatformSide = false;
+            ground = false;
             foreach (Gameobject platform in gameworld.Platforms)
             {
                 if (physicsEngine.collisionDetection(risse, platform))
@@ -95,6 +100,7 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
+                        ground = true;
                         //break;
                     }
                 }
@@ -109,6 +115,7 @@ namespace Risseproto
                         if (collisionDetermineType(gameworld, risse, platform, prePos))
                         {
                             collidedWithPlatformSide = true;
+                            ground = true;
                             //break;
                         }
                     }
@@ -122,6 +129,7 @@ namespace Risseproto
                     if (physicsEngine.collisionDetection(risse, collidable))
                     {
                         collisionHorizontal(gameworld, prePos);
+                        ground = true;
                     }
                 }
             }
@@ -143,9 +151,9 @@ namespace Risseproto
         //handles colliding with something from the side
         protected void collisionHorizontal(Gameworld gameworld, Vector2 prePos)
         {
-            //gameworld.Risse.Velocity = Vector2.Zero;
-
-            //FUCK MY LIFE HE HAS TO FALL AND STOP
+            gameworld.Risse.Velocity = Vector2.Zero;
+            gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
+            gameworld.Risse.collisionFall();
         }
 
         //handles landing on or jumping up and hitting a platform
