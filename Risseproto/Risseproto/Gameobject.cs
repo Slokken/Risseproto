@@ -36,6 +36,8 @@ namespace Risseproto
                     (int)Position.Y - Texture.Height,
                     Texture.Width,
                     Texture.Height);
+
+            this.origin = new Vector2(texture.Width / 2, texture.Height / 2);
         }
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity, float interval, int spriteWidth, int spriteHeight)
@@ -51,6 +53,12 @@ namespace Risseproto
             Interval = interval;
             SpriteWidth = spriteWidth;
             SpriteHeight = spriteHeight;
+
+            //this.origin = new Vector2(texture.Width , texture.Height );
+
+            origin = position;
+
+            
         }
 
         public Rectangle BoundingBox
@@ -129,6 +137,8 @@ namespace Risseproto
 
         public void update(GameTime gameTime)
         {
+
+            velocity.X = 2;
             position += velocity;
 
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
@@ -145,7 +155,9 @@ namespace Risseproto
             }
 
             sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            //origin = new Vector2(sourceRect.Width , sourceRect.Height );
+
+            //origin = position;
         }
 
         // updates boundingbox position

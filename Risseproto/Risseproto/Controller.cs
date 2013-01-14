@@ -48,7 +48,7 @@ namespace Risseproto
 
         public void jump()
         {
-            //risse.Position = new Vector2(risse.Position.X, risse.Position.Y -5);
+            risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
             risse.Velocity = new Vector2(0, -10);
             //if (risse.Velocity.Y == 0) //Trokke det her funker
             //{
@@ -67,7 +67,7 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
-                        break;
+                        //break;
                     }
                 }
             }
@@ -81,7 +81,7 @@ namespace Risseproto
                         if (collisionDetermineType(gameworld, risse, platform, prePos))
                         {
                             collidedWithPlatformSide = true;
-                            break;
+                            //break;
                         }
                     }
                 }
