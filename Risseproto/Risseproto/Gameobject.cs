@@ -178,10 +178,5 @@ namespace Risseproto
             this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
             return this.boundingBox;
         }
-
-        public void collisionFall()
-        {
-        
-        }
     }
 }

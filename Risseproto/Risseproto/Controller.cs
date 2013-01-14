@@ -71,22 +71,19 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
-                        //break;
                     }
                 }
             }
 
             if (!collidedWithPlatformSide)
             {
-                foreach (Gameobject platform in gameworld.Ground)
+                foreach (Gameobject ground in gameworld.Ground)
                 {
-                    if (physicsEngine.collisionDetection(risse, platform))
+                    if (physicsEngine.collisionDetection(risse, ground))
                     {
-                        if (collisionDetermineType(gameworld, risse, platform, prePos))
+                        if (collisionDetermineType(gameworld, risse, ground, prePos))
                         {
                             collidedWithPlatformSide = true;
-                            risse.OnTheGround = true;
-                            //break;
                         }
                     }
                 }
@@ -109,7 +106,14 @@ namespace Risseproto
         {
             if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
             {
-                collisionVertical(gameworld, new Vector2(prePos.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
+                if (risse.Position.Y < platform.BoundingBox.Y){
+                    collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
+                    risse.OnTheGround = true;
+                }
+                else
+                {
+                    collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (platform.BoundingBox.Height + 1)));
+                }
                 return false;
             }
 
@@ -122,7 +126,7 @@ namespace Risseproto
         {
             gameworld.Risse.Velocity = Vector2.Zero;
             gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
-            gameworld.Risse.collisionFall();
+            gameworld.Risse.Animation = "crash";
         }
 
         //handles landing on or jumping up and hitting a platform
