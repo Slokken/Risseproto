@@ -27,7 +27,7 @@ namespace Risseproto
         private int spriteHeight;
         Rectangle sourceRect;
         Vector2 origin;
-        bool onTheGround = false;
+        bool onTheGround = true;
 
         int animation;
         
@@ -169,7 +169,6 @@ namespace Risseproto
         public void update(GameTime gameTime)
         {
             position += velocity;
-
             if (timer > interval)
             {
                 currentFrame++;
@@ -183,9 +182,11 @@ namespace Risseproto
                     break;
                 case 5:
                     numberOfFrames = 1;
+                    //interval = 500;
                     if (currentFrame >= numberOfFrames) 
                     {
                         animation = 0;
+                        interval = 250;
                     }
                     break;
                 default:
