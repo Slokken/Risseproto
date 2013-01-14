@@ -26,7 +26,6 @@ namespace Risseproto
             physicsEngine.gravitation(risse, gameTime);
             collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
-            Console.Out.WriteLine("X: " + risse.Position.X + " Y: " + risse.Position.Y);
         }
 
 
@@ -100,11 +99,11 @@ namespace Risseproto
             if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
             {
                 collisionVertical(gameworld, prePos);
-                return true;
+                return false;
             }
 
             collisionHorizontal(gameworld, prePos);
-            return false;
+            return true;
         }
 
         //handles crashing
