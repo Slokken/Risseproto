@@ -16,6 +16,7 @@ namespace Risseproto
         private Vector2 acceleration;
         private const int normalBoundingHeight = 256;
         private Rectangle boundingBox;
+        private Rectangle boundingBoxDuck;
 
         private Texture2D rectangle = ContentHolder.textureRectangle;
 
@@ -27,7 +28,7 @@ namespace Risseproto
         private int spriteHeight;
         Rectangle sourceRect;
         Vector2 origin;
-        bool onTheGround = false;
+        bool onTheGround = true;
 
         int animation;
         
@@ -56,6 +57,11 @@ namespace Risseproto
                 (int)Position.Y - spriteHeight /2,
                 spriteWidth / 2,
                 spriteHeight);
+            boundingBoxDuck = new Rectangle(
+                (int)Position.X,
+                (int)Position.Y + spriteWidth / 2,
+                spriteWidth,
+                spriteHeight / 2);
             Interval = interval;
             SpriteWidth = spriteWidth;
             SpriteHeight = spriteHeight;
@@ -152,7 +158,7 @@ namespace Risseproto
         public void DrawAnimation(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
-            //spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+            spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
         }
 
         public int TextureWidth
@@ -169,6 +175,11 @@ namespace Risseproto
         public void update(GameTime gameTime)
         {
             position += velocity;
+            if (timer > interval)
+            {
+                currentFrame++;
+                timer = 0f;
+            }
 
             switch (animation)
             {
@@ -176,7 +187,13 @@ namespace Risseproto
                     numberOfFrames = 7;
                     break;
                 case 5:
-                    numberOfFrames = 1;
+                    numberOfFrames = 2;
+                    //interval = 500;
+                    if (currentFrame >= numberOfFrames) 
+                    {
+                        animation = 0;
+                        interval = 250;
+                    }
                     break;
                 default:
                     numberOfFrames = 0;
@@ -185,11 +202,6 @@ namespace Risseproto
 
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
-            if (timer > interval)
-            {
-                currentFrame++;
-                timer = 0f;
-            }
 
             if (currentFrame >= numberOfFrames)
             {
@@ -207,7 +219,11 @@ namespace Risseproto
         {
             this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
             this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
-            return this.boundingBox;
+
+            this.boundingBoxDuck.X = (int)Position.X - spriteWidth / 2;// -Texture.Width / 2;
+            this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2 ;
+
+            return (animation == 2) ? this.boundingBoxDuck: this.boundingBox;
         }
     }
 }

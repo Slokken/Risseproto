@@ -23,15 +23,30 @@ namespace Risseproto
             gameObject.Position += gameObject.Velocity * elapsed;
         }
 
-        public bool collisionDetection(Gameobject object1, Gameobject object2)
+        public bool collisionDetection(Gameobject object1, Gameobject object2, bool crouchingRisseHiddenBoundingBox)
         {
-            if (object1.BoundingBox.Intersects(object2.BoundingBox))
+            if (!crouchingRisseHiddenBoundingBox)
             {
-                return true;
+                if (object1.BoundingBox.Intersects(object2.BoundingBox))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false;
+
+                if (object1.BoundingBox.Intersects(object2.BoundingBox))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }
