@@ -110,7 +110,7 @@ namespace Risseproto
         {
             int gap = rand.Next(50, 200);
             int startCoordinate;
-            ground.Add(makePlatformSection(new Vector2(0, GROUNDHEIGHT), 20));
+            ground.Add(makePlatformSection(new Vector2(0, GROUNDHEIGHT), 0, 20));
 
             // o_O
             startCoordinate = (int) (ground[ground.Count - 1][ground[ground.Count - 1].Count - 1].Position.X + gap);
@@ -118,7 +118,7 @@ namespace Risseproto
             for(int i = 0; i < numberOfSections; i++)
             {
 
-                ground.Add(makePlatformSection(new Vector2(startCoordinate, GROUNDHEIGHT), 10));
+                ground.Add(makePlatformSection(new Vector2(startCoordinate, GROUNDHEIGHT), 0, 10));
                 gap = rand.Next(100, 600 );
                 //startCoordinate = (int)(ground[ground.Count - 1].Position.X + gap);
                 startCoordinate = (int)(ground[ground.Count - 1][ground[ground.Count - 1].Count - 1].Position.X + gap);
@@ -132,7 +132,7 @@ namespace Risseproto
             for (int i = 0; i < numberOfSections / 2; i++)
             {
 
-                Platforms.Add(makePlatformSection(position, 2));
+                Platforms.Add(makePlatformSection(position,0, 2));
 
                 position.X = position.X + rand.Next(600, 2000);
                 position.Y = rand.Next(250, 350);
@@ -229,13 +229,13 @@ namespace Risseproto
             get { return risseObject; }
         }
 
-        public List<Gameobject> makePlatformSection(Vector2 startCoordinates, int randomMax)
+        public List<Gameobject> makePlatformSection(Vector2 startCoordinates, int randomMin, int randomMax)
         {
             List<Gameobject> section = new List<Gameobject>();
 
             
             Vector2 platformVelocity = new Vector2(-risseSpeed, 0);
-            int numberOfTiles = rand.Next(randomMax);
+            int numberOfTiles = rand.Next(randomMin, randomMax);
             
 
             int platformWidth = (int) (contentHolder.texture_platform_middle.Width + startCoordinates.X);
