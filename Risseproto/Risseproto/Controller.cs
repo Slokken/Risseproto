@@ -14,6 +14,7 @@ namespace Risseproto
         private SoundManager soundManager;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
+        private state theState = state.running;
 
         public Controller(Input input, SoundManager soundManager)
         {
@@ -21,7 +22,7 @@ namespace Risseproto
 
             this.soundManager = soundManager;
             input.jump += new Input.EventHandler(jump);
-            //input.duck += new Input.EventHandler(duck);
+            input.duck += new Input.EventHandler(duck);
         }
 
         public void update(Gameworld gameWorld, GameTime gameTime)
@@ -58,8 +59,14 @@ namespace Risseproto
 
         public void jump()
         {
+            if (theState == state.ducking)
+            {
+                ResetBoundingBox();
+                risse.OnTheGround = true;
+            }
             if(risse.OnTheGround)
             {
+                theState = state.jumping;
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -15);
                 soundManager.Play();
@@ -69,8 +76,13 @@ namespace Risseproto
         {
             if (risse.OnTheGround)
             {
-
+                theState = state.ducking;
+                risse.BoundingBox = new Rectangle(risse.BoundingBox.X, risse.BoundingBox.Y, risse.BoundingBox.Width , risse.BoundingBox.Height / 2);
             }
+        }
+        public void ResetBoundingBox()
+        {
+            risse.BoundingBox = new Rectangle(risse.BoundingBox.X, risse.BoundingBox.Y - risse.BoundingBox.Height - 6, risse.BoundingBox.Width, risse.NormalBoundingHeight);
         }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
