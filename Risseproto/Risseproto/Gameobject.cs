@@ -67,8 +67,6 @@ namespace Risseproto
             timer = 0f;
             currentFrame = 0;
             numberOfFrames = 7;
-
-            
         }
 
         public Rectangle BoundingBox
@@ -175,7 +173,7 @@ namespace Risseproto
                 timer = 0f;
             }
 
-            if (currentFrame == numberOfFrames)
+            if (currentFrame >= numberOfFrames)
             {
                 currentFrame = 0;
             }
