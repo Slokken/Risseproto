@@ -143,6 +143,7 @@ namespace Risseproto
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
         }
 
+        // updates boundingbox position
         protected Rectangle refreshRectangle()
         {
             this.boundingBox.X = (int)Position.X - Texture.Width / 2;
