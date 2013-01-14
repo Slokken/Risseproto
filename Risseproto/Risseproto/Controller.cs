@@ -40,11 +40,18 @@ namespace Risseproto
             physicsEngine.gravitation(risse, gameTime);
             collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
-            foreach (Gameobject go in gameWorld.Platforms)
-            {
-                go.update();
-            }
+            //foreach (Gameobject go in gameWorld.Platforms)
+            //{
+            //    go.update();
+            //}
 
+            foreach (List<Gameobject> p in gameWorld.Platforms)
+            {
+                foreach (Gameobject obj in p)
+                {
+                    obj.update();
+                }
+            }
             //if (!(MediaPlayer.State == MediaState.Playing))
             //{
             //    MediaPlayer.Play(contentHolder.soundtrack);
@@ -130,17 +137,20 @@ namespace Risseproto
             {
                 crouchingRisseHiddenBoundingBox = false;
             }
-            foreach (Gameobject platform in gameworld.Platforms)
+            foreach (List<Gameobject> platforms in gameworld.Platforms)
             {
-                if (physicsEngine.collisionDetection(risse, platform, crouchingRisseHiddenBoundingBox))
+                foreach (Gameobject platform in platforms)
                 {
-                    if (collisionDetermineType(gameworld, risse, platform, prePos))
+                    if (physicsEngine.collisionDetection(risse, platform, crouchingRisseHiddenBoundingBox))
                     {
-                        collidedWithPlatformSide = true;
-                    }
-                    else
-                    {
-                        airborne = false;
+                        if (collisionDetermineType(gameworld, risse, platform, prePos))
+                        {
+                            collidedWithPlatformSide = true;
+                        }
+                        else
+                        {
+                            airborne = false;
+                        }
                     }
                 }
             }
