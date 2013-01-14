@@ -95,6 +95,7 @@ namespace Risseproto
         {
             Console.Out.WriteLine(risse.OnTheGround);
             bool collidedWithPlatformSide = false;
+            bool airborne = true;
             foreach (Gameobject platform in gameworld.Platforms)
             {
                 if (physicsEngine.collisionDetection(risse, platform))
@@ -102,6 +103,10 @@ namespace Risseproto
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
+                    }
+                    else
+                    {
+                        airborne = false;
                     }
                 }
             }
@@ -116,6 +121,10 @@ namespace Risseproto
                         {
                             collidedWithPlatformSide = true;
                         }
+                        else
+                        {
+                            airborne = false;
+                        }
                     }
                 }
             }
@@ -129,6 +138,10 @@ namespace Risseproto
                         collisionHorizontal(gameworld, prePos);
                     }
                 }
+            }
+            if (airborne)
+            {
+                risse.OnTheGround = false;
             }
         }
 
