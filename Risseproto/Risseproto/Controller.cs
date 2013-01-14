@@ -106,7 +106,7 @@ namespace Risseproto
             return true;
         }
 
-        //handles crashing
+        //handles colliding with something from the side
         protected void collisionHorizontal(Gameworld gameworld, Vector2 prePos)
         {
             //gameworld.Risse.Velocity = Vector2.Zero;

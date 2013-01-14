@@ -1,9 +1,9 @@
 Content\Background\background.xnb
 Content\Risse\risse.xnb
-Content\Object\platform.xnb
 Content\MenuObjects\start.xnb
 Content\MenuObjects\start_clicked.xnb
 Content\MenuObjects\start_hover.xnb
+Content\Object\platform.xnb
 Content\Risse\spriteSheet.xnb
 Content\SoundEffects\jump.xnb
 Content\rasstangle.xnb
