@@ -183,7 +183,7 @@ namespace Risseproto
                     break;
                 case 5:
                     numberOfFrames = 1;
-                    if (currentFrame > numberOfFrames) 
+                    if (currentFrame >= numberOfFrames) 
                     {
                         animation = 0;
                     }
