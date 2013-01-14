@@ -170,6 +170,12 @@ namespace Risseproto
         {
             position += velocity;
 
+            if (timer > interval)
+            {
+                currentFrame++;
+                timer = 0f;
+            }
+
             switch (animation)
             {
                 case 0:
@@ -177,6 +183,10 @@ namespace Risseproto
                     break;
                 case 5:
                     numberOfFrames = 1;
+                    if (currentFrame > numberOfFrames) 
+                    {
+                        animation = 0;
+                    }
                     break;
                 default:
                     numberOfFrames = 0;
@@ -185,11 +195,6 @@ namespace Risseproto
 
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
-            if (timer > interval)
-            {
-                currentFrame++;
-                timer = 0f;
-            }
 
             if (currentFrame >= numberOfFrames)
             {
