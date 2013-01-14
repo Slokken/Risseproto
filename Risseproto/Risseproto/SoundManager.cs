@@ -13,5 +13,10 @@ namespace Risseproto
         {
             this.soundContent = soundContent;
         }
+
+       public void Play()
+        {
+            soundContent.jump.Play();
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace Risseproto
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ContentHolder contentHolder;
+        SoundManager soundManager;
         Gameworld gameWorld;
         Input input;
         Button startButton;
@@ -47,8 +48,9 @@ namespace Risseproto
             // TODO: Add your initialization logic here
             input = new Input();
             contentHolder = new ContentHolder(Content);
+            soundManager = new SoundManager(contentHolder);
             gameWorld = new Gameworld(contentHolder);
-            controller = new Controller(input);
+            controller = new Controller(input, soundManager);
             this.IsMouseVisible = true;
             base.Initialize();
         }

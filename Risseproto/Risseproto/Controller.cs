@@ -11,12 +11,14 @@ namespace Risseproto
 
         public Gameobject risse;
         private PhysicsEngine physicsEngine;
+        private SoundManager soundManager;
         bool ground = false;
 
-        public Controller(Input input)
+        public Controller(Input input, SoundManager soundManager)
         {
             physicsEngine = new PhysicsEngine();
 
+            this.soundManager = soundManager;
             input.jump += new Input.EventHandler(jump);
             //input.duck += new Input.EventHandler(duck);
         }
@@ -81,12 +83,12 @@ namespace Risseproto
             {
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -10);
+                soundManager.Play();
             }
             //if (risse.Velocity.Y == 0) //Trokke det her funker
             //{
             //}
 
-            System.Console.WriteLine("JUMPMUTHAAA");
         }
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
