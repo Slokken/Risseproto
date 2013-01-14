@@ -48,6 +48,7 @@ namespace Risseproto
             contentHolder = new ContentHolder(Content);
             gameWorld = new Gameworld(contentHolder);
             controller = new Controller();
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -102,17 +103,20 @@ namespace Risseproto
         protected override void Update(GameTime gameTime)
         {
             input.Update();
-            // Allows the game to exit
-            if (input.WasKeyClicked(Keys.Escape))
-                this.Exit();
 
             if (gameState == GameState.Menu)
             {
+                // Allows the game to exit
+                if (input.WasKeyClicked(Keys.Escape))
+                    this.Exit();
                 startButton.Update();
             }
             else if (gameState == GameState.InGame)
             {
-                // TODO: Add your update logic here
+                // Puts you back into the menu
+                if (input.WasKeyClicked(Keys.Escape))
+                    gameState = GameState.Menu;
+
                 controller.update(gameWorld, gameTime);
                 input.Swipe();
                 input.Click();
