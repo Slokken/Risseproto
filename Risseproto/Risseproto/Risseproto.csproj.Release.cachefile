@@ -17,4 +17,6 @@ Content\Object\platform_middle.xnb
 Content\Object\platform_start.xnb
 Content\SoundEffects\jump.xnb
 Content\SoundEffects\soundtrack.xnb
+Content\Background\SnowmanSpriteSheet.xnb
+Content\MenuObjects\meny_bg.xnb
 Content\SoundEffects\soundtrack.wma

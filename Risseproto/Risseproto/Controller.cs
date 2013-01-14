@@ -22,7 +22,7 @@ namespace Risseproto
         public Controller(Input input, SoundManager soundManager, ContentHolder contentHolder)
         {
             physicsEngine = new PhysicsEngine();
-            this.key = input;
+            
             this.contentHolder = contentHolder;
 
             this.soundManager = soundManager;
@@ -132,9 +132,8 @@ namespace Risseproto
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
             risse.OnTheGround = false;
-            {
-                foreach (Gameobject platform in platforms)
-                        }
+            
+              
             foreach (List<Gameobject> list in gameworld.Ground)
             {
                 foreach (Gameobject ground in list)
