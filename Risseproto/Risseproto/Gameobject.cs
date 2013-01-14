@@ -175,7 +175,6 @@ namespace Risseproto
         public void update(GameTime gameTime)
         {
             position += velocity;
-
             if (timer > interval)
             {
                 currentFrame++;
@@ -188,10 +187,12 @@ namespace Risseproto
                     numberOfFrames = 7;
                     break;
                 case 5:
-                    numberOfFrames = 1;
-                    if (currentFrame > numberOfFrames) 
+                    numberOfFrames = 2;
+                    //interval = 500;
+                    if (currentFrame >= numberOfFrames) 
                     {
                         animation = 0;
+                        interval = 250;
                     }
                     break;
                 default:
