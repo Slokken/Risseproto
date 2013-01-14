@@ -124,7 +124,10 @@ namespace Risseproto
                 if (risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height){
                     collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                     risse.OnTheGround = true;
-                    //gameworld.Risse.Animation = (int)state.running;
+                    if (gameworld.Risse.Animation == (int)state.jumping)
+                    {
+                        gameworld.Risse.Animation = (int)state.running;
+                    }
                 }
                 else
                 {
