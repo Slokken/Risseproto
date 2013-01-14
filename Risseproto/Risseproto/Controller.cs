@@ -20,11 +20,12 @@ namespace Risseproto
         public void update(Gameworld gameWorld, GameTime gameTime)
         {
             risse = gameWorld.Risse;
+            Vector2 prePos = risse.Position;
             parallaxBackground(gameWorld);
 
             physicsEngine.gravitation(risse, gameTime);
-            collisionResolution(gameWorld);
-
+            collisionResolution(gameWorld, prePos);
+            risse.update(gameTime);
         }
 
 
@@ -50,14 +51,14 @@ namespace Risseproto
             }
         }
 
-        protected void collisionResolution(Gameworld gameworld)
+        protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
             bool collidedWithPlatformSide = false;
             foreach (Gameobject platform in gameworld.Platforms)
             {
                 if (physicsEngine.collisionDetection(risse, platform))
                 {
-                    if (collisionDetermineType(gameworld, risse, platform))
+                    if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
                         collidedWithPlatformSide = true;
                         break;
@@ -71,7 +72,7 @@ namespace Risseproto
                 {
                     if (physicsEngine.collisionDetection(risse, platform))
                     {
-                        if (collisionDetermineType(gameworld, risse, platform))
+                        if (collisionDetermineType(gameworld, risse, platform, prePos))
                         {
                             collidedWithPlatformSide = true;
                             break;
@@ -86,27 +87,27 @@ namespace Risseproto
                 {
                     if (physicsEngine.collisionDetection(risse, collidable))
                     {
-                        collisionHorizontal(gameworld);
+                        collisionHorizontal(gameworld, prePos);
                     }
                 }
             }
         }
 
         // returns true if colliding from side
-        protected bool collisionDetermineType(Gameworld gameworld, Gameobject risse, Gameobject platform)
+        protected bool collisionDetermineType(Gameworld gameworld, Gameobject risse, Gameobject platform, Vector2 prePos)
         {
             if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
             {
-                collisionHorizontal(gameworld);
+                collisionVertical(gameworld, prePos);
                 return true;
             }
 
-            collisionVertical(gameworld);
+            collisionHorizontal(gameworld, prePos);
             return false;
         }
 
         //handles crashing
-        protected void collisionHorizontal(Gameworld gameworld)
+        protected void collisionHorizontal(Gameworld gameworld, Vector2 prePos)
         {
             //gameworld.Risse.Velocity = Vector2.Zero;
 
@@ -114,9 +115,9 @@ namespace Risseproto
         }
 
         //handles landing on or jumping up and hitting a platform
-        protected void collisionVertical(Gameworld gameworld)
+        protected void collisionVertical(Gameworld gameworld, Vector2 prePos)
         {
-            gameworld.Risse.Position = new Vector2(gameworld.Risse.Position.X, gameworld.Risse.Position.Y - gameworld.Risse.Velocity.Y);
+            gameworld.Risse.Position = new Vector2(gameworld.Risse.Position.X, prePos.Y);
             gameworld.Risse.Velocity = new Vector2(gameworld.Risse.Velocity.X, 0);
         }
     }
