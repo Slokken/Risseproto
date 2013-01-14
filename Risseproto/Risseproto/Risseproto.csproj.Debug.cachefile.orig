@@ -1,9 +1,13 @@
 Content\Background\background.xnb
-Content\Risse\risse.xnb
 <<<<<<< HEAD
-Content\Object\platform.xnb
+Content\Risse\risse.xnb
 =======
+Content\Object\platform.xnb
+>>>>>>> ec29bc4d12365f2b53983b06c2ace35a0b11fcbc
 Content\MenuObjects\start.xnb
 Content\MenuObjects\start_clicked.xnb
 Content\MenuObjects\start_hover.xnb
->>>>>>> efbec3b331beed9a003bfb3a69495b528f7c74a3
+Content\Object\platform.xnb
+Content\Risse\spriteSheet.xnb
+Content\SoundEffects\jump.xnb
+Content\rasstangle.xnb
