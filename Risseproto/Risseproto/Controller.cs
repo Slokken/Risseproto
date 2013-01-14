@@ -155,62 +155,27 @@ namespace Risseproto
                     }
                 }
             }
-        }
-
-        // returns true if colliding from side
-        protected bool collisionDetermineType(Gameworld gameworld, Gameobject risse, Gameobject platform, Vector2 prePos)
-        {
-            if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
+            foreach (List<Gameobject> list in gameworld.Platforms)
             {
-                if (risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height){
-                    collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
-                    risse.OnTheGround = true;
-                    if (risse.Animation != (int)state.crash && risse.Animation != (int)state.ducking)
-                    {
-                        gameworld.Risse.Animation = (int)state.running;
-                        Console.Out.WriteLine("running");
-                    }
-                }
-                else if (risse.Position.Y < platform.BoundingBox.Y + platform.BoundingBox.Height)
+                foreach (Gameobject platform in list)
                 {
-                    if (risse.OnTheGround)
+                    if (physicsEngine.collisionDetection(risse, platform))
                     {
-                        gameworld.Risse.Animation = (int)state.ducking;
-                        Console.Out.WriteLine("ducking");
-                    }
-                    else
-                    {
-                        collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y + (platform.BoundingBox.Height + 1)));
+                        if (risse.BoundingBox.Bottom <= platform.Position.Y + 20 && theState == state.ducking)
+                        {
+                            risse.Position = new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height * 2) + 1);
+                            risse.Velocity = Vector2.Zero;
+                            risse.OnTheGround = true;
+                        }
+                        else if (risse.BoundingBox.Bottom <= platform.Position.Y + 20 && risse.Velocity.Y > 0)
+                        {
+                            risse.Position = new Vector2(risse.Position.X, platform.Position.Y - risse.BoundingBox.Height + 1);
+                            risse.Velocity = Vector2.Zero;
+                            risse.OnTheGround = true;
+                        }
                     }
                 }
-                return false;
             }
-
-            if (risse.OnTheGround && risse.BoundingBox.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
-            {
-                collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
-                return false;
-            }
-            collisionHorizontal(gameworld, prePos);
-            return true;
-        }
-
-        //handles colliding with something from the side
-        protected void collisionHorizontal(Gameworld gameworld, Vector2 prePos)
-        {
-            gameworld.Risse.Velocity = Vector2.Zero;
-            gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
-            if (risse.Animation != (int)state.crash){
-                gameworld.Risse.Animation = (int)state.crash;
-                Console.Out.WriteLine("crashed");
-            }
-        }
-
-        //handles landing on or jumping up and hitting a platform
-        protected void collisionVertical(Gameworld gameworld, Vector2 newPos)
-        {
-            gameworld.Risse.Position = newPos;
-            gameworld.Risse.Velocity = new Vector2(gameworld.Risse.Velocity.X, 0);
         }
     }
 }
