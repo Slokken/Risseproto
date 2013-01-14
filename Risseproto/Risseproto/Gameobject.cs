@@ -22,6 +22,7 @@ namespace Risseproto
         private float timer;
         private float interval;
         private int currentFrame;
+        private int numberOfFrames;
         private int spriteWidth;
         private int spriteHeight;
         Rectangle sourceRect;
@@ -63,7 +64,9 @@ namespace Risseproto
 
             origin = position;
 
-            
+            timer = 0f;
+            currentFrame = 0;
+            numberOfFrames = 7;
         }
 
         public Rectangle BoundingBox
@@ -167,6 +170,19 @@ namespace Risseproto
         {
             position += velocity;
 
+            switch (animation)
+            {
+                case 0:
+                    numberOfFrames = 7;
+                    break;
+                case 5:
+                    numberOfFrames = 1;
+                    break;
+                default:
+                    numberOfFrames = 0;
+                    break;
+            }
+
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             if (timer > interval)
@@ -175,7 +191,7 @@ namespace Risseproto
                 timer = 0f;
             }
 
-            if (currentFrame == 3)
+            if (currentFrame >= numberOfFrames)
             {
                 currentFrame = 0;
             }
