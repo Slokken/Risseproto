@@ -16,6 +16,8 @@ namespace Risseproto
         private Vector2 acceleration;
         private Rectangle boundingBox;
 
+        private Texture2D rectangle = ContentHolder.textureRectangle;
+
         private float timer;
         private float interval;
         private int currentFrame;
@@ -30,8 +32,8 @@ namespace Risseproto
             Position = position;
             Velocity = velocity;
             BoundingBox = new Rectangle(
-                    (int)Position.X - Texture.Width / 2,
-                    (int)Position.Y - Texture.Height / 2,
+                    (int)Position.X - Texture.Width,
+                    (int)Position.Y - Texture.Height,
                     Texture.Width,
                     Texture.Height);
         }
@@ -104,6 +106,8 @@ namespace Risseproto
             spriteBatch.Draw(texture, position, Color.White);
             //spriteBatch.Draw(texture, position, null, Color.White, 0f,
             //        position, 0.2f, SpriteEffects.None, 0f);
+
+            spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
         }
 
         public void DrawAnimation(SpriteBatch spriteBatch)
@@ -146,8 +150,8 @@ namespace Risseproto
         // updates boundingbox position
         protected Rectangle refreshRectangle()
         {
-            this.boundingBox.X = (int)Position.X - Texture.Width / 2;
-            this.boundingBox.Y = (int)Position.Y - Texture.Height / 2;
+            this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
+            this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
             return this.boundingBox;
         }
     }
