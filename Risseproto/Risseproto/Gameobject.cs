@@ -25,6 +25,7 @@ namespace Risseproto
         private int spriteHeight;
         Rectangle sourceRect;
         Vector2 origin;
+        bool onTheGround = false;
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
         {
@@ -109,6 +110,12 @@ namespace Risseproto
             set { this.spriteHeight = value; }
         }
         
+        public bool OnTheGround
+        {
+            get { return this.onTheGround; }
+            set { this.onTheGround = value; }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
