@@ -25,6 +25,7 @@ namespace Risseproto
         Gameworld gameWorld;
         Input input;
         Button startButton;
+        Gameobject menuBackground;
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
@@ -66,11 +67,12 @@ namespace Risseproto
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
            
-            startButton = new Button(new Rectangle((width/2)-200,50,400,75), "Start Spill", ref input, new List<Texture2D>() {
+            startButton = new Button(new Rectangle((width/3)*2,550,400,75), "Start Spill", ref input, new List<Texture2D>() {
                 contentHolder.menuStart,
                 contentHolder.menuStartHover,
                 contentHolder.menuStartClicked
             });
+            menuBackground = new Gameobject(contentHolder.menuBackground, Vector2.Zero, new Vector2(0, 0));
 
             
             startButton.clicked += new Button.EventHandler(buttonClicked);
@@ -131,6 +133,7 @@ namespace Risseproto
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             if (gameState == GameState.Menu)
             {
+                menuBackground.Draw(spriteBatch);
                 startButton.Draw(spriteBatch);
             }
             else if(gameState == GameState.InGame)

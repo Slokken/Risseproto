@@ -23,9 +23,12 @@ namespace Risseproto
         public Texture2D texture_platform_end;
         public Texture2D texture_platform;
 
+        public Texture2D texture_checkpoint;
+
         public Texture2D menuStart;
         public Texture2D menuStartHover;
         public Texture2D menuStartClicked;
+        public Texture2D menuBackground;
 
         public List<Texture2D> collidables = new List<Texture2D>();
 
@@ -68,9 +71,12 @@ namespace Risseproto
             collidables.Add(content.Load<Texture2D>("Object\\Obstacles2"));
             collidables.Add(content.Load<Texture2D>("Object\\Obstacles3"));
 
+            texture_checkpoint  = content.Load<Texture2D>("Background\\SnowmanSpriteSheet");
+            
             menuStart           = content.Load<Texture2D>("MenuObjects\\start");
             menuStartHover      = content.Load<Texture2D>("MenuObjects\\start_hover");
             menuStartClicked    = content.Load<Texture2D>("MenuObjects\\start_clicked");
+            menuBackground      = content.Load<Texture2D>("MenuObjects\\meny_bg");
 
             textureRectangle = content.Load<Texture2D>("rasstangle");
         }

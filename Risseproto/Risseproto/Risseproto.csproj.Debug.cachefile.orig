@@ -1,13 +1,20 @@
 Content\Background\background.xnb
-<<<<<<< HEAD
-Content\Risse\risse.xnb
-=======
-Content\Object\platform.xnb
->>>>>>> ec29bc4d12365f2b53983b06c2ace35a0b11fcbc
+Content\Risse\spriteSheet.xnb
 Content\MenuObjects\start.xnb
 Content\MenuObjects\start_clicked.xnb
 Content\MenuObjects\start_hover.xnb
 Content\Object\platform.xnb
-Content\Risse\spriteSheet.xnb
-Content\SoundEffects\jump.xnb
 Content\rasstangle.xnb
+Content\Background\BackGround1.xnb
+Content\Background\BackGround2.xnb
+Content\Background\BackGround3.xnb
+Content\Background\BackGround4.xnb
+Content\Object\platform_end.xnb
+Content\Object\platform_middle.xnb
+Content\Object\platform_start.xnb
+<<<<<<< HEAD
+=======
+Content\MenuObjects\meny_bg.xnb
+Content\Background\SnowmanSpriteSheet.xnb
+>>>>>>> fd03325243ebc87379aa402e719be58061154bde
+Content\SoundEffects\jump.xnb

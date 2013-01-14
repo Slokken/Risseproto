@@ -12,40 +12,49 @@ namespace Risseproto
         private const int NUMBEROFPLATFORMS = 10;
         private Gameobject risseObject;
 
+        private int risseSpeed = 10;
+
+        private const int GROUNDHEIGHT = 670;
+
+        private int numberOfSections = 30;           // HIRRHIRRHIRR
+        private int checkpointInterval = 4000;
+
         private ContentHolder contentHolder;
 
         private List<Gameobject> backgrounds = new List<Gameobject>();
         private List<Gameobject> backgrounds2 = new List<Gameobject>();
 
-        private List<Gameobject> platforms = new List<Gameobject>();
+        private List<List<Gameobject>> platforms = new List<List<Gameobject>>();
         private List<Gameobject> collidables = new List<Gameobject>();
-        private List<Gameobject> ground = new List<Gameobject>();
+        private List<List<Gameobject>> ground = new List<List<Gameobject>>();
+        Random rand = new Random();
         //BECAUSE FUCK YOU THAT'S WHY
+        private List<Gameobject> background_fluff = new List<Gameobject>();
 
         public Gameworld(ContentHolder contentHolder)
         {
-            risseObject = new Gameobject(contentHolder.texture_risse, new Vector2(100, 0), Vector2.Zero, 100, 256, 256);
+            risseObject = new Gameobject(contentHolder.texture_risse, new Vector2(100, 0), Vector2.Zero, 100, 192, 192);
 
             backgrounds.Add(new Gameobject(contentHolder.texture_background4, Vector2.Zero, new Vector2(-1, 0)));
-            
-            backgrounds2.Add(new Gameobject(contentHolder.texture_background3, new Vector2(contentHolder.texture_background3.Width, 0), new Vector2(-3, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background3, Vector2.Zero, new Vector2(-3, 0)));
-
-            backgrounds2.Add(new Gameobject(contentHolder.texture_background1, new Vector2(contentHolder.texture_background1.Width, 0), new Vector2(-6, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background1, Vector2.Zero, new Vector2(-6, 0)));
-
-            backgrounds2.Add(new Gameobject(contentHolder.texture_background2, new Vector2(contentHolder.texture_background2.Width, 0), new Vector2(-8, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background2, Vector2.Zero, new Vector2(-8, 0)));
 
 <<<<<<< HEAD
-
-            this.contentHolder = contentHolder;
+            //platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
 =======
             platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
->>>>>>> 488f44e2c46f05a5c1cec6ad309274488416055f
+
+            background_fluff.Add(new Gameobject(contentHolder.texture_checkpoint, new Vector2(checkpointInterval, 550), new Vector2(-10, 0), 256, 256));
+>>>>>>> e87942591216ba32d5c9f7c02fc8a0e49ce03d05
+            this.contentHolder = contentHolder;
 
 
-            ground = makePlatformSection(new Vector2(0, 688));
+            generateMap();
+            generateObstacles();
+            generatePlatforms();
+
+            //ground = makePlatformSection(new Vector2(0, 670));
 
             //int platformWidth = contentHolder.texture_platform.Width;
             //for (int i = 0; i < NUMBEROFPLATFORMS; i++)
@@ -64,32 +73,148 @@ namespace Risseproto
                 backgrounds[i].DrawDuplicateMUTHAAAAAAA(spriteBatch);
             }
 
+            for (int i = 0; i < background_fluff.Count; i++)
+            {
+                background_fluff[i].DrawFluff(spriteBatch);
+            }
 
             risseObject.DrawAnimation(spriteBatch);
 
-            for (int i = 0; i < ground.Count; i++)
+            //for (int i = 0; i < ground.Count; i++)
+            //{
+            //    ground[i].Draw(spriteBatch);
+            //}
+
+            foreach (List<Gameobject> g in ground)
             {
-                ground[i].Draw(spriteBatch);
+                foreach (Gameobject obj in g)
+                {
+                    obj.Draw(spriteBatch);
+                }
             }
-            foreach (Gameobject go in platforms)
+
+            foreach (Gameobject coll in collidables)
             {
-                go.Draw(spriteBatch);
+                coll.Draw(spriteBatch);
+            }
+
+            foreach (List<Gameobject> p in platforms)
+            {
+                foreach (Gameobject obj in p)
+                {
+                    obj.Draw(spriteBatch);
+                }
             }
 
         }
 
+
+        public void generateMap()
+        {
+<<<<<<< HEAD
+            int gap = rand.Next(50, 200);
+=======
+            int gap = 450;
+>>>>>>> e87942591216ba32d5c9f7c02fc8a0e49ce03d05
+            int startCoordinate;
+            ground.Add(makePlatformSection(new Vector2(0, GROUNDHEIGHT), 20));
+
+            // o_O
+            startCoordinate = (int) (ground[ground.Count - 1][ground[ground.Count - 1].Count - 1].Position.X + gap);
+
+            for(int i = 0; i < numberOfSections; i++)
+            {
+
+                ground.Add(makePlatformSection(new Vector2(startCoordinate, GROUNDHEIGHT), 10));
+                gap = rand.Next(100, 600 );
+                //startCoordinate = (int)(ground[ground.Count - 1].Position.X + gap);
+                startCoordinate = (int)(ground[ground.Count - 1][ground[ground.Count - 1].Count - 1].Position.X + gap);
+            }
+        }
+
+        private void generatePlatforms()
+        {
+            Vector2 position = new Vector2(900, 350);
+
+            for (int i = 0; i < numberOfSections / 2; i++)
+            {
+
+                Platforms.Add(makePlatformSection(position, 2));
+
+                position.X = position.X + rand.Next(600, 2000);
+                position.Y = rand.Next(250, 350);
+            }
+        }
+
+        private void generateObstacles()
+        {
+            int obstacleCoordinate = 0;
+
+            foreach (List<Gameobject> g in ground)
+            {
+                if (getSectionLength(g) > 600)
+                {
+                    Texture2D texture = getRandomCollidableTexture();
+                    obstacleCoordinate = rand.Next((int)g[0].Position.X + texture.Width * 2, (int)g[0].Position.X + getSectionLength(g) - texture.Width * 2);
+
+                    collidables.Add(new Gameobject(texture, new Vector2(obstacleCoordinate, GROUNDHEIGHT - texture.Height + 20),new Vector2(- risseSpeed, 0)));
+                }
+            }
+        }
+
+        private Texture2D getRandomCollidableTexture()
+        {
+            int random = rand.Next(0, 3);
+
+            switch (random)
+            {
+                case 0:
+                    return contentHolder.collidables[0];
+                    
+                case 1:
+                    return contentHolder.collidables[1];
+
+                case 2:
+                    return contentHolder.collidables[2];
+
+                default:
+                    return null;
+            }
+        }
+
+        private int getSectionLength(List<Gameobject> section)
+        {
+            int sectionLength = 0;
+
+            foreach(Gameobject sectionPiece in section)
+            {
+                sectionLength += sectionPiece.TextureWidth;
+            }
+
+            return sectionLength;
+        }
 
         public List<Gameobject> Collidables
         {
             get { return collidables; }
         }
 
-        public List<Gameobject> Ground
+        public List<Gameobject> BackgroundFluff
+        {
+            get { return background_fluff; }
+        }
+
+        //public List<Gameobject> Ground
+        //{
+        //    get { return ground; }
+        //}
+
+        public List<List<Gameobject>> Ground
         {
             get { return ground; }
         }
 
-        public List<Gameobject> Platforms
+        public List<List<Gameobject>> Platforms
         {
             get { return platforms; }
         }
@@ -111,24 +236,26 @@ namespace Risseproto
             get { return risseObject; }
         }
 
-        public List<Gameobject> makePlatformSection(Vector2 startCoordinates)
+        public List<Gameobject> makePlatformSection(Vector2 startCoordinates, int randomMax)
         {
             List<Gameobject> section = new List<Gameobject>();
 
-            Random rand = new Random();
-            int numberOfSections = rand.Next(1, 10);
+            
+            Vector2 platformVelocity = new Vector2(-risseSpeed, 0);
+            int numberOfTiles = rand.Next(randomMax);
+            
 
             int platformWidth = (int) (contentHolder.texture_platform_middle.Width + startCoordinates.X);
 
-            section.Add(new Gameobject(contentHolder.texture_platform_start, startCoordinates, Vector2.Zero));
+            section.Add(new Gameobject(contentHolder.texture_platform_start, startCoordinates, platformVelocity));
 
-            for (int i = 0; i < numberOfSections; i++)
+            for (int i = 0; i < numberOfTiles; i++)
             {
-                section.Add(new Gameobject(contentHolder.texture_platform_middle, new Vector2(platformWidth, startCoordinates.Y), Vector2.Zero));
+                section.Add(new Gameobject(contentHolder.texture_platform_middle, new Vector2(platformWidth, startCoordinates.Y), platformVelocity));
                 platformWidth += contentHolder.texture_platform_middle.Width;
             }
 
-            section.Add(new Gameobject(contentHolder.texture_platform_end, new Vector2(platformWidth, startCoordinates.Y), Vector2.Zero));
+            section.Add(new Gameobject(contentHolder.texture_platform_end, new Vector2(platformWidth, startCoordinates.Y), platformVelocity));
 
             return section;
         }

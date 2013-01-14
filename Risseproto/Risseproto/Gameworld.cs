@@ -17,6 +17,7 @@ namespace Risseproto
         private const int GROUNDHEIGHT = 670;
 
         private int numberOfSections = 30;           // HIRRHIRRHIRR
+        private int checkpointInterval = 4000;
 
         private ContentHolder contentHolder;
 
@@ -28,10 +29,11 @@ namespace Risseproto
         private List<List<Gameobject>> ground = new List<List<Gameobject>>();
         Random rand = new Random();
         //BECAUSE FUCK YOU THAT'S WHY
+        private List<Gameobject> background_fluff = new List<Gameobject>();
 
         public Gameworld(ContentHolder contentHolder)
         {
-            risseObject = new Gameobject(contentHolder.texture_risse, new Vector2(100, 0), Vector2.Zero, 100, 256, 256);
+            risseObject = new Gameobject(contentHolder.texture_risse, new Vector2(100, 0), Vector2.Zero, 100, 192, 192);
 
             backgrounds.Add(new Gameobject(contentHolder.texture_background4, Vector2.Zero, new Vector2(-1, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background3, Vector2.Zero, new Vector2(-3, 0)));
@@ -39,6 +41,8 @@ namespace Risseproto
             backgrounds.Add(new Gameobject(contentHolder.texture_background2, Vector2.Zero, new Vector2(-8, 0)));
 
             //platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
+
+            background_fluff.Add(new Gameobject(contentHolder.texture_checkpoint, new Vector2(checkpointInterval, 550), new Vector2(-10, 0), 256, 256));
             this.contentHolder = contentHolder;
 
 
@@ -65,6 +69,10 @@ namespace Risseproto
                 backgrounds[i].DrawDuplicateMUTHAAAAAAA(spriteBatch);
             }
 
+            for (int i = 0; i < background_fluff.Count; i++)
+            {
+                background_fluff[i].DrawFluff(spriteBatch);
+            }
 
             risseObject.DrawAnimation(spriteBatch);
 
@@ -181,6 +189,11 @@ namespace Risseproto
         public List<Gameobject> Collidables
         {
             get { return collidables; }
+        }
+
+        public List<Gameobject> BackgroundFluff
+        {
+            get { return background_fluff; }
         }
 
         //public List<Gameobject> Ground

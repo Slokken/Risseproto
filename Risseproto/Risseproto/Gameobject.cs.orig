@@ -9,71 +9,197 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Risseproto
 {
     class Gameobject
-    {
+    { 
         private Vector2 position;
         private Texture2D texture;
         private Vector2 velocity;
-        private Vector2 accelllllllllleration;
+        private Vector2 acceleration;
+        private const int normalBoundingHeight = 256;
+        private Rectangle boundingBox;
+        private Rectangle boundingBoxDuck;
+
+        private Texture2D rectangle = ContentHolder.textureRectangle;
+
+        private float timer;
+        private float interval;
+        private int currentFrame;
+        private int numberOfFrames;
+        private int spriteWidth;
+        private int spriteHeight;
+        Rectangle sourceRect;
+        Vector2 origin;
+        bool onTheGround = true;
+
+        int animation;
+        int previousAnimation;
+
+        private int checkpoints;
+        
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
         {
-<<<<<<< HEAD
             Texture = texture;
             Position = position;
-=======
-            this.texture = texture;
-            this.position = position;
-            this.velocity = velocity;
->>>>>>> 89f6827c4fc007b9462aca1d3bed4c597d518d20
+            Velocity = velocity;
+            BoundingBox = new Rectangle(
+                    (int)Position.X - Texture.Width,
+                    (int)Position.Y - Texture.Height,
+                    Texture.Width,
+                    Texture.Height);
+
+            this.origin = new Vector2(texture.Width / 2, texture.Height / 2);
+        }
+
+        public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity, float interval, int spriteWidth, int spriteHeight)
+        {
+            Texture = texture;
+            Position = position;
+            Velocity = velocity;
+            BoundingBox = new Rectangle(
+                (int)Position.X - spriteWidth / 2,
+                (int)Position.Y - spriteHeight /2,
+                spriteWidth / 2,
+                spriteHeight);
+            boundingBoxDuck = new Rectangle(
+                (int)Position.X,
+                (int)Position.Y + spriteWidth / 2,
+                spriteWidth / 2,
+                spriteHeight / 2);
+            Interval = interval;
+            SpriteWidth = spriteWidth;
+            SpriteHeight = spriteHeight;
+
+            //this.origin = new Vector2(texture.Width , texture.Height );
+
+            origin = position;
+
+            animation = 0;
+            previousAnimation = 0;
+
+            timer = 0f;
+            currentFrame = 0;
+            numberOfFrames = 7;
+        }
+
+        public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity, int spriteWidth, int spriteHeight)
+        {
+            Texture = texture;
+            Position = position;
+            Velocity = velocity;
+
+            SpriteWidth = spriteWidth;
+            SpriteHeight = spriteHeight;
+
+            BoundingBox = new Rectangle(
+                    (int)Position.X - Texture.Width,
+                    (int)Position.Y - Texture.Height,
+                    Texture.Width,
+                    Texture.Height);
+            
+            origin = position;
+            //this.origin = new Vector2(SpriteWidth / 2, SpriteWidth / 2);
+
+            currentFrame = 0;
+            numberOfFrames = 2;
+            Checkpoints = 0;
         }
 
         public Rectangle BoundingBox
         {
-            get
-            {
-                return new Rectangle(
-                    (int)position.X - texture.Width / 2,
-                    (int)position.Y - texture.Height / 2,
-                    texture.Width,
-                    texture.Height);
-            }
+            set { this.boundingBox = value; }
+            get { return refreshRectangle(); }
         }
 
-        protected Vector2 Position
+        public int NormalBoundingHeight
+        {
+            get { return normalBoundingHeight; }
+        }
+
+        public Vector2 Position
         {
             get { return this.position; }
             set { this.position = value; }
         }
 
-        protected Texture2D Texture
+        public Texture2D Texture
         {
             get { return this.texture; }
             set { this.texture = value; }
         }
 
-        protected Vector2 Velocity
+        public Vector2 Velocity
         {
             get { return this.velocity; }
             set { this.velocity = value; }
         }
 
-        protected Vector2 Acceleration
+        public Vector2 Acceleration
         {
             get { return this.acceleration; }
             set { this.acceleration = value; }
         }
+
+        public float Interval
+        {
+            get { return this.interval; }
+            set { this.interval = value; }
+        }
+
+        public int SpriteWidth
+        {
+            get { return this.spriteWidth; }
+            set { this.spriteWidth = value; }
+        }
+
+        public int SpriteHeight
+        {
+            get { return this.spriteHeight; }
+            set { this.spriteHeight = value; }
+        }
+
+        public int Animation
+        {
+            get { return this.animation; }
+            set { this.animation = value; }
+        }
         
+        public bool OnTheGround
+        {
+            get { return this.onTheGround; }
+            set { this.onTheGround = value; }
+        }
+
+        public int Checkpoints
+        {
+            get { return this.checkpoints; }
+            set { this.checkpoints = value; }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
             //spriteBatch.Draw(texture, position, null, Color.White, 0f,
             //        position, 0.2f, SpriteEffects.None, 0f);
+
+            //spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
         }
 
-        public Vector2 Position
+        public void DrawFluff(SpriteBatch spriteBatch)
         {
-            get { return position; }
-            set { this.position = value; }
+            spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+        }
+
+        public void DrawDuplicateMUTHAAAAAAA(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(texture, new Vector2(position.X + texture.Width, position.Y), Color.White);
+        }
+
+        public void DrawAnimation(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+            spriteBatch.Draw(rectangle, secretBox, Color.Red);
         }
 
         public int TextureWidth
@@ -83,9 +209,117 @@ namespace Risseproto
 
         public void update ()
         {
-            position += velocity; 
+            position += velocity;
+ 
         }
 
+        public void update(GameTime gameTime)
+        {
+            position += velocity;
 
+            if (timer > interval)
+            {
+                currentFrame++;
+                timer = 0f;
+            }
+
+            if (previousAnimation != animation)
+            {
+                currentFrame = 0;
+            }
+
+            switch (animation)
+            {
+                case 0:
+                    interval = 250;
+                    numberOfFrames = 7;
+                    break;
+                case 1:
+                    numberOfFrames = 2;
+                    runAnimationOnce(1000, 0);
+                    break;
+                case 2:
+                    numberOfFrames = 0;
+                    break;
+                case 3:
+                    numberOfFrames = 1;
+                    runAnimationOnce(1000, 0);
+                    break;
+                case 4:
+                    numberOfFrames = 2;
+                    runAnimationOnce(1000, 0);
+                    break;
+            }
+
+            timer += (float)gameTime.ElapsedGameTime.Milliseconds;
+
+
+            if (currentFrame >= numberOfFrames)
+            {
+                currentFrame = 0;
+            }
+
+            Console.Out.WriteLine(secretBox);
+            sourceRect = new Rectangle(currentFrame * spriteWidth, animation * spriteHeight, spriteWidth, spriteHeight);
+
+            previousAnimation = animation;
+            
+            //origin = new Vector2(sourceRect.Width , sourceRect.Height );
+
+            //origin = position;
+        }
+
+        public void updateFluff(int rissepos)
+        {
+            position += velocity;
+            if (Position.X <= rissepos + 400)
+            {
+                currentFrame = 1;
+                Checkpoints = Checkpoints + 1;
+            }
+            if (Position.X < -SpriteWidth)
+            {
+                position.X = 4000;
+                currentFrame = 0;
+            }
+            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            Console.Out.WriteLine(Position);
+        }
+
+        private void runAnimationOnce(int animationSpeed, int nextAnimation)
+        {
+            if (currentFrame >= numberOfFrames)
+            {
+                animation = nextAnimation;
+                interval = animationSpeed;
+            }
+        }
+
+        Rectangle secretBox;
+        // updates boundingbox position
+        protected Rectangle refreshRectangle()
+        {
+            this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
+            this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
+
+<<<<<<< HEAD
+            this.boundingBoxDuck.X = (int)Position.X;// -Texture.Width / 2;
+            this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2;
+=======
+>>>>>>> fd03325243ebc87379aa402e719be58061154bde
+
+            secretBox = new Rectangle(
+                (int)Position.X - SpriteWidth / 3,
+                (int)Position.Y + SpriteHeight / 2,
+                SpriteWidth,
+                SpriteHeight / 2);
+            //this.boundingBoxDuck.X = (int)Position.X - spriteWidth / 2;// -Texture.Width / 2;
+            //this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2 ;
+
+            //return (animation == 2) ? this.boundingBoxDuck: this.boundingBox;
+            //return (animation == 2) ? secretBox : this.boundingBox;
+            return secretBox;
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace Risseproto
         private PhysicsEngine physicsEngine;
         private SoundManager soundManager;
         private ContentHolder contentHolder;
+        Vector2 prePos;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
         private state theState = state.running;
@@ -21,7 +22,7 @@ namespace Risseproto
         public Controller(Input input, SoundManager soundManager, ContentHolder contentHolder)
         {
             physicsEngine = new PhysicsEngine();
-
+            this.key = input;
             this.contentHolder = contentHolder;
 
             this.soundManager = soundManager;
@@ -33,12 +34,13 @@ namespace Risseproto
 
         public void update(Gameworld gameWorld, GameTime gameTime)
         {
+
             risse = gameWorld.Risse;
-            Vector2 prePos = risse.Position;
             parallaxBackground(gameWorld);
 
             physicsEngine.gravitation(risse, gameTime);
             collisionResolution(gameWorld, prePos);
+            prePos = new Vector2(risse.BoundingBox.X, risse.BoundingBox.Y);
             risse.update(gameTime);
             //foreach (Gameobject go in gameWorld.Platforms)
             //{
@@ -56,6 +58,11 @@ namespace Risseproto
             //{
             //    MediaPlayer.Play(contentHolder.soundtrack);
             //}
+
+            foreach (Gameobject go in gameWorld.BackgroundFluff)
+            {
+                go.updateFluff((int)risse.BoundingBox.X);
+            }
 
             //foreach (Gameobject ground in gameWorld.Ground)
             //{
@@ -75,7 +82,6 @@ namespace Risseproto
                 obj.update();
             }
 
-            //Console.Out.WriteLine(risse.Position);
         }
 
 
@@ -97,7 +103,6 @@ namespace Risseproto
         {
             if (theState == state.ducking)
             {
-                ResetBoundingBox();
                 risse.OnTheGround = true;
             }
             if(risse.OnTheGround)
@@ -126,79 +131,29 @@ namespace Risseproto
 
         protected void collisionResolution(Gameworld gameworld, Vector2 prePos)
         {
-            Console.Out.WriteLine(risse.OnTheGround);
-            bool collidedWithPlatformSide = false;
-            bool airborne = true;
-            bool crouchingRisseHiddenBoundingBox;
-            if (risse.Animation == (int)state.ducking){
-                crouchingRisseHiddenBoundingBox = true;
-            }
-            else
-            {
-                crouchingRisseHiddenBoundingBox = false;
-            }
-            foreach (List<Gameobject> platforms in gameworld.Platforms)
+            risse.OnTheGround = false;
             {
                 foreach (Gameobject platform in platforms)
-                {
-                    if (physicsEngine.collisionDetection(risse, platform, crouchingRisseHiddenBoundingBox))
-                    {
-                        if (collisionDetermineType(gameworld, risse, platform, prePos))
-                        {
-                            collidedWithPlatformSide = true;
                         }
-                        else
-                        {
-                            airborne = false;
-                        }
-                    }
-                }
-            }
-
-            if (!collidedWithPlatformSide)
+            foreach (List<Gameobject> list in gameworld.Ground)
             {
-                //foreach (Gameobject ground in gameworld.Ground)
-                //{
-                //    if (physicsEngine.collisionDetection(risse, ground))
-                //    {
-                //        if (collisionDetermineType(gameworld, risse, ground, prePos))
-                //        {
-                //            collidedWithPlatformSide = true;
-                //        }
-                //    }
-                //}
-
-                foreach (List<Gameobject> list in gameworld.Ground)
+                foreach (Gameobject ground in list)
                 {
-                    foreach (Gameobject ground in list)
+                    if (physicsEngine.collisionDetection(risse, ground))
                     {
-                        if (physicsEngine.collisionDetection(risse, ground, crouchingRisseHiddenBoundingBox))
+                        if (risse.BoundingBox.Bottom <= ground.Position.Y + 20 && theState == state.ducking)
                         {
-                            if (collisionDetermineType(gameworld, risse, ground, prePos))
-                            {
-                                collidedWithPlatformSide = true;
-                            }
-                            else
-                            {
-                                airborne = false;
-                            }
+                            risse.Position = new Vector2(risse.Position.X, ground.Position.Y - (risse.BoundingBox.Height * 2) + 1);
+                            risse.Velocity = Vector2.Zero;
+                            risse.OnTheGround = true;
+                        }
+                        else if (risse.BoundingBox.Bottom <= ground.Position.Y + 20 && risse.Velocity.Y > 0)
+                        {
+                            risse.Position = new Vector2(risse.Position.X, ground.Position.Y - risse.BoundingBox.Height + 1);
+                            risse.Velocity = Vector2.Zero;
+                            risse.OnTheGround = true;
                         }
                     }
-                }
-
-                if (!collidedWithPlatformSide)
-                {
-                    foreach (Gameobject collidable in gameworld.Collidables)
-                    {
-                        if (physicsEngine.collisionDetection(risse, collidable, crouchingRisseHiddenBoundingBox))
-                        {
-                            collisionHorizontal(gameworld, prePos);
-                        }
-                    }
-                }
-                if (airborne)
-                {
-                    //risse.OnTheGround = false;
                 }
             }
         }
@@ -232,7 +187,7 @@ namespace Risseproto
                 return false;
             }
 
-            if (risse.OnTheGround && risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
+            if (risse.OnTheGround && risse.BoundingBox.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
             {
                 collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                 return false;
