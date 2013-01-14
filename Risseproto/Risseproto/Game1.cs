@@ -62,7 +62,7 @@ namespace Risseproto
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             input = new Input();
-            startButton = new Button(new Rectangle(0,0,400,75), "Start Spill", ref input, new List<Texture2D>() {
+            startButton = new Button(new Rectangle((width/2)-200,50,400,75), "Start Spill", ref input, new List<Texture2D>() {
                 contentHolder.menuStart,
                 contentHolder.menuStartHover,
                 contentHolder.menuStartClicked
@@ -126,7 +126,7 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             if (gameState == GameState.Menu)
             {
