@@ -96,9 +96,17 @@ namespace Risseproto
             Console.Out.WriteLine(risse.OnTheGround);
             bool collidedWithPlatformSide = false;
             bool airborne = true;
+            bool crouchingRisseHiddenBoundingBox;
+            if (risse.Animation == (int)state.ducking){
+                crouchingRisseHiddenBoundingBox = true;
+            }
+            else
+            {
+                crouchingRisseHiddenBoundingBox = false;
+            }
             foreach (Gameobject platform in gameworld.Platforms)
             {
-                if (physicsEngine.collisionDetection(risse, platform))
+                if (physicsEngine.collisionDetection(risse, platform, crouchingRisseHiddenBoundingBox))
                 {
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
@@ -115,7 +123,7 @@ namespace Risseproto
             {
                 foreach (Gameobject ground in gameworld.Ground)
                 {
-                    if (physicsEngine.collisionDetection(risse, ground))
+                    if (physicsEngine.collisionDetection(risse, ground, crouchingRisseHiddenBoundingBox))
                     {
                         if (collisionDetermineType(gameworld, risse, ground, prePos))
                         {
@@ -133,7 +141,7 @@ namespace Risseproto
             {
                 foreach (Gameobject collidable in gameworld.Collidables)
                 {
-                    if (physicsEngine.collisionDetection(risse, collidable))
+                    if (physicsEngine.collisionDetection(risse, collidable, crouchingRisseHiddenBoundingBox))
                     {
                         collisionHorizontal(gameworld, prePos);
                     }
