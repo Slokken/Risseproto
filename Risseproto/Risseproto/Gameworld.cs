@@ -43,6 +43,11 @@ namespace Risseproto
 
         }
 
+        public List<Gameobject> Collidables
+        {
+            get { return collidables; }
+        }
+
         public List<Gameobject> Ground
         {
             get { return ground; }
