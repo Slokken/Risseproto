@@ -14,6 +14,7 @@ namespace Risseproto
         private Texture2D texture;
         private Vector2 velocity;
         private Vector2 acceleration;
+        private const int BOUNDING= 256;
         private Rectangle boundingBox;
 
         private Texture2D rectangle = ContentHolder.textureRectangle;
@@ -191,11 +192,6 @@ namespace Risseproto
             this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
             this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
             return this.boundingBox;
-        }
-
-        public void collisionFall()
-        {
-        
         }
     }
 }
