@@ -85,7 +85,7 @@ namespace Risseproto
 
         public void generateMap()
         {
-            int gap = 200;
+            int gap = 450;
             int startCoordinate;
             ground.Add(makePlatformSection(new Vector2(0, 670)));
 

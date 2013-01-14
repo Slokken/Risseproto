@@ -60,7 +60,7 @@ namespace Risseproto
             boundingBoxDuck = new Rectangle(
                 (int)Position.X,
                 (int)Position.Y + spriteWidth / 2,
-                spriteWidth,
+                spriteWidth / 2,
                 spriteHeight / 2);
             Interval = interval;
             SpriteWidth = spriteWidth;
@@ -233,8 +233,8 @@ namespace Risseproto
             this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
             this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
 
-            this.boundingBoxDuck.X = (int)Position.X - spriteWidth / 2;// -Texture.Width / 2;
-            this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2 ;
+            this.boundingBoxDuck.X = (int)Position.X;// -Texture.Width / 2;
+            this.boundingBoxDuck.Y = (int)Position.Y + spriteHeight / 2;
 
             return (animation == 2) ? this.boundingBoxDuck: this.boundingBox;
         }
