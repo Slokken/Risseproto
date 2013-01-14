@@ -21,6 +21,7 @@ namespace Risseproto
         private float timer;
         private float interval;
         private int currentFrame;
+        private int numberOfFrames;
         private int spriteWidth;
         private int spriteHeight;
         Rectangle sourceRect;
@@ -61,6 +62,10 @@ namespace Risseproto
             //this.origin = new Vector2(texture.Width , texture.Height );
 
             origin = position;
+
+            timer = 0f;
+            currentFrame = 0;
+            numberOfFrames = 7;
 
             
         }
@@ -169,7 +174,7 @@ namespace Risseproto
                 timer = 0f;
             }
 
-            if (currentFrame == 3)
+            if (currentFrame == numberOfFrames)
             {
                 currentFrame = 0;
             }
