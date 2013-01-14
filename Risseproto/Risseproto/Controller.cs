@@ -145,6 +145,10 @@ namespace Risseproto
                     {
                         gameworld.Risse.Animation = (int)state.running;
                     }
+                    if (risse.Animation != (int)state.crash)
+                    {
+                        gameworld.Risse.Animation = (int)state.running;
+                    }
                 }
                 else if (risse.Position.Y + risse.BoundingBox.Height > platform.BoundingBox.Y + platform.BoundingBox.Height)
                 {
