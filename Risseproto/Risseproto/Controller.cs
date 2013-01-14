@@ -111,6 +111,7 @@ namespace Risseproto
                 if (risse.Position.Y < platform.BoundingBox.Y){
                     collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                     risse.OnTheGround = true;
+                    gameworld.Risse.Animation = (int)state.running;
                 }
                 else
                 {
@@ -128,13 +129,13 @@ namespace Risseproto
         {
             gameworld.Risse.Velocity = Vector2.Zero;
             gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
-            gameworld.Risse.Animation = "crash";
+            gameworld.Risse.Animation = (int)state.crash;
         }
 
         //handles landing on or jumping up and hitting a platform
-        protected void collisionVertical(Gameworld gameworld, Vector2 prePos)
+        protected void collisionVertical(Gameworld gameworld, Vector2 newPos)
         {
-            gameworld.Risse.Position = new Vector2(gameworld.Risse.Position.X, prePos.Y);
+            gameworld.Risse.Position = newPos;
             gameworld.Risse.Velocity = new Vector2(gameworld.Risse.Velocity.X, 0);
         }
     }
