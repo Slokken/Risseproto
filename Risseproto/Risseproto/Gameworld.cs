@@ -34,7 +34,7 @@ namespace Risseproto
         public void Draw(SpriteBatch spriteBatch)
         {
             background.Draw(spriteBatch);
-            risseObject.Draw(spriteBatch);
+            risseObject.DrawAnimation(spriteBatch);
 
             for (int i = 0; i < ground.Count; i++)
             {
