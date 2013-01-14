@@ -31,6 +31,7 @@ namespace Risseproto
         bool onTheGround = true;
 
         int animation;
+        int previousAnimation;
         
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
@@ -69,6 +70,9 @@ namespace Risseproto
             //this.origin = new Vector2(texture.Width , texture.Height );
 
             origin = position;
+
+            animation = 0;
+            previousAnimation = 0;
 
             timer = 0f;
             currentFrame = 0;
@@ -175,10 +179,16 @@ namespace Risseproto
         public void update(GameTime gameTime)
         {
             position += velocity;
+
             if (timer > interval)
             {
                 currentFrame++;
                 timer = 0f;
+            }
+
+            if (previousAnimation != animation)
+            {
+                currentFrame = 0;
             }
 
             switch (animation)
@@ -196,11 +206,11 @@ namespace Risseproto
                     break;
                 case 3:
                     numberOfFrames = 1;
-                    runAnimationOnce(500, 0);
+                    runAnimationOnce(1000, 0);
                     break;
                 case 4:
                     numberOfFrames = 2;
-                    runAnimationOnce(500, 0);
+                    runAnimationOnce(1000, 0);
                     break;
             }
 
@@ -213,6 +223,9 @@ namespace Risseproto
             }
 
             sourceRect = new Rectangle(currentFrame * spriteWidth, animation * spriteHeight, spriteWidth, spriteHeight);
+
+            previousAnimation = animation;
+            
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
