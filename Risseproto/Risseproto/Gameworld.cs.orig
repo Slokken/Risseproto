@@ -37,11 +37,15 @@ namespace Risseproto
             backgrounds2.Add(new Gameobject(contentHolder.texture_background2, new Vector2(contentHolder.texture_background2.Width, 0), new Vector2(-8, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background2, Vector2.Zero, new Vector2(-8, 0)));
 
-            platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
+<<<<<<< HEAD
+
             this.contentHolder = contentHolder;
+=======
+            platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
+>>>>>>> 488f44e2c46f05a5c1cec6ad309274488416055f
 
 
-            ground = makePlatformSection(new Vector2(0, 670));
+            ground = makePlatformSection(new Vector2(0, 688));
 
             //int platformWidth = contentHolder.texture_platform.Width;
             //for (int i = 0; i < NUMBEROFPLATFORMS; i++)

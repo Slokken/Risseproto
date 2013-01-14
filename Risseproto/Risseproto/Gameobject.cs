@@ -14,6 +14,7 @@ namespace Risseproto
         private Texture2D texture;
         private Vector2 velocity;
         private Vector2 acceleration;
+        private const int BOUNDING= 256;
         private Rectangle boundingBox;
 
         private Texture2D rectangle = ContentHolder.textureRectangle;
@@ -21,11 +22,15 @@ namespace Risseproto
         private float timer;
         private float interval;
         private int currentFrame;
+        private int numberOfFrames;
         private int spriteWidth;
         private int spriteHeight;
         Rectangle sourceRect;
         Vector2 origin;
         bool onTheGround = false;
+
+        int animation;
+        
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
         {
@@ -59,7 +64,9 @@ namespace Risseproto
 
             origin = position;
 
-            
+            timer = 0f;
+            currentFrame = 0;
+            numberOfFrames = 7;
         }
 
         public Rectangle BoundingBox
@@ -109,6 +116,12 @@ namespace Risseproto
             get { return this.spriteHeight; }
             set { this.spriteHeight = value; }
         }
+
+        public int Animation
+        {
+            get { return this.animation; }
+            set { this.animation = value; }
+        }
         
         public bool OnTheGround
         {
@@ -152,6 +165,19 @@ namespace Risseproto
         {
             position += velocity;
 
+            switch (animation)
+            {
+                case 0:
+                    numberOfFrames = 7;
+                    break;
+                case 5:
+                    numberOfFrames = 1;
+                    break;
+                default:
+                    numberOfFrames = 0;
+                    break;
+            }
+
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
             if (timer > interval)
@@ -160,12 +186,12 @@ namespace Risseproto
                 timer = 0f;
             }
 
-            if (currentFrame == 3)
+            if (currentFrame >= numberOfFrames)
             {
                 currentFrame = 0;
             }
 
-            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
+            sourceRect = new Rectangle(currentFrame * spriteWidth, animation * spriteHeight, spriteWidth, spriteHeight);
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
@@ -177,11 +203,6 @@ namespace Risseproto
             this.boundingBox.X = (int)Position.X;// -Texture.Width / 2;
             this.boundingBox.Y = (int)Position.Y; //+ Texture.Height / 2 ;
             return this.boundingBox;
-        }
-
-        public void collisionFall()
-        {
-        
         }
     }
 }
