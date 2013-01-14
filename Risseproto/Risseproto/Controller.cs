@@ -39,9 +39,17 @@ namespace Risseproto
                 go.update();
             }
 
-            foreach (Gameobject ground in gameWorld.Ground)
+            //foreach (Gameobject ground in gameWorld.Ground)
+            //{
+            //    ground.update();
+            //}
+
+            foreach (List<Gameobject> g in gameWorld.Ground)
             {
-                ground.update();
+                foreach (Gameobject obj in g)
+                {
+                    obj.update();
+                }
             }
 
             //Console.Out.WriteLine(risse.Position);
@@ -98,9 +106,17 @@ namespace Risseproto
             Console.Out.WriteLine(risse.OnTheGround);
             bool collidedWithPlatformSide = false;
             bool airborne = true;
+            bool crouchingRisseHiddenBoundingBox;
+            if (risse.Animation == (int)state.ducking){
+                crouchingRisseHiddenBoundingBox = true;
+            }
+            else
+            {
+                crouchingRisseHiddenBoundingBox = false;
+            }
             foreach (Gameobject platform in gameworld.Platforms)
             {
-                if (physicsEngine.collisionDetection(risse, platform))
+                if (physicsEngine.collisionDetection(risse, platform, crouchingRisseHiddenBoundingBox))
                 {
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
@@ -115,35 +131,49 @@ namespace Risseproto
 
             if (!collidedWithPlatformSide)
             {
-                foreach (Gameobject ground in gameworld.Ground)
-                {
-                    if (physicsEngine.collisionDetection(risse, ground))
-                    {
-                        if (collisionDetermineType(gameworld, risse, ground, prePos))
-                        {
-                            collidedWithPlatformSide = true;
-                        }
-                        else
-                        {
-                            airborne = false;
-                        }
-                    }
-                }
-            }
+                //foreach (Gameobject ground in gameworld.Ground)
+                //{
+                //    if (physicsEngine.collisionDetection(risse, ground))
+                //    {
+                //        if (collisionDetermineType(gameworld, risse, ground, prePos))
+                //        {
+                //            collidedWithPlatformSide = true;
+                //        }
+                //    }
+                //}
 
-            if (!collidedWithPlatformSide)
-            {
-                foreach (Gameobject collidable in gameworld.Collidables)
+                foreach (List<Gameobject> list in gameworld.Ground)
                 {
-                    if (physicsEngine.collisionDetection(risse, collidable))
+                    foreach (Gameobject ground in list)
                     {
-                        collisionHorizontal(gameworld, prePos);
+                        if (physicsEngine.collisionDetection(risse, ground, crouchingRisseHiddenBoundingBox))
+                        {
+                            if (collisionDetermineType(gameworld, risse, ground, prePos))
+                            {
+                                collidedWithPlatformSide = true;
+                            }
+                            else
+                            {
+                                airborne = false;
+                            }
+                        }
                     }
                 }
-            }
-            if (airborne)
-            {
-                //risse.OnTheGround = false;
+
+                if (!collidedWithPlatformSide)
+                {
+                    foreach (Gameobject collidable in gameworld.Collidables)
+                    {
+                        if (physicsEngine.collisionDetection(risse, collidable, crouchingRisseHiddenBoundingBox))
+                        {
+                            collisionHorizontal(gameworld, prePos);
+                        }
+                    }
+                }
+                if (airborne)
+                {
+                    //risse.OnTheGround = false;
+                }
             }
         }
 
