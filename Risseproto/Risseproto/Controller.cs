@@ -44,7 +44,7 @@ namespace Risseproto
                 ground.update();
             }
 
-            //Console.Out.WriteLine(risse.Position);
+            Console.Out.WriteLine(risse.Position);
         }
 
 
@@ -108,7 +108,7 @@ namespace Risseproto
             }
             foreach (Gameobject platform in gameworld.Platforms)
             {
-                if (physicsEngine.collisionDetection(risse, platform, crouchingRisseHiddenBoundingBox))
+                if (physicsEngine.collisionDetection(risse, platform))
                 {
                     if (collisionDetermineType(gameworld, risse, platform, prePos))
                     {
@@ -125,7 +125,7 @@ namespace Risseproto
             {
                 foreach (Gameobject ground in gameworld.Ground)
                 {
-                    if (physicsEngine.collisionDetection(risse, ground, crouchingRisseHiddenBoundingBox))
+                    if (physicsEngine.collisionDetection(risse, ground))
                     {
                         if (collisionDetermineType(gameworld, risse, ground, prePos))
                         {
@@ -143,7 +143,7 @@ namespace Risseproto
             {
                 foreach (Gameobject collidable in gameworld.Collidables)
                 {
-                    if (physicsEngine.collisionDetection(risse, collidable, crouchingRisseHiddenBoundingBox))
+                    if (physicsEngine.collisionDetection(risse, collidable))
                     {
                         collisionHorizontal(gameworld, prePos);
                     }
@@ -184,7 +184,7 @@ namespace Risseproto
                 return false;
             }
 
-            if (risse.OnTheGround && risse.Position.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
+            if (risse.OnTheGround && risse.BoundingBox.Y + risse.BoundingBox.Height < platform.BoundingBox.Y + platform.BoundingBox.Height)
             {
                 collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                 return false;
