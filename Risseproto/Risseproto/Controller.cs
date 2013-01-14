@@ -33,7 +33,12 @@ namespace Risseproto
             collisionResolution(gameWorld, prePos);
             risse.update(gameTime);
 
-            Console.Out.WriteLine(risse.Position);
+            foreach (Gameobject ground in gameWorld.Ground)
+            {
+                ground.update();
+            }
+
+            //Console.Out.WriteLine(risse.Position);
         }
 
 

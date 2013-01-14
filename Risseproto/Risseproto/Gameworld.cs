@@ -12,6 +12,8 @@ namespace Risseproto
         private const int NUMBEROFPLATFORMS = 10;
         private Gameobject risseObject;
 
+        private ContentHolder contentHolder;
+
         private List<Gameobject> backgrounds = new List<Gameobject>();
         private List<Gameobject> backgrounds2 = new List<Gameobject>();
 
@@ -36,13 +38,19 @@ namespace Risseproto
             backgrounds.Add(new Gameobject(contentHolder.texture_background2, Vector2.Zero, new Vector2(-8, 0)));
 
 
+            this.contentHolder = contentHolder;
 
-            int platformWidth = contentHolder.texture_platform.Width;
-            for (int i = 0; i < NUMBEROFPLATFORMS; i++)
-            {
-                ground.Add(new Gameobject(contentHolder.texture_platform, new Vector2(- 200 + platformWidth, 688), Vector2.Zero));
-                platformWidth += 200;
-            }
+
+            ground = makePlatformSection(new Vector2(0, 688));
+
+            //int platformWidth = contentHolder.texture_platform.Width;
+            //for (int i = 0; i < NUMBEROFPLATFORMS; i++)
+            //{
+            //    ground.Add(new Gameobject(contentHolder.texture_platform, new Vector2(- contentHolder.texture_platform.Width + platformWidth, 688), new Vector2(-3, 0)));
+            //    platformWidth += contentHolder.texture_platform.Width;
+            //}
+
+            //ground.Add(new Gameobject(contentHolder.texture_platform, new Vector2(1, 688), new Vector2(-3, 0)));
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -95,9 +103,26 @@ namespace Risseproto
             get { return risseObject; }
         }
 
-        public void makeGround()
+        public List<Gameobject> makePlatformSection(Vector2 startCoordinates)
         {
+            List<Gameobject> section = new List<Gameobject>();
 
+            Random rand = new Random();
+            int numberOfSections = rand.Next(1, 10);
+
+            int platformWidth = (int) (contentHolder.texture_platform_middle.Width + startCoordinates.X);
+
+            section.Add(new Gameobject(contentHolder.texture_platform_start, startCoordinates, Vector2.Zero));
+
+            for (int i = 0; i < numberOfSections; i++)
+            {
+                section.Add(new Gameobject(contentHolder.texture_platform_middle, new Vector2(platformWidth, startCoordinates.Y), Vector2.Zero));
+                platformWidth += contentHolder.texture_platform_middle.Width;
+            }
+
+            section.Add(new Gameobject(contentHolder.texture_platform_end, new Vector2(platformWidth, startCoordinates.Y), Vector2.Zero));
+
+            return section;
         }
     }
 }
