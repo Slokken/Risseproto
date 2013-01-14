@@ -184,19 +184,23 @@ namespace Risseproto
             switch (animation)
             {
                 case 0:
+                    interval = 250;
                     numberOfFrames = 7;
                     break;
-                case 5:
-                    numberOfFrames = 1;
-                    //interval = 500;
-                    if (currentFrame >= numberOfFrames) 
-                    {
-                        animation = 0;
-                        interval = 250;
-                    }
+                case 1:
+                    numberOfFrames = 2;
+                    runAnimationOnce(500, 0);
                     break;
-                default:
+                case 2:
                     numberOfFrames = 0;
+                    break;
+                case 3:
+                    numberOfFrames = 1;
+                    runAnimationOnce(500, 0);
+                    break;
+                case 4:
+                    numberOfFrames = 2;
+                    runAnimationOnce(500, 0);
                     break;
             }
 
@@ -212,6 +216,15 @@ namespace Risseproto
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
+        }
+
+        private void runAnimationOnce(int animationSpeed, int nextAnimation)
+        {
+            if (currentFrame >= numberOfFrames)
+            {
+                animation = nextAnimation;
+                interval = animationSpeed;
+            }
         }
 
         // updates boundingbox position
