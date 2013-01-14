@@ -39,6 +39,11 @@ namespace Risseproto
                 go.update();
             }
 
+            foreach (Gameobject go in gameWorld.BackgroundFluff)
+            {
+                go.updateFluff((int)risse.BoundingBox.X);
+            }
+
             //foreach (Gameobject ground in gameWorld.Ground)
             //{
             //    ground.update();

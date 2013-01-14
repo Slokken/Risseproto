@@ -22,6 +22,8 @@ namespace Risseproto
         public Texture2D texture_platform_end;
         public Texture2D texture_platform;
 
+        public Texture2D texture_checkpoint;
+
         public Texture2D menuStart;
         public Texture2D menuStartHover;
         public Texture2D menuStartClicked;
@@ -56,7 +58,9 @@ namespace Risseproto
             texture_platform        = content.Load<Texture2D>("Object\\platform");
             texture_platform_start  = content.Load<Texture2D>("Object\\platform_start");
             texture_platform_middle = content.Load<Texture2D>("Object\\platform_middle");
-            texture_platform_end    = content.Load<Texture2D>("Object\\platform_end"); 
+            texture_platform_end    = content.Load<Texture2D>("Object\\platform_end");
+
+            texture_checkpoint  = content.Load<Texture2D>("Background\\SnowmanSpriteSheet"); 
 
             menuStart           = content.Load<Texture2D>("MenuObjects\\start");
             menuStartHover      = content.Load<Texture2D>("MenuObjects\\start_hover");

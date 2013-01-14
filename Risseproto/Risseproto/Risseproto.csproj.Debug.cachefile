@@ -12,5 +12,6 @@ Content\Background\BackGround4.xnb
 Content\Object\platform_end.xnb
 Content\Object\platform_middle.xnb
 Content\Object\platform_start.xnb
-Content\SoundEffects\jump.xnb
 Content\MenuObjects\meny_bg.xnb
+Content\Background\SnowmanSpriteSheet.xnb
+Content\SoundEffects\jump.xnb

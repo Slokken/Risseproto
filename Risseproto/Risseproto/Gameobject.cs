@@ -32,6 +32,8 @@ namespace Risseproto
 
         int animation;
         int previousAnimation;
+
+        private int checkpoints;
         
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
@@ -77,6 +79,29 @@ namespace Risseproto
             timer = 0f;
             currentFrame = 0;
             numberOfFrames = 7;
+        }
+
+        public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity, int spriteWidth, int spriteHeight)
+        {
+            Texture = texture;
+            Position = position;
+            Velocity = velocity;
+
+            SpriteWidth = spriteWidth;
+            SpriteHeight = spriteHeight;
+
+            BoundingBox = new Rectangle(
+                    (int)Position.X - Texture.Width,
+                    (int)Position.Y - Texture.Height,
+                    Texture.Width,
+                    Texture.Height);
+            
+            origin = position;
+            //this.origin = new Vector2(SpriteWidth / 2, SpriteWidth / 2);
+
+            currentFrame = 0;
+            numberOfFrames = 2;
+            Checkpoints = 0;
         }
 
         public Rectangle BoundingBox
@@ -144,6 +169,12 @@ namespace Risseproto
             set { this.onTheGround = value; }
         }
 
+        public int Checkpoints
+        {
+            get { return this.checkpoints; }
+            set { this.checkpoints = value; }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
@@ -151,6 +182,11 @@ namespace Risseproto
             //        position, 0.2f, SpriteEffects.None, 0f);
 
             //spriteBatch.Draw(rectangle, BoundingBox, Color.Black);
+        }
+
+        public void DrawFluff(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1.0f, SpriteEffects.None, 0);
         }
 
         public void DrawDuplicateMUTHAAAAAAA(SpriteBatch spriteBatch)
@@ -231,6 +267,24 @@ namespace Risseproto
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
+        }
+
+        public void updateFluff(int rissepos)
+        {
+            position += velocity;
+            if (Position.X <= rissepos + 400)
+            {
+                currentFrame = 1;
+                Checkpoints = Checkpoints + 1;
+            }
+            if (Position.X < -SpriteWidth)
+            {
+                position.X = 4000;
+                currentFrame = 0;
+            }
+            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            Console.Out.WriteLine(Position);
         }
 
         private void runAnimationOnce(int animationSpeed, int nextAnimation)

@@ -13,6 +13,7 @@ namespace Risseproto
         private Gameobject risseObject;
 
         private int numberOfSections = 30;           // HIRRHIRRHIRR
+        private int checkpointInterval = 4000;
 
         private ContentHolder contentHolder;
 
@@ -24,6 +25,7 @@ namespace Risseproto
         private List<List<Gameobject>> ground = new List<List<Gameobject>>();
         Random rand = new Random();
         //BECAUSE FUCK YOU THAT'S WHY
+        private List<Gameobject> background_fluff = new List<Gameobject>();
 
         public Gameworld(ContentHolder contentHolder)
         {
@@ -35,6 +37,8 @@ namespace Risseproto
             backgrounds.Add(new Gameobject(contentHolder.texture_background2, Vector2.Zero, new Vector2(-8, 0)));
 
             platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
+
+            background_fluff.Add(new Gameobject(contentHolder.texture_checkpoint, new Vector2(checkpointInterval, 550), new Vector2(-10, 0), 256, 256));
             this.contentHolder = contentHolder;
 
 
@@ -59,6 +63,10 @@ namespace Risseproto
                 backgrounds[i].DrawDuplicateMUTHAAAAAAA(spriteBatch);
             }
 
+            for (int i = 0; i < background_fluff.Count; i++)
+            {
+                background_fluff[i].DrawFluff(spriteBatch);
+            }
 
             risseObject.DrawAnimation(spriteBatch);
 
@@ -104,6 +112,11 @@ namespace Risseproto
         public List<Gameobject> Collidables
         {
             get { return collidables; }
+        }
+
+        public List<Gameobject> BackgroundFluff
+        {
+            get { return background_fluff; }
         }
 
         //public List<Gameobject> Ground
