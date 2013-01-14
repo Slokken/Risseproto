@@ -118,6 +118,8 @@ namespace Risseproto
             //gameworld.Risse.Velocity = Vector2.Zero;
 
             //FUCK MY LIFE HE HAS TO FALL AND STOP
+            gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
+            gameworld.Risse.collisionFall();
         }
 
         //handles landing on or jumping up and hitting a platform
