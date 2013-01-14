@@ -56,6 +56,7 @@ namespace Risseproto
         {
             if(risse.OnTheGround)
             {
+                risse.Animation = (int)state.jumping;
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -15);
                 soundManager.Play();
@@ -108,7 +109,7 @@ namespace Risseproto
         {
             if (risse.BoundingBox.Right - (risse.BoundingBox.Width/2) > platform.BoundingBox.Left && risse.BoundingBox.Right - (risse.BoundingBox.Width/2) < platform.BoundingBox.Right)
             {
-                if (risse.Position.Y < platform.BoundingBox.Y){
+                if (risse.Position.Y - risse.BoundingBox.Height < platform.BoundingBox.Y - platform.BoundingBox.Height){
                     collisionVertical(gameworld, new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height - 1)));
                     risse.OnTheGround = true;
                     gameworld.Risse.Animation = (int)state.running;
