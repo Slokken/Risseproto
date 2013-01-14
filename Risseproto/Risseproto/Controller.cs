@@ -123,9 +123,7 @@ namespace Risseproto
         //handles colliding with something from the side
         protected void collisionHorizontal(Gameworld gameworld, Vector2 prePos)
         {
-            //gameworld.Risse.Velocity = Vector2.Zero;
-
-            //FUCK MY LIFE HE HAS TO FALL AND STOP
+            gameworld.Risse.Velocity = Vector2.Zero;
             gameworld.Risse.Position = new Vector2(prePos.X, gameworld.Risse.Position.Y);
             gameworld.Risse.collisionFall();
         }
