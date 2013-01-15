@@ -30,6 +30,7 @@ namespace Risseproto
         public Texture2D menuStartClicked;
         public Texture2D menuBackground;
         public Texture2D grandma;
+        public Texture2D texture_outro;
 
         public List<Texture2D> collidables = new List<Texture2D>();
 
@@ -90,6 +91,7 @@ namespace Risseproto
             menuBackground      = content.Load<Texture2D>("MenuObjects\\meny_bg");
 
             grandma = content.Load<Texture2D>("Cutscenes\\grandma");
+            texture_outro   = content.Load<Texture2D>("Cutscenes\\bestemor_leser2");
 
             textureRectangle = content.Load<Texture2D>("rasstangle");
         }

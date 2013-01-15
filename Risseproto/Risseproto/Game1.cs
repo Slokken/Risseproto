@@ -25,8 +25,11 @@ namespace Risseproto
         Gameworld gameWorld;
         Input input;
         Button startButton;
+        Button restartButton;
+        Button menuButton;
         Gameobject menuBackground;
         Gameobject grandma;
+        Gameobject outroBackground;
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
@@ -75,8 +78,23 @@ namespace Risseproto
             });
             menuBackground = new Gameobject(contentHolder.menuBackground, Vector2.Zero, new Vector2(0, 0));
             grandma = new Gameobject(contentHolder.grandma, Vector2.Zero, new Vector2(0, 0));
-            
+            outroBackground = new Gameobject(contentHolder.texture_outro, Vector2.Zero, new Vector2(0, 0));
+
+            restartButton = new Button(new Rectangle(50, height - 125, 400, 75), "Start paa nytt", ref input, new List<Texture2D>() {
+                contentHolder.menuStart,
+                contentHolder.menuStartHover,
+                contentHolder.menuStartClicked
+            });
+
+            menuButton = new Button(new Rectangle(width - 450, height - 125, 400, 75), "Meny", ref input, new List<Texture2D>() {
+                contentHolder.menuStart,
+                contentHolder.menuStartHover,
+                contentHolder.menuStartClicked
+            });
+
             startButton.clicked += new Button.EventHandler(buttonClicked);
+            restartButton.clicked += new Button.EventHandler(buttonClicked);
+            menuButton.clicked += new Button.EventHandler(buttonClicked);
             controller.goToOutro += new Controller.EventHandler(outro);
             // TODO: use this.Content to load your game content here
         }
@@ -88,7 +106,19 @@ namespace Risseproto
 
         public void buttonClicked(string action)
         {
-            gameState = GameState.Grandma;
+            switch (action)
+            {
+                case "Start Spill":
+                    gameState = GameState.Grandma;
+                    break;
+                case "Start paa nytt":
+                    //FUCKING UPDATE THE FUCKING FUCK, FUCK
+                    gameState = GameState.InGame;
+                    break;
+                case "Meny":
+                    gameState = GameState.Menu;
+                    break;
+            }
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -126,6 +156,16 @@ namespace Risseproto
                 if (input.WasMouseClicked())
                     gameState = GameState.InGame;
             }
+            else if (gameState == GameState.Outro)
+            {
+                if (input.WasKeyClicked(Keys.Escape))
+                    gameState = GameState.Menu;
+                if (input.WasKeyClicked(Keys.Enter))
+                    gameState = GameState.InGame;
+                restartButton.Update();
+                menuButton.Update();
+
+            }
             else if (gameState == GameState.InGame)
             {
                 // Puts you back into the menu
@@ -159,6 +199,12 @@ namespace Risseproto
             else if(gameState == GameState.InGame)
             {
                 gameWorld.Draw(spriteBatch);
+            }
+            else if (gameState == GameState.Outro)
+            {
+                outroBackground.Draw(spriteBatch);
+                restartButton.Draw(spriteBatch);
+                menuButton.Draw(spriteBatch);
             }
             // TODO: Add your drawing code here
 
