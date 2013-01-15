@@ -226,11 +226,11 @@ namespace Risseproto
             switch (animation)
             {
                 case 0:
-                    interval = 100;
+                    interval = 67;
                     numberOfFrames = 8;
                     break;
                 case 1:
-                    interval = 500;
+                    interval = 400;
                     numberOfFrames = 3;
                     runAnimationOnce(0);
                     break;
