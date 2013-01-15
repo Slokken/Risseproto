@@ -98,9 +98,9 @@ namespace Risseproto
             }
         }
 
-        public void playFootstep()
+        public void playFootstep(bool jump)
         {
-            if (!risse.OnTheGround)
+            if (risse.Animation == (int)state.jumping || jump)
             {
                 Random rand = new Random();
                 int footstep = rand.Next(4);
@@ -157,6 +157,7 @@ namespace Risseproto
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -22);
                 //soundManager.Play();
+                playFootstep(true);
                 contentHolder.sound_jump.Play();
             }
         }
@@ -190,14 +191,14 @@ namespace Risseproto
                         {
                             risse.Position = new Vector2(risse.Position.X, ground.Position.Y - (risse.BoundingBox.Height * 2) + 1);
                             risse.Velocity = Vector2.Zero;
-                            playFootstep();
+                            //playFootstep();
                             risse.OnTheGround = true;
                         }
                         else if (risse.BoundingBox.Bottom <= ground.Position.Y + 30 && risse.Velocity.Y > 0)
                         {
                             risse.Position = new Vector2(risse.Position.X, ground.Position.Y - risse.BoundingBox.Height + 1);
                             risse.Velocity = Vector2.Zero;
-                            playFootstep();
+                            //playFootstep();
                             risse.OnTheGround = true;
                         }
                         
@@ -215,7 +216,7 @@ namespace Risseproto
                         {
                             risse.Position = new Vector2(risse.Position.X, platform.Position.Y - risse.BoundingBox.Height + 1);
                             risse.Velocity = Vector2.Zero;
-                            playFootstep();
+                            //playFootstep();
                             risse.OnTheGround = true;
                         }
                     }
@@ -223,6 +224,7 @@ namespace Risseproto
             }
             if (risse.OnTheGround && theState != state.ducking)
             {
+                playFootstep(false);
                 risse.Animation = (int)state.running;
             }
         }

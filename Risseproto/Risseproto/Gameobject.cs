@@ -28,7 +28,7 @@ namespace Risseproto
         private int spriteHeight;
         Rectangle sourceRect;
         Vector2 origin;
-        bool onTheGround = true;
+        bool onTheGround = false;
 
         int animation;
         int previousAnimation;
