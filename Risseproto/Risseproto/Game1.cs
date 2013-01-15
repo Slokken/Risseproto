@@ -109,6 +109,7 @@ namespace Risseproto
             switch (action)
             {
                 case "Start Spill":
+                    gameWorld = new Gameworld(contentHolder);
                     gameState = GameState.Grandma;
                     break;
                 case "Start paa nytt":
