@@ -242,10 +242,12 @@ namespace Risseproto
                     numberOfFrames = 0;
                     break;
                 case 3:
+                    interval = 400;
                     numberOfFrames = 2;
                     runAnimationOnce(0);
                     break;
                 case 4:
+                    interval = 400;
                     numberOfFrames = 3;
                     runAnimationOnce(0);
                     break;
@@ -273,7 +275,7 @@ namespace Risseproto
                 timer = 0f;
             }
 
-            Console.Out.WriteLine(currentFrame);
+            //Console.Out.WriteLine(currentFrame);
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
