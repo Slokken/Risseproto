@@ -178,7 +178,7 @@ namespace Risseproto
                     }
                 }
             }
-            if (risse.OnTheGround)
+            if (risse.OnTheGround && theState != state.ducking)
             {
                 risse.Animation = (int)state.running;
             }
