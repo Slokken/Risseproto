@@ -70,6 +70,11 @@ namespace Risseproto
             checkpointsDone = i;
         }
 
+        public void updateCheckpointsDone()
+        {
+            checkpointsDone -= risseSpeed;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < backgrounds.Count; i++)
@@ -262,28 +267,36 @@ namespace Risseproto
 
         public void resetToCheckpoint()
         {
-            int lengthToLastSnowman = snowmanLastvisited - risseObject.Position.X;
+            int lengthToLastSnowman = (int) (checkpointsDone + risseObject.Position.X );
 
             foreach (List<Gameobject> g in ground)
             {
                 foreach (Gameobject obj in g)
                 {
-                    obj.Position = new Vector2(lengthToLastSnowman, 0);
+                    obj.Position = new Vector2(obj.Position.X - lengthToLastSnowman, obj.Position.Y);
                 }
             }
 
             foreach (Gameobject obj in collidables)
             {
-                obj.Position = new Vector2(lengthToLastSnowman, 0);
+                obj.Position = new Vector2(obj.Position.X - lengthToLastSnowman, obj.Position.Y);
             }
 
             foreach (List<Gameobject> p in platforms)
             {
                 foreach (Gameobject obj in p)
                 {
-                    obj.Position = new Vector2(lengthToLastSnowman, 0);
+                    obj.Position = new Vector2(obj.Position.X - lengthToLastSnowman, obj.Position.Y);
                 }
             }
+
+            foreach(Gameobject obj in background_fluff)
+            {
+                obj.Position = new Vector2(obj.Position.X - lengthToLastSnowman, obj.Position.Y);
+            }
+
+            checkpointsDone = -80;
+            risseObject.Position = new Vector2(100, GROUNDHEIGHT - risseObject.SpriteHeight - 40);
         }
     }
 }

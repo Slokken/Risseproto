@@ -113,6 +113,7 @@ namespace Risseproto
                     break;
                 case "Start paa nytt":
                     //FUCKING UPDATE THE FUCKING FUCK, FUCK
+                    gameWorld.resetToCheckpoint();
                     gameState = GameState.InGame;
                     break;
                 case "Meny":

@@ -50,6 +50,8 @@ namespace Risseproto
             //    go.update();
             //}
 
+            gameWorld.updateCheckpointsDone();
+
             if (theState == state.ducking)
             {
                 if (ducking > 1000)

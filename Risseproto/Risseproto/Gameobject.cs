@@ -288,7 +288,7 @@ namespace Risseproto
                 if (!checkpointActivated)
                 {
                     currentFrame = 1;
-                    incrementCheckpoint((int)position.X + Checkpoints * 4000);
+                    incrementCheckpoint((int)position.X);
                     contentHolder.sound_checkpoint.Play();
                     checkpointActivated = true;
                 }
