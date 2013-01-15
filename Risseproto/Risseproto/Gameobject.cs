@@ -275,7 +275,7 @@ namespace Risseproto
             //origin = position;
         }
 
-        public void updateFluff(Gameobject risse)
+        public void updateFluff(Gameobject risse, ContentHolder contentHolder)
         {
             position += velocity;
             if (BoundingBox.Intersects(risse.BoundingBox))
@@ -283,6 +283,7 @@ namespace Risseproto
                 currentFrame = 1;
                 
                 Checkpoints = Checkpoints + 1;
+                contentHolder.sound_checkpoint.Play();
             }
             if (Position.X < -SpriteWidth)
             {

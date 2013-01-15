@@ -12,11 +12,12 @@ Content\Background\BackGround4.xnb
 Content\Object\platform_end.xnb
 Content\Object\platform_middle.xnb
 Content\Object\platform_start.xnb
-Content\SoundEffects\jump.xnb
-Content\Background\SnowmanSpriteSheet.xnb
 Content\MenuObjects\meny_bg.xnb
+Content\Background\SnowmanSpriteSheet.xnb
+Content\SoundEffects\jump.xnb
 Content\Object\Obstacles1.xnb
 Content\Object\Obstacles2.xnb
 Content\Object\Obstacles3.xnb
 Content\SoundEffects\soundtrack.xnb
+Content\SoundEffects\sound_snowman.xnb
 Content\SoundEffects\soundtrack.wma

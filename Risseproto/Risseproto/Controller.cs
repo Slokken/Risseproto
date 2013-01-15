@@ -15,6 +15,7 @@ namespace Risseproto
         private SoundManager soundManager;
         private ContentHolder contentHolder;
         Vector2 prePos;
+        private float ducking = 0;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
         private state theState = state.running;
@@ -47,6 +48,17 @@ namespace Risseproto
             //    go.update();
             //}
 
+            if (theState == state.ducking)
+            {
+                if (ducking > 1000)
+                {
+                    ducking = 0;
+                    theState = state.running;
+                    risse.Animation = (int)state.running;
+                }
+                ducking += (float)gameTime.ElapsedGameTime.Milliseconds;
+            }
+
             foreach (List<Gameobject> p in gameWorld.Platforms)
             {
                 foreach (Gameobject obj in p)
@@ -56,12 +68,12 @@ namespace Risseproto
             }
             if (!(MediaPlayer.State == MediaState.Playing))
             {
-                MediaPlayer.Play(contentHolder.soundtrack);
+                MediaPlayer.Play(contentHolder.music_soundtrack);
             }
 
             foreach (Gameobject go in gameWorld.BackgroundFluff)
             {
-                go.updateFluff(risse);
+                go.updateFluff(risse, contentHolder);
             }
 
             gameWorld.Platforms[0][0].Position = new Vector2(gameWorld.BackgroundFluff[0].Position.X - gameWorld.Platforms[0][0].Texture.Width, gameWorld.Platforms[0][0].Position.Y);
@@ -84,7 +96,6 @@ namespace Risseproto
             {
                 obj.update();
             }
-
         }
 
 
@@ -122,7 +133,8 @@ namespace Risseproto
                 risse.Animation = (int)state.jumping;
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -22);
-                soundManager.Play();
+                //soundManager.Play();
+                contentHolder.sound_jump.Play();
             }
         }
         public void duck()
