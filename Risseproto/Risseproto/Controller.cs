@@ -56,7 +56,7 @@ namespace Risseproto
             }
             if (!(MediaPlayer.State == MediaState.Playing))
             {
-                MediaPlayer.Play(contentHolder.music_soundtrack);
+                //MediaPlayer.Play(contentHolder.music_soundtrack);
             }
 
             foreach (Gameobject go in gameWorld.BackgroundFluff)
@@ -87,6 +87,29 @@ namespace Risseproto
 
         }
 
+        public void playFootstep()
+        {
+            if (!risse.OnTheGround)
+            {
+                Random rand = new Random();
+                int footstep = rand.Next(4);
+                switch (footstep)
+                {
+                    case 0:
+                        contentHolder.sound_footstep0.Play();
+                        break;
+                    case 1:
+                        contentHolder.sound_footstep1.Play();
+                        break;
+                    case 2:
+                        contentHolder.sound_footstep2.Play();
+                        break;
+                    case 3:
+                        contentHolder.sound_footstep3.Play();
+                        break;
+                }
+            }
+        }
 
         //TODO: actual parallaxing
         public void parallaxBackground(Gameworld gameWorld)
@@ -156,12 +179,14 @@ namespace Risseproto
                         {
                             risse.Position = new Vector2(risse.Position.X, ground.Position.Y - (risse.BoundingBox.Height * 2) + 1);
                             risse.Velocity = Vector2.Zero;
+                            playFootstep();
                             risse.OnTheGround = true;
                         }
                         else if (risse.BoundingBox.Bottom <= ground.Position.Y + 20 && risse.Velocity.Y > 0)
                         {
                             risse.Position = new Vector2(risse.Position.X, ground.Position.Y - risse.BoundingBox.Height + 1);
                             risse.Velocity = Vector2.Zero;
+                            playFootstep();
                             risse.OnTheGround = true;
                         }
                         
@@ -179,6 +204,7 @@ namespace Risseproto
                         {
                             risse.Position = new Vector2(risse.Position.X, platform.Position.Y - risse.BoundingBox.Height + 1);
                             risse.Velocity = Vector2.Zero;
+                            playFootstep();
                             risse.OnTheGround = true;
                         }
                     }

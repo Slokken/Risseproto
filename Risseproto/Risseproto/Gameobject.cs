@@ -34,6 +34,7 @@ namespace Risseproto
         int previousAnimation;
 
         private int checkpoints;
+        bool checkpointActivated = false;
         
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
@@ -274,7 +275,7 @@ namespace Risseproto
 
             //origin = position;
         }
-
+        
         public void updateFluff(Gameobject risse, ContentHolder contentHolder)
         {
             position += velocity;
@@ -283,12 +284,16 @@ namespace Risseproto
                 currentFrame = 1;
                 
                 Checkpoints = Checkpoints + 1;
-                contentHolder.sound_checkpoint.Play();
+                if (!checkpointActivated){
+                    contentHolder.sound_checkpoint.Play();
+                    checkpointActivated = true;
+                }
             }
             if (Position.X < -SpriteWidth)
             {
                 position.X = 4000;
                 currentFrame = 0;
+                checkpointActivated = false;
             }
             sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
