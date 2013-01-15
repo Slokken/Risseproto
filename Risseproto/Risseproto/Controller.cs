@@ -174,7 +174,7 @@ namespace Risseproto
                 {
                     if (physicsEngine.collisionDetection(risse, platform))
                     {
-                        if (risse.BoundingBox.Bottom <= platform.Position.Y + 20 && risse.Velocity.Y > 0)
+                        if (risse.BoundingBox.Bottom <= platform.Position.Y + 20 && risse.Velocity.Y > 0 && theState != state.ducking)
                         {
                             risse.Position = new Vector2(risse.Position.X, platform.Position.Y - risse.BoundingBox.Height + 1);
                             risse.Velocity = Vector2.Zero;
