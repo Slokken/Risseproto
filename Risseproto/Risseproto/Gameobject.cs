@@ -275,12 +275,13 @@ namespace Risseproto
             //origin = position;
         }
 
-        public void updateFluff(int rissepos)
+        public void updateFluff(Gameobject risse)
         {
             position += velocity;
-            if (Position.X <= rissepos + 400)
+            if (BoundingBox.Intersects(risse.BoundingBox))
             {
                 currentFrame = 1;
+                
                 Checkpoints = Checkpoints + 1;
             }
             if (Position.X < -SpriteWidth)

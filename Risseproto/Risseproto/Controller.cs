@@ -61,7 +61,7 @@ namespace Risseproto
 
             foreach (Gameobject go in gameWorld.BackgroundFluff)
             {
-                go.updateFluff((int)risse.BoundingBox.X);
+                go.updateFluff(risse);
             }
 
             gameWorld.Platforms[0][0].Position = new Vector2(gameWorld.BackgroundFluff[0].Position.X - gameWorld.Platforms[0][0].Texture.Width, gameWorld.Platforms[0][0].Position.Y);
