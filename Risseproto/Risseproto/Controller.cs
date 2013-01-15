@@ -15,6 +15,7 @@ namespace Risseproto
         private SoundManager soundManager;
         private ContentHolder contentHolder;
         Vector2 prePos;
+        private float ducking = 0;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
         private state theState = state.running;
@@ -47,6 +48,17 @@ namespace Risseproto
             //    go.update();
             //}
 
+            if (theState == state.ducking)
+            {
+                if (ducking > 1000)
+                {
+                    ducking = 0;
+                    theState = state.running;
+                    risse.Animation = (int)state.running;
+                }
+                ducking += (float)gameTime.ElapsedGameTime.Milliseconds;
+            }
+
             foreach (List<Gameobject> p in gameWorld.Platforms)
             {
                 foreach (Gameobject obj in p)
@@ -54,10 +66,10 @@ namespace Risseproto
                     obj.update();
                 }
             }
-            if (!(MediaPlayer.State == MediaState.Playing))
-            {
-                MediaPlayer.Play(contentHolder.soundtrack);
-            }
+            //if (!(MediaPlayer.State == MediaState.Playing))
+            //{
+            //    MediaPlayer.Play(contentHolder.soundtrack);
+            //}
 
             foreach (Gameobject go in gameWorld.BackgroundFluff)
             {
@@ -84,7 +96,6 @@ namespace Risseproto
             {
                 obj.update();
             }
-
         }
 
 
