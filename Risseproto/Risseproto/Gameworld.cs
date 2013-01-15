@@ -297,6 +297,7 @@ namespace Risseproto
 
             checkpointsDone = -80;
             risseObject.Position = new Vector2(100, GROUNDHEIGHT - risseObject.SpriteHeight - 40);
+            risseObject.Velocity = Vector2.Zero;
         }
     }
 }
