@@ -176,9 +176,6 @@ namespace Risseproto
                     {
                         if (risse.BoundingBox.Bottom <= platform.Position.Y + 20 && theState == state.ducking)
                         {
-                            risse.Position = new Vector2(risse.Position.X, platform.Position.Y - (risse.BoundingBox.Height * 2) + 1);
-                            risse.Velocity = Vector2.Zero;
-                            risse.OnTheGround = true;
                         }
                         else if (risse.BoundingBox.Bottom <= platform.Position.Y + 20 && risse.Velocity.Y > 0)
                         {
