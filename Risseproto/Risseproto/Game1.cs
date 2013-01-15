@@ -16,7 +16,7 @@ namespace Risseproto
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        enum GameState { Menu, InGame }
+        enum GameState { Menu, Grandma, InGame }
         GameState gameState = GameState.Menu;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -26,6 +26,7 @@ namespace Risseproto
         Input input;
         Button startButton;
         Gameobject menuBackground;
+        Gameobject grandma;
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
@@ -73,7 +74,7 @@ namespace Risseproto
                 contentHolder.menuStartClicked
             });
             menuBackground = new Gameobject(contentHolder.menuBackground, Vector2.Zero, new Vector2(0, 0));
-
+            grandma = new Gameobject(contentHolder.grandma, Vector2.Zero, new Vector2(0, 0));
             
             startButton.clicked += new Button.EventHandler(buttonClicked);
             // TODO: use this.Content to load your game content here
@@ -81,7 +82,7 @@ namespace Risseproto
 
         public void buttonClicked(string action)
         {
-            gameState = GameState.InGame;
+            gameState = GameState.Grandma;
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -107,8 +108,17 @@ namespace Risseproto
                 if (input.WasKeyClicked(Keys.Escape))
                     this.Exit();
                 if (input.WasKeyClicked(Keys.Enter))
-                    gameState = GameState.InGame;
+                    gameState = GameState.Grandma;
                 startButton.Update();
+            }
+            else if (gameState == GameState.Grandma)
+            {
+                if (input.WasKeyClicked(Keys.Escape))
+                    gameState = GameState.Menu;
+                if (input.WasKeyClicked(Keys.Enter))
+                    gameState = GameState.InGame;
+                if (input.WasMouseClicked())
+                    gameState = GameState.InGame;
             }
             else if (gameState == GameState.InGame)
             {
@@ -135,6 +145,10 @@ namespace Risseproto
             {
                 menuBackground.Draw(spriteBatch);
                 startButton.Draw(spriteBatch);
+            }
+            else if (gameState == GameState.Grandma)
+            {
+                grandma.Draw(spriteBatch);
             }
             else if(gameState == GameState.InGame)
             {

@@ -29,6 +29,7 @@ namespace Risseproto
         public Texture2D menuStartHover;
         public Texture2D menuStartClicked;
         public Texture2D menuBackground;
+        public Texture2D grandma;
 
         public List<Texture2D> collidables = new List<Texture2D>();
 
@@ -87,6 +88,8 @@ namespace Risseproto
             menuStartHover      = content.Load<Texture2D>("MenuObjects\\start_hover");
             menuStartClicked    = content.Load<Texture2D>("MenuObjects\\start_clicked");
             menuBackground      = content.Load<Texture2D>("MenuObjects\\meny_bg");
+
+            grandma = content.Load<Texture2D>("Cutscenes\\grandma");
 
             textureRectangle = content.Load<Texture2D>("rasstangle");
         }
