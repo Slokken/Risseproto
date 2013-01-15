@@ -216,11 +216,7 @@ namespace Risseproto
         {
             position += velocity;
 
-            if (timer > interval)
-            {
-                currentFrame++;
-                timer = 0f;
-            }
+            
 
             if (previousAnimation != animation)
             {
@@ -230,25 +226,28 @@ namespace Risseproto
             switch (animation)
             {
                 case 0:
-                    interval = 250;
-                    numberOfFrames = 7;
+                    interval = 100;
+                    numberOfFrames = 8;
                     break;
                 case 1:
-                    numberOfFrames = 2;
-                    runAnimationOnce(1000, 0);
+                    interval = 500;
+                    numberOfFrames = 3;
+                    runAnimationOnce(0);
                     break;
                 case 2:
                     numberOfFrames = 0;
                     break;
                 case 3:
-                    numberOfFrames = 1;
-                    runAnimationOnce(1000, 0);
+                    numberOfFrames = 2;
+                    runAnimationOnce(0);
                     break;
                 case 4:
-                    numberOfFrames = 2;
-                    runAnimationOnce(1000, 0);
+                    numberOfFrames = 3;
+                    runAnimationOnce(0);
                     break;
             }
+
+           
 
             timer += (float)gameTime.ElapsedGameTime.Milliseconds;
 
@@ -258,10 +257,19 @@ namespace Risseproto
                 currentFrame = 0;
             }
 
+           
+
             sourceRect = new Rectangle(currentFrame * spriteWidth, animation * spriteHeight, spriteWidth, spriteHeight);
 
             previousAnimation = animation;
             
+            if (timer > interval)
+            {
+                currentFrame++;
+                timer = 0f;
+            }
+
+            Console.Out.WriteLine(currentFrame);
             //origin = new Vector2(sourceRect.Width , sourceRect.Height );
 
             //origin = position;
@@ -282,15 +290,14 @@ namespace Risseproto
             }
             sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
-            Console.Out.WriteLine(Position);
+            
         }
 
-        private void runAnimationOnce(int animationSpeed, int nextAnimation)
+        private void runAnimationOnce(int nextAnimation)
         {
             if (currentFrame >= numberOfFrames)
             {
                 animation = nextAnimation;
-                interval = animationSpeed;
             }
         }
 

@@ -163,6 +163,8 @@ namespace Risseproto
                             risse.Velocity = Vector2.Zero;
                             risse.OnTheGround = true;
                         }
+                        
+
                     }
                 }
             }
@@ -186,6 +188,10 @@ namespace Risseproto
                         }
                     }
                 }
+            }
+            if (risse.OnTheGround)
+            {
+                risse.Animation = (int)state.running;
             }
         }
     }
