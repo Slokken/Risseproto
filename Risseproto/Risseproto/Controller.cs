@@ -54,10 +54,10 @@ namespace Risseproto
                     obj.update();
                 }
             }
-            //if (!(MediaPlayer.State == MediaState.Playing))
-            //{
-            //    MediaPlayer.Play(contentHolder.soundtrack);
-            //}
+            if (!(MediaPlayer.State == MediaState.Playing))
+            {
+                MediaPlayer.Play(contentHolder.soundtrack);
+            }
 
             foreach (Gameobject go in gameWorld.BackgroundFluff)
             {
