@@ -193,6 +193,7 @@ namespace Risseproto
         {
             theState = state.crash;
             risse.Animation = (int)state.facedown;
+            risse.Velocity = Vector2.Zero;
         }
         public void ResetBoundingBox()
         {
