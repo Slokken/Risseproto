@@ -121,7 +121,7 @@ namespace Risseproto
            	    theState = state.jumping;
                 risse.Animation = (int)state.jumping;
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
-                risse.Velocity = new Vector2(0, -15);
+                risse.Velocity = new Vector2(0, -22);
                 soundManager.Play();
             }
         }
