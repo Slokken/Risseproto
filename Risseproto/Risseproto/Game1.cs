@@ -81,15 +81,15 @@ namespace Risseproto
             outroBackground = new Gameobject(contentHolder.texture_outro, Vector2.Zero, new Vector2(0, 0));
 
             restartButton = new Button(new Rectangle(50, height - 125, 400, 75), "Start paa nytt", ref input, new List<Texture2D>() {
-                contentHolder.menuStart,
-                contentHolder.menuStartHover,
+                contentHolder.menuRestart,
+                contentHolder.menuRestartHover,
                 contentHolder.menuStartClicked
             });
 
             menuButton = new Button(new Rectangle(width - 450, height - 125, 400, 75), "Meny", ref input, new List<Texture2D>() {
-                contentHolder.menuStart,
-                contentHolder.menuStartHover,
-                contentHolder.menuStartClicked
+                contentHolder.menuMenu,
+                contentHolder.menuMenuHover,
+                contentHolder.menuMenuClicked
             });
 
             startButton.clicked += new Button.EventHandler(buttonClicked);

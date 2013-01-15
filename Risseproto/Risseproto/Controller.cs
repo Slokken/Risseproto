@@ -18,6 +18,7 @@ namespace Risseproto
         private ContentHolder contentHolder;
         Vector2 prePos;
         private float ducking = 0;
+        private float crashing = 0;
 
         enum state { running, jumping, ducking, facedown, crash }
         private state theState = state.running;
@@ -61,6 +62,16 @@ namespace Risseproto
                     risse.Animation = (int)state.running;
                 }
                 ducking += (float)gameTime.ElapsedGameTime.Milliseconds;
+            }
+            if (theState == state.crash)
+            {
+                if (crashing > 1000)
+                {
+                    crashing = 0;
+                    theState = state.running;
+                    risse.Animation = (int)state.running;
+                }
+                crashing += (float)gameTime.ElapsedGameTime.Milliseconds;
             }
 
             foreach (List<Gameobject> p in gameWorld.Platforms)
@@ -126,6 +137,12 @@ namespace Risseproto
             }
         }
 
+        public void playSlide()
+        {
+            if (risse.Animation == (int)state.running)
+                contentHolder.sound_slide.Play();
+        }
+
         //TODO: actual parallaxing
         public void parallaxBackground(Gameworld gameWorld)
         {
@@ -150,11 +167,7 @@ namespace Risseproto
 
         public void jump()
         {
-            if (theState == state.ducking)
-            {
-                risse.OnTheGround = true;
-            }
-            if(risse.OnTheGround)
+            if(risse.OnTheGround && theState != state.crash)
             {
            	    theState = state.jumping;
                 risse.Animation = (int)state.jumping;
@@ -167,12 +180,19 @@ namespace Risseproto
         }
         public void duck()
         {
-            if (risse.OnTheGround)
+            if (risse.OnTheGround && theState != state.crash)
             {
+                playSlide();
                 theState = state.ducking;
                 risse.Animation = (int)state.ducking;
                 //risse.Position = new Vector2(risse.Position.X, risse.Position.Y - 128);
             }
+        }
+
+        public void crash()
+        {
+            theState = state.crash;
+            risse.Animation = (int)state.facedown;
         }
         public void ResetBoundingBox()
         {
@@ -224,7 +244,18 @@ namespace Risseproto
                     }
                 }
             }
-            if (risse.OnTheGround && theState != state.ducking)
+            foreach (Gameobject collidable in gameworld.Collidables)
+            {
+                if (physicsEngine.collisionDetection(risse, collidable))
+                {
+                    if (risse.BoundingBox.Right <= collidable.Position.X + 30)// && risse.BoundingBox.Bottom >= collidable.Position.Y)
+                    {
+                        crash();
+                        //Console.Out.WriteLine("pang");
+                    }
+                }
+            }
+            if (risse.OnTheGround && theState != state.ducking && theState != state.crash)
             {
                 playFootstep(false);
                 risse.Animation = (int)state.running;
