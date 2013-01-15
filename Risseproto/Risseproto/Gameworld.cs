@@ -18,6 +18,7 @@ namespace Risseproto
 
         private int numberOfSections = 30;           // HIRRHIRRHIRR
         private int checkpointInterval = 4000;
+        private int checkpointsDone = 0;
 
         private ContentHolder contentHolder;
 
@@ -46,6 +47,7 @@ namespace Risseproto
             background_fluff.Add(new Gameobject(contentHolder.texture_checkpoint, new Vector2(checkpointInterval, 560), new Vector2(-10, 0), 256, 256));
             platforms.Add(makePlatformSection(new Vector2(checkpointInterval, GROUNDHEIGHT), 0, 0));
 
+            background_fluff[0].incrementCheckpoint += new Gameobject.EventHandler(increment);
 
             generateMap();
             generateObstacles();
@@ -61,6 +63,11 @@ namespace Risseproto
             //}
 
             //ground.Add(new Gameobject(contentHolder.texture_platform, new Vector2(1, 688), new Vector2(-3, 0)));
+        }
+
+        protected void increment()
+        {
+            checkpointsDone++;
         }
 
         public void Draw(SpriteBatch spriteBatch)
