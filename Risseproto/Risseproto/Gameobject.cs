@@ -37,6 +37,7 @@ namespace Risseproto
         bool checkpointActivated = false;
         public event EventHandler incrementCheckpoint;
         public delegate void EventHandler(int i);
+
         
 
         public Gameobject(Texture2D texture, Vector2 position, Vector2 velocity)
@@ -284,17 +285,17 @@ namespace Risseproto
             if (BoundingBox.Intersects(risse.BoundingBox))
             {
                 
-                //Checkpoints = Checkpoints + 1;
                 if (!checkpointActivated)
                 {
                     currentFrame = 1;
-                    incrementCheckpoint((int)position.X);
+                    incrementCheckpoint((int)position.X + Checkpoints * 4000);
                     contentHolder.sound_checkpoint.Play();
                     checkpointActivated = true;
                 }
             }
             if (Position.X < -SpriteWidth)
             {
+                Checkpoints = Checkpoints + 1;
                 position.X += 4000;
                 currentFrame = 0;
                 checkpointActivated = false;
