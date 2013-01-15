@@ -65,9 +65,9 @@ namespace Risseproto
             //ground.Add(new Gameobject(contentHolder.texture_platform, new Vector2(1, 688), new Vector2(-3, 0)));
         }
 
-        protected void increment()
+        protected void increment(int i)
         {
-            checkpointsDone++;
+            checkpointsDone = i;
         }
 
         public void Draw(SpriteBatch spriteBatch)
