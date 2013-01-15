@@ -28,6 +28,12 @@ namespace Risseproto
         public Texture2D menuStart;
         public Texture2D menuStartHover;
         public Texture2D menuStartClicked;
+        public Texture2D menuMenu;
+        public Texture2D menuMenuHover;
+        public Texture2D menuMenuClicked;
+        public Texture2D menuRestart;
+        public Texture2D menuRestartHover;
+        public Texture2D menuRestartClicked;
         public Texture2D menuBackground;
         public Texture2D grandma;
         public Texture2D texture_outro;
@@ -87,7 +93,16 @@ namespace Risseproto
             
             menuStart           = content.Load<Texture2D>("MenuObjects\\start");
             menuStartHover      = content.Load<Texture2D>("MenuObjects\\start_hover");
-            menuStartClicked    = content.Load<Texture2D>("MenuObjects\\start_clicked");
+            menuStartClicked = content.Load<Texture2D>("MenuObjects\\start_clicked");
+
+            menuMenu        = content.Load<Texture2D>("MenuObjects\\menu");
+            menuMenuHover   = content.Load<Texture2D>("MenuObjects\\menu_hover");
+            menuMenuClicked = content.Load<Texture2D>("MenuObjects\\menu_clicked");
+
+            menuRestart = content.Load<Texture2D>("MenuObjects\\restart");
+            menuRestartHover = content.Load<Texture2D>("MenuObjects\\restart_hover");
+            menuRestartClicked = content.Load<Texture2D>("MenuObjects\\restart_clicked");
+
             menuBackground      = content.Load<Texture2D>("MenuObjects\\meny_bg");
 
             grandma = content.Load<Texture2D>("Cutscenes\\grandma");
