@@ -33,18 +33,18 @@ namespace Risseproto
 
         public Gameworld(ContentHolder contentHolder)
         {
+            this.contentHolder = contentHolder;
             risseObject = new Gameobject(contentHolder.texture_risse, new Vector2(100, 0), Vector2.Zero, 100, 192, 192);
 
             backgrounds.Add(new Gameobject(contentHolder.texture_background4, Vector2.Zero, new Vector2(-1, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background3, Vector2.Zero, new Vector2(-3, 0)));
             backgrounds.Add(new Gameobject(contentHolder.texture_background1, Vector2.Zero, new Vector2(-6, 0)));
-            backgrounds.Add(new Gameobject(contentHolder.texture_background2, Vector2.Zero, new Vector2(-8, 0)));
-
+            backgrounds.Add(new Gameobject(contentHolder.texture_background2, new Vector2(0,15), new Vector2(-8, 0)));
+            
             //platforms.Add(new Gameobject(contentHolder.texture_platform, new Vector2(900, 500), new Vector2(-6,0)));
 
-            background_fluff.Add(new Gameobject(contentHolder.texture_checkpoint, new Vector2(checkpointInterval, 550), new Vector2(-10, 0), 256, 256));
-            platforms.Add(List < Gameobject > makePlatformSection(new Vector2(checkpointInterval, GROUNDHEIGHT), 0, 0));
-            this.contentHolder = contentHolder;
+            background_fluff.Add(new Gameobject(contentHolder.texture_checkpoint, new Vector2(checkpointInterval, 560), new Vector2(-10, 0), 256, 256));
+            platforms.Add(makePlatformSection(new Vector2(checkpointInterval, GROUNDHEIGHT), 0, 0));
 
 
             generateMap();

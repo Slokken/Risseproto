@@ -64,6 +64,9 @@ namespace Risseproto
                 go.updateFluff((int)risse.BoundingBox.X);
             }
 
+            gameWorld.Platforms[0][0].Position = new Vector2(gameWorld.BackgroundFluff[0].Position.X - gameWorld.Platforms[0][0].Texture.Width, gameWorld.Platforms[0][0].Position.Y);
+            gameWorld.Platforms[0][1].Position = new Vector2(gameWorld.BackgroundFluff[0].Position.X + gameWorld.Platforms[0][1].SpriteWidth, gameWorld.Platforms[0][1].Position.Y);
+
             //foreach (Gameobject ground in gameWorld.Ground)
             //{
             //    ground.update();
@@ -92,9 +95,17 @@ namespace Risseproto
             {
                 if (gameWorld.Backgrounds[i].Position.X < (-gameWorld.Backgrounds[i].TextureWidth))
                 {
-                    gameWorld.Backgrounds[i].Position = new Vector2(gameWorld.Backgrounds[i].Position.X + gameWorld.Backgrounds[i].TextureWidth, 0);
+                    if (i == 3)
+                    {
+                        gameWorld.Backgrounds[i].Position = new Vector2(gameWorld.Backgrounds[i].Position.X + gameWorld.Backgrounds[i].TextureWidth, 15);
+                    }
+                    else
+                    {
+                        gameWorld.Backgrounds[i].Position = new Vector2(gameWorld.Backgrounds[i].Position.X + gameWorld.Backgrounds[i].TextureWidth, 0);
+                    }
                     //gameWorld.Backgrounds[i+1].Position = new Vector2(gameWorld.Backgrounds[i+1].Position.X + gameWorld.Backgrounds[i+1].TextureWidth, 0);
                 }
+                
                 gameWorld.Backgrounds[i].update();
             }
         }
