@@ -83,7 +83,7 @@ namespace Risseproto
             }
             if (!(MediaPlayer.State == MediaState.Playing))
             {
-                //MediaPlayer.Play(contentHolder.music_soundtrack);
+                MediaPlayer.Play(contentHolder.music_soundtrack);
             }
 
             foreach (Gameobject go in gameWorld.BackgroundFluff)
