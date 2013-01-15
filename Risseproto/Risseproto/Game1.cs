@@ -16,7 +16,7 @@ namespace Risseproto
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        enum GameState { Menu, InGame }
+        enum GameState { Menu, InGame, Grandma, Outro }
         GameState gameState = GameState.Menu;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -76,7 +76,13 @@ namespace Risseproto
 
             
             startButton.clicked += new Button.EventHandler(buttonClicked);
+            controller.goToOutro += new Controller.EventHandler(outro);
             // TODO: use this.Content to load your game content here
+        }
+
+        public void outro()
+        {
+            gameState = GameState.Outro;
         }
 
         public void buttonClicked(string action)

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Risseproto
 {
     class Controller
     {
-
+        public event EventHandler goToOutro;
+        public delegate void EventHandler();
         public Gameobject risse;
         private PhysicsEngine physicsEngine;
         private SoundManager soundManager;
@@ -17,7 +19,7 @@ namespace Risseproto
         Vector2 prePos;
         private float ducking = 0;
 
-        enum state { running, jumping, ducking, idonteven, facedown, crash }
+        enum state { running, jumping, ducking, facedown, crash }
         private state theState = state.running;
 
         public Controller(Input input, SoundManager soundManager, ContentHolder contentHolder)
@@ -201,8 +203,6 @@ namespace Risseproto
                             //playFootstep();
                             risse.OnTheGround = true;
                         }
-                        
-
                     }
                 }
             }
@@ -226,6 +226,11 @@ namespace Risseproto
             {
                 playFootstep(false);
                 risse.Animation = (int)state.running;
+            }
+
+            if (risse.BoundingBox.Top > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height)
+            {
+                goToOutro();
             }
         }
     }
