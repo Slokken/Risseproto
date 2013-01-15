@@ -146,7 +146,10 @@ namespace Risseproto
                 if (input.WasKeyClicked(Keys.Escape))
                     this.Exit();
                 if (input.WasKeyClicked(Keys.Enter))
+                {
+                    gameWorld = new Gameworld(contentHolder);
                     gameState = GameState.Grandma;
+                }
                 startButton.Update();
             }
             else if (gameState == GameState.Grandma)
@@ -163,7 +166,10 @@ namespace Risseproto
                 if (input.WasKeyClicked(Keys.Escape))
                     gameState = GameState.Menu;
                 if (input.WasKeyClicked(Keys.Enter))
+                {
+                    gameWorld.resetToCheckpoint();
                     gameState = GameState.InGame;
+                }
                 restartButton.Update();
                 menuButton.Update();
 
