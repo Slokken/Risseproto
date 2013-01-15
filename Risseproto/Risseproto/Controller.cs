@@ -61,7 +61,7 @@ namespace Risseproto
 
             foreach (Gameobject go in gameWorld.BackgroundFluff)
             {
-                go.updateFluff(risse);
+                go.updateFluff(risse, contentHolder);
             }
 
             gameWorld.Platforms[0][0].Position = new Vector2(gameWorld.BackgroundFluff[0].Position.X - gameWorld.Platforms[0][0].Texture.Width, gameWorld.Platforms[0][0].Position.Y);
@@ -122,7 +122,8 @@ namespace Risseproto
                 risse.Animation = (int)state.jumping;
                 risse.Position = new Vector2(risse.Position.X, risse.Position.Y -6);
                 risse.Velocity = new Vector2(0, -15);
-                soundManager.Play();
+                //soundManager.Play();
+                contentHolder.sound_jump.Play();
             }
         }
         public void duck()

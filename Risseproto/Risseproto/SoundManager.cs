@@ -16,12 +16,12 @@ namespace Risseproto
 
        public void Play()
         {
-            soundContent.jump.Play();
+            soundContent.sound_jump.Play();
         }
 
        public void playSoundtrack()
        {
-           Microsoft.Xna.Framework.Media.Song instance = soundContent.soundtrack;
+           Microsoft.Xna.Framework.Media.Song instance = soundContent.music_soundtrack;
        }
     }
 }

@@ -35,8 +35,9 @@ namespace Risseproto
         public static Texture2D textureRectangle;
 
         //Sounds and music
-        public SoundEffect jump;
-        public Song soundtrack;
+        public SoundEffect sound_jump;
+        public Song sound_checkpoint;
+        public Song music_soundtrack;
 
         public ContentHolder(ContentManager content)
         {
@@ -48,9 +49,10 @@ namespace Risseproto
 
         private void loadSounds(ContentManager content)
         {
-            jump = content.Load<SoundEffect>("SoundEffects\\jump");
+            sound_jump = content.Load<SoundEffect>("SoundEffects\\jump");
+            sound_checkpoint = content.Load<Song>("SoundEffects\\sound_snowman");
 
-            soundtrack = content.Load<Song>("SoundEffects\\soundtrack");
+            music_soundtrack = content.Load<Song>("SoundEffects\\soundtrack");
         }
 
         private void loadTextures(ContentManager content)
