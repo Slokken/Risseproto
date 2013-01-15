@@ -16,15 +16,21 @@ namespace Risseproto
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+<<<<<<< HEAD
+        enum GameState { Menu, InGame, Grandma, Outro }
+=======
+        enum GameState { Menu, Grandma, InGame }
+>>>>>>> f555fa30c3a508eef509ee5aec945797ee218879
+        GameState gameState = GameState.Menu;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         ContentHolder contentHolder;
-<<<<<<< HEAD
-        Gameobject risseObject;
-        Input input;
-=======
+        SoundManager soundManager;
         Gameworld gameWorld;
->>>>>>> ab8caaf94ebbef3c8b689c154c301de56a2dc869
+        Input input;
+        Button startButton;
+        Gameobject menuBackground;
+        Gameobject grandma;
         int width = 1280;
         int height = 720;
         String gameName = "Risse prototype";
@@ -46,9 +52,12 @@ namespace Risseproto
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            input = new Input();
             contentHolder = new ContentHolder(Content);
+            soundManager = new SoundManager(contentHolder);
             gameWorld = new Gameworld(contentHolder);
-            controller = new Controller();
+            controller = new Controller(input, soundManager, contentHolder);
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -61,24 +70,29 @@ namespace Risseproto
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-<<<<<<< HEAD
-            risseObject = new Gameobject(contentHolder.risse, Vector2.Zero);
-            input = new Input();
-=======
             
->>>>>>> ab8caaf94ebbef3c8b689c154c301de56a2dc869
-
-            input.jump += new Input.EventHandler(jump);
-            input.duck += new Input.EventHandler(duck);
+           
+            startButton = new Button(new Rectangle((width/3)*2,550,400,75), "Start Spill", ref input, new List<Texture2D>() {
+                contentHolder.menuStart,
+                contentHolder.menuStartHover,
+                contentHolder.menuStartClicked
+            });
+            menuBackground = new Gameobject(contentHolder.menuBackground, Vector2.Zero, new Vector2(0, 0));
+            grandma = new Gameobject(contentHolder.grandma, Vector2.Zero, new Vector2(0, 0));
+            
+            startButton.clicked += new Button.EventHandler(buttonClicked);
+            controller.goToOutro += new Controller.EventHandler(outro);
             // TODO: use this.Content to load your game content here
         }
-        public void jump()
+
+        public void outro()
         {
-            System.Diagnostics.Debug.WriteLine("jump");
+            gameState = GameState.Outro;
         }
-        public void duck()
+
+        public void buttonClicked(string action)
         {
-            System.Diagnostics.Debug.WriteLine("duck");
+            gameState = GameState.Grandma;
         }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -96,14 +110,36 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
-            //controller.update(gameTime);
-
-            // TODO: Add your update logic here
             input.Update();
+
+            if (gameState == GameState.Menu)
+            {
+                // Allows the game to exit
+                if (input.WasKeyClicked(Keys.Escape))
+                    this.Exit();
+                if (input.WasKeyClicked(Keys.Enter))
+                    gameState = GameState.Grandma;
+                startButton.Update();
+            }
+            else if (gameState == GameState.Grandma)
+            {
+                if (input.WasKeyClicked(Keys.Escape))
+                    gameState = GameState.Menu;
+                if (input.WasKeyClicked(Keys.Enter))
+                    gameState = GameState.InGame;
+                if (input.WasMouseClicked())
+                    gameState = GameState.InGame;
+            }
+            else if (gameState == GameState.InGame)
+            {
+                // Puts you back into the menu
+                if (input.WasKeyClicked(Keys.Escape))
+                    gameState = GameState.Menu;
+
+                controller.update(gameWorld, gameTime);
+                input.Swipe();
+                input.Click();
+            }
             base.Update(gameTime);
         }
 
@@ -113,11 +149,21 @@ namespace Risseproto
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
+            GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            gameWorld.Draw(spriteBatch);
-            
+            if (gameState == GameState.Menu)
+            {
+                menuBackground.Draw(spriteBatch);
+                startButton.Draw(spriteBatch);
+            }
+            else if (gameState == GameState.Grandma)
+            {
+                grandma.Draw(spriteBatch);
+            }
+            else if(gameState == GameState.InGame)
+            {
+                gameWorld.Draw(spriteBatch);
+            }
             // TODO: Add your drawing code here
 
             spriteBatch.End();
