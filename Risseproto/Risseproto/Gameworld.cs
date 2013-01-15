@@ -259,5 +259,31 @@ namespace Risseproto
 
             return section;
         }
+
+        public void resetToCheckpoint()
+        {
+            int lengthToLastSnowman = snowmanLastvisited - risseObject.Position.X;
+
+            foreach (List<Gameobject> g in ground)
+            {
+                foreach (Gameobject obj in g)
+                {
+                    obj.Position = new Vector2(lengthToLastSnowman, 0);
+                }
+            }
+
+            foreach (Gameobject obj in collidables)
+            {
+                obj.Position = new Vector2(lengthToLastSnowman, 0);
+            }
+
+            foreach (List<Gameobject> p in platforms)
+            {
+                foreach (Gameobject obj in p)
+                {
+                    obj.Position = new Vector2(lengthToLastSnowman, 0);
+                }
+            }
+        }
     }
 }
