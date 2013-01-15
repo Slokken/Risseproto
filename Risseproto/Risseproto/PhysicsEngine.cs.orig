@@ -19,7 +19,7 @@ namespace Risseproto
         {
             
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;//0.01666667 (or 16.67 ms) @ 60FPS
-            gameObject.Velocity += new Vector2(0, GRAVITYCONSTANT * elapsed * 4);
+            gameObject.Velocity += new Vector2(0, GRAVITYCONSTANT * elapsed * 2);
             gameObject.Position += gameObject.Velocity * elapsed;
         }
 
@@ -32,6 +32,22 @@ namespace Risseproto
             else
             {
                 return false;
+<<<<<<< HEAD
+=======
+            }
+        }
+
+        public bool collisionDetectionCrouching(Rectangle secretBox, Gameobject object2)
+        {
+
+            if (secretBox.Intersects(object2.BoundingBox))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+>>>>>>> fd03325243ebc87379aa402e719be58061154bde
             }
         }
     }

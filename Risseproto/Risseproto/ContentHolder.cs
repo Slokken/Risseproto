@@ -36,7 +36,7 @@ namespace Risseproto
 
         //Sounds and music
         public SoundEffect sound_jump;
-        public Song sound_checkpoint;
+        public SoundEffect sound_checkpoint;
         public Song music_soundtrack;
 
         public ContentHolder(ContentManager content)
@@ -50,7 +50,7 @@ namespace Risseproto
         private void loadSounds(ContentManager content)
         {
             sound_jump = content.Load<SoundEffect>("SoundEffects\\jump");
-            sound_checkpoint = content.Load<Song>("SoundEffects\\sound_snowman");
+            sound_checkpoint = content.Load<SoundEffect>("SoundEffects\\sound_snowman");
 
             music_soundtrack = content.Load<Song>("SoundEffects\\soundtrack");
         }

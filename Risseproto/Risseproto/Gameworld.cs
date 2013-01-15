@@ -135,7 +135,7 @@ namespace Risseproto
                 Platforms.Add(makePlatformSection(position,0, 2));
 
                 position.X = position.X + rand.Next(600, 2000);
-                position.Y = rand.Next(250, 350);
+                position.Y = rand.Next(250, 400);
             }
         }
 
