@@ -15,6 +15,7 @@ namespace Risseproto
         private SoundManager soundManager;
         private ContentHolder contentHolder;
         Vector2 prePos;
+        private float ducking = 0;
 
         enum state { running, jumping, ducking, idonteven, facedown, crash }
         private state theState = state.running;
@@ -46,6 +47,17 @@ namespace Risseproto
             //{
             //    go.update();
             //}
+
+            if (theState == state.ducking)
+            {
+                if (ducking > 1000)
+                {
+                    ducking = 0;
+                    theState = state.running;
+                    risse.Animation = (int)state.running;
+                }
+                ducking += (float)gameTime.ElapsedGameTime.Milliseconds;
+            }
 
             foreach (List<Gameobject> p in gameWorld.Platforms)
             {
@@ -84,7 +96,6 @@ namespace Risseproto
             {
                 obj.update();
             }
-
         }
 
         public void playFootstep()
@@ -175,14 +186,14 @@ namespace Risseproto
                 {
                     if (physicsEngine.collisionDetection(risse, ground))
                     {
-                        if (risse.BoundingBox.Bottom <= ground.Position.Y + 20 && theState == state.ducking)
+                        if (risse.BoundingBox.Bottom <= ground.Position.Y + 30 && theState == state.ducking)
                         {
                             risse.Position = new Vector2(risse.Position.X, ground.Position.Y - (risse.BoundingBox.Height * 2) + 1);
                             risse.Velocity = Vector2.Zero;
                             playFootstep();
                             risse.OnTheGround = true;
                         }
-                        else if (risse.BoundingBox.Bottom <= ground.Position.Y + 20 && risse.Velocity.Y > 0)
+                        else if (risse.BoundingBox.Bottom <= ground.Position.Y + 30 && risse.Velocity.Y > 0)
                         {
                             risse.Position = new Vector2(risse.Position.X, ground.Position.Y - risse.BoundingBox.Height + 1);
                             risse.Velocity = Vector2.Zero;
@@ -200,7 +211,7 @@ namespace Risseproto
                 {
                     if (physicsEngine.collisionDetection(risse, platform))
                     {
-                        if (risse.BoundingBox.Bottom <= platform.Position.Y + 20 && risse.Velocity.Y > 0 && theState != state.ducking)
+                        if (risse.BoundingBox.Bottom <= platform.Position.Y + 30 && risse.Velocity.Y > 0 && theState != state.ducking)
                         {
                             risse.Position = new Vector2(risse.Position.X, platform.Position.Y - risse.BoundingBox.Height + 1);
                             risse.Velocity = Vector2.Zero;
