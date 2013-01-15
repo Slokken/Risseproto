@@ -45,6 +45,7 @@ namespace Risseproto
         //Sounds and music
         public SoundEffect sound_jump;
         public SoundEffect sound_checkpoint;
+        public SoundEffect sound_slide;
         public SoundEffect sound_footstep0;
         public SoundEffect sound_footstep1;
         public SoundEffect sound_footstep2;
@@ -61,8 +62,9 @@ namespace Risseproto
 
         private void loadSounds(ContentManager content)
         {
-            sound_jump = content.Load<SoundEffect>("SoundEffects\\jump");
+            sound_jump      = content.Load<SoundEffect>("SoundEffects\\jump");
             sound_checkpoint = content.Load<SoundEffect>("SoundEffects\\sound_snowman");
+            sound_slide     = content.Load<SoundEffect>("SoundEffects\\sound_slide");
             sound_footstep0 = content.Load<SoundEffect>("SoundEffects\\Fotspor1");
             sound_footstep1 = content.Load<SoundEffect>("SoundEffects\\Fotspor2");
             sound_footstep2 = content.Load<SoundEffect>("SoundEffects\\Fotspor3");

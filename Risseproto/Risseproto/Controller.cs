@@ -124,6 +124,12 @@ namespace Risseproto
             }
         }
 
+        public void playSlide()
+        {
+            if (risse.Animation == (int)state.running)
+                contentHolder.sound_slide.Play();
+        }
+
         //TODO: actual parallaxing
         public void parallaxBackground(Gameworld gameWorld)
         {
@@ -167,6 +173,7 @@ namespace Risseproto
         {
             if (risse.OnTheGround)
             {
+                playSlide();
                 theState = state.ducking;
                 risse.Animation = (int)state.ducking;
                 //risse.Position = new Vector2(risse.Position.X, risse.Position.Y - 128);
